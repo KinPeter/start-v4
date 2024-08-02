@@ -3,10 +3,9 @@ import { Observable, of } from 'rxjs';
 import { differenceInHours, isAfter, parseISO } from 'date-fns';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { StoreKeys } from '../constants/constants';
-// import { AppBarService } from '../main/app-bar/app-bar.service';
+import { AppBarService } from '../main/app-bar/app-bar.service';
 import { ApiRoutes } from '../constants/api-routes';
 import { ApiService } from '../services/api.service';
-// import { NotificationService } from '../shared/services/notification.service';
 import { SettingsStore } from '../services/settings.store';
 import { AuthState, AuthStore } from './auth.store';
 import {
@@ -16,6 +15,8 @@ import {
   PasswordAuthRequest,
   PkStartSettings,
 } from '@kinpeter/pk-common';
+import { NotificationService } from '../services/notification.service';
+import { parseError } from '../utils/parse-error';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -24,8 +25,8 @@ export class AuthService {
   constructor(
     private authStore: AuthStore,
     private api: ApiService,
-    // private appBarService: AppBarService,
-    // private notificationService: NotificationService,
+    private appBarService: AppBarService,
+    private notificationService: NotificationService,
     private settingsStore: SettingsStore
   ) {}
 
@@ -82,7 +83,7 @@ export class AuthService {
   public logout(): void {
     this.authStore.setLogout();
     this.settingsStore.clearSettings();
-    // this.appBarService.resetState(); // FIXME
+    this.appBarService.resetState();
     this.unscheduleTokenRefresh();
     localStorage.removeItem(StoreKeys.BIRTHDAYS);
     localStorage.removeItem(StoreKeys.KOREAN);
@@ -91,7 +92,7 @@ export class AuthService {
 
   public autoLogin(): void {
     const { expiresAt, id } = this.authStore.current;
-    const expires = parseISO(expiresAt as unknown as string);
+    const expires = expiresAt ? parseISO(expiresAt as unknown as string) : null;
     if (!expires || !id || isAfter(new Date(), expires)) {
       this.logout();
       return;
@@ -131,8 +132,7 @@ export class AuthService {
         this.scheduleTokenRefresh(expires);
       },
       error: err => {
-        // this.notificationService.showError('Token refresh error: ' + parseError(err)); // FIXME
-        console.log(err);
+        this.notificationService.showError('Token refresh error: ' + parseError(err));
       },
     });
   }
