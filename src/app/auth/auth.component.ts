@@ -8,11 +8,23 @@ import { parseError } from '../utils/parse-error';
 import { NgStyle } from '@angular/common';
 import { PkInputDirective } from '../common/pk-input.directive';
 import { PkInputComponent } from '../common/pk-input.component';
+import { PkButtonComponent } from '../common/pk-button.component';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { tablerDeviceFloppy } from '@ng-icons/tabler-icons';
 
 @Component({
   selector: 'pk-auth',
   standalone: true,
-  imports: [FormsModule, RouterLink, NgStyle, PkInputDirective, PkInputComponent],
+  imports: [
+    FormsModule,
+    RouterLink,
+    NgStyle,
+    PkInputDirective,
+    PkInputComponent,
+    PkButtonComponent,
+    NgIcon,
+  ],
+  providers: [provideIcons({ tablerDeviceFloppy })],
   styles: ``,
   template: `
     <p>auth works!</p>
@@ -32,7 +44,34 @@ import { PkInputComponent } from '../common/pk-input.component';
             [(ngModel)]="password"
             (keyup.enter)="onPasswordLogin()" />
         </pk-input>
-        <button (click)="onPasswordLogin()" [disabled]="!password.length">Log in</button>
+        <pk-button (click)="onPasswordLogin()" [disabled]="!password.length">Log in</pk-button>
+
+        <div
+          class="buttons-test"
+          style="display: flex; flex-direction: column; gap: 12px; margin: 2rem 0">
+          <div style="display: flex; gap: 12px">
+            <pk-button>Default</pk-button>
+            <pk-button accent="filled">Default</pk-button>
+            <pk-button accent="outline">Default</pk-button>
+            <pk-button accent="subtle">Default</pk-button>
+            <pk-button accent="link">Default</pk-button>
+          </div>
+
+          <div style="display: flex; gap: 70px">
+            <pk-button [icon]="true">
+              <ng-icon name="tablerDeviceFloppy"></ng-icon>
+            </pk-button>
+            <pk-button accent="filled" [icon]="true">
+              <ng-icon name="tablerDeviceFloppy"></ng-icon>
+            </pk-button>
+            <pk-button accent="outline" [icon]="true">
+              <ng-icon name="tablerDeviceFloppy"></ng-icon>
+            </pk-button>
+            <pk-button accent="subtle" [icon]="true">
+              <ng-icon name="tablerDeviceFloppy"></ng-icon>
+            </pk-button>
+          </div>
+        </div>
       }
       <p>
         <small>
