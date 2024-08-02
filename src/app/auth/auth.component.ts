@@ -6,22 +6,32 @@ import { NotificationService } from '../services/notification.service';
 import { AuthStore } from './auth.store';
 import { parseError } from '../utils/parse-error';
 import { NgStyle } from '@angular/common';
+import { PkInputDirective } from '../common/pk-input.directive';
+import { PkInputComponent } from '../common/pk-input.component';
 
 @Component({
   selector: 'pk-auth',
   standalone: true,
-  imports: [FormsModule, RouterLink, NgStyle],
+  imports: [FormsModule, RouterLink, NgStyle, PkInputDirective, PkInputComponent],
   styles: ``,
   template: `
     <p>auth works!</p>
     @if (loading()) {
       <div>loading...</div>
     } @else if (!loading() && step() === 0) {
-      <input type="text" [(ngModel)]="email" (keyup.enter)="onRequestLoginCode()" />
+      <pk-input label="Email" [withAsterisk]="true" width="250px">
+        <input pkInput type="text" [(ngModel)]="email" (keyup.enter)="onRequestLoginCode()" />
+      </pk-input>
       @if (!usePassword()) {
         <button (click)="onRequestLoginCode()" [disabled]="!email.length">Get login code</button>
       } @else {
-        <input type="text" [(ngModel)]="password" (keyup.enter)="onPasswordLogin()" />
+        <pk-input label="Password" [withAsterisk]="true" width="250px">
+          <input
+            pkInput="other"
+            type="password"
+            [(ngModel)]="password"
+            (keyup.enter)="onPasswordLogin()" />
+        </pk-input>
         <button (click)="onPasswordLogin()" [disabled]="!password.length">Log in</button>
       }
       <p>
@@ -37,6 +47,7 @@ import { NgStyle } from '@angular/common';
           }
         </small>
       </p>
+      <button (click)="toggleError()">Toggle error</button>
       <p>
         <small>
           @if (hasEmailSaved()) {
@@ -49,11 +60,14 @@ import { NgStyle } from '@angular/common';
         </small>
       </p>
     } @else if (!loading() && step() === 1) {
-      <input
-        type="text"
-        name="auth-loginCode"
-        [(ngModel)]="loginCode"
-        (keyup.enter)="onCodeLogin()" />
+      <pk-input label="Login code" [withAsterisk]="true" width="250px">
+        <input
+          pkInput
+          type="text"
+          name="auth-loginCode"
+          [(ngModel)]="loginCode"
+          (keyup.enter)="onCodeLogin()" />
+      </pk-input>
       <button data-id="login-button" [disabled]="loginCode.length !== 6" (click)="onCodeLogin()">
         Log in
       </button>
@@ -72,9 +86,18 @@ export class AuthComponent {
   public loginCode = '';
   public password = '';
   public step = signal(0);
-  public usePassword = signal(false);
+  public usePassword = signal(true);
   public loading = signal(false);
   public hasEmailSaved = computed(() => !!this.authStore.email());
+  public tempError = signal('');
+
+  toggleError(): void {
+    if (!this.tempError()) {
+      this.tempError.set('something went wrong');
+    } else {
+      this.tempError.set('');
+    }
+  }
 
   constructor(
     private authService: AuthService,
@@ -128,4 +151,6 @@ export class AuthComponent {
       },
     });
   }
+
+  protected readonly visualViewport = visualViewport;
 }

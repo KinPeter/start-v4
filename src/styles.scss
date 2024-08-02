@@ -2,6 +2,11 @@
 @import 'styles/colors';
 @import 'styles/typography';
 @import 'styles/scrollbar';
+@import 'styles/forms';
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   background-color: var(--color-body);
