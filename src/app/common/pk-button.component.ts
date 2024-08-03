@@ -1,12 +1,13 @@
 import { Component, input, output, signal } from '@angular/core';
-import { NgStyle } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
+import { PkLoaderComponent } from './pk-loader.component';
 
 export type PkButtonVariant = 'default' | 'filled' | 'outline' | 'link' | 'subtle';
 
 @Component({
   selector: 'pk-button',
   standalone: true,
-  imports: [NgStyle],
+  imports: [NgStyle, PkLoaderComponent, NgClass],
   styles: [
     `
       button {
@@ -118,6 +119,12 @@ export type PkButtonVariant = 'default' | 'filled' | 'outline' | 'link' | 'subtl
           padding: 0.375rem;
           border-radius: 50%;
         }
+
+        &.loading {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
     `,
   ],
@@ -126,8 +133,11 @@ export type PkButtonVariant = 'default' | 'filled' | 'outline' | 'link' | 'subtl
       [type]="type()"
       [disabled]="disabled()"
       [class]="variant()"
-      [class.icon]="icon()"
-      [class.pressed]="pressed()"
+      [ngClass]="{
+        icon: icon(),
+        pressed: pressed(),
+        loading: loading(),
+      }"
       [ngStyle]="{
         width: icon() ? 'auto' : size() ? size() : 'auto',
         fontSize: !icon() ? 'revert' : size() ? size() : '22px',
@@ -140,7 +150,9 @@ export type PkButtonVariant = 'default' | 'filled' | 'outline' | 'link' | 'subtl
       (keyup.enter)="onClick.emit()"
       (keyup.space)="onClick.emit()">
       @if (loading()) {
-        <span>...</span>
+        <pk-loader
+          [size]="icon() ? 'xs' : 'sm'"
+          [style]="icon() ? 'position: relative; top: -0.25rem' : undefined" />
       } @else {
         <ng-content></ng-content>
       }

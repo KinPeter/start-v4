@@ -11,6 +11,7 @@ import { PkInputComponent } from '../common/pk-input.component';
 import { PkButtonComponent } from '../common/pk-button.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { tablerDeviceFloppy } from '@ng-icons/tabler-icons';
+import { PkLoaderComponent } from '../common/pk-loader.component';
 
 @Component({
   selector: 'pk-auth',
@@ -23,6 +24,7 @@ import { tablerDeviceFloppy } from '@ng-icons/tabler-icons';
     PkInputComponent,
     PkButtonComponent,
     NgIcon,
+    PkLoaderComponent,
   ],
   providers: [provideIcons({ tablerDeviceFloppy })],
   styles: ``,
@@ -45,12 +47,12 @@ import { tablerDeviceFloppy } from '@ng-icons/tabler-icons';
             (keyup.enter)="onPasswordLogin()" />
         </pk-input>
         <pk-button (onClick)="onPasswordLogin()" [disabled]="!password.length">Log in</pk-button>
-
+        <pk-loader />
         <div
           class="buttons-test"
           style="display: flex; flex-direction: column; gap: 12px; margin: 2rem 0">
           <div style="display: flex; gap: 12px">
-            <pk-button>Default</pk-button>
+            <pk-button [loading]="true">Default</pk-button>
             <pk-button variant="filled">Filled</pk-button>
             <pk-button variant="outline">Outline</pk-button>
             <pk-button variant="subtle">Subtle</pk-button>
@@ -61,7 +63,7 @@ import { tablerDeviceFloppy } from '@ng-icons/tabler-icons';
             <pk-button [icon]="true">
               <ng-icon name="tablerDeviceFloppy"></ng-icon>
             </pk-button>
-            <pk-button variant="filled" [icon]="true">
+            <pk-button variant="filled" [icon]="true" [loading]="true">
               <ng-icon name="tablerDeviceFloppy"></ng-icon>
             </pk-button>
             <pk-button variant="outline" [icon]="true">
