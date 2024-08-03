@@ -44,30 +44,30 @@ import { tablerDeviceFloppy } from '@ng-icons/tabler-icons';
             [(ngModel)]="password"
             (keyup.enter)="onPasswordLogin()" />
         </pk-input>
-        <pk-button (click)="onPasswordLogin()" [disabled]="!password.length">Log in</pk-button>
+        <pk-button (onClick)="onPasswordLogin()" [disabled]="!password.length">Log in</pk-button>
 
         <div
           class="buttons-test"
           style="display: flex; flex-direction: column; gap: 12px; margin: 2rem 0">
           <div style="display: flex; gap: 12px">
             <pk-button>Default</pk-button>
-            <pk-button accent="filled">Default</pk-button>
-            <pk-button accent="outline">Default</pk-button>
-            <pk-button accent="subtle">Default</pk-button>
-            <pk-button accent="link">Default</pk-button>
+            <pk-button variant="filled">Filled</pk-button>
+            <pk-button variant="outline">Outline</pk-button>
+            <pk-button variant="subtle">Subtle</pk-button>
+            <pk-button variant="link">Link</pk-button>
           </div>
 
           <div style="display: flex; gap: 70px">
             <pk-button [icon]="true">
               <ng-icon name="tablerDeviceFloppy"></ng-icon>
             </pk-button>
-            <pk-button accent="filled" [icon]="true">
+            <pk-button variant="filled" [icon]="true">
               <ng-icon name="tablerDeviceFloppy"></ng-icon>
             </pk-button>
-            <pk-button accent="outline" [icon]="true">
+            <pk-button variant="outline" [icon]="true">
               <ng-icon name="tablerDeviceFloppy"></ng-icon>
             </pk-button>
-            <pk-button accent="subtle" [icon]="true">
+            <pk-button variant="subtle" [icon]="true">
               <ng-icon name="tablerDeviceFloppy"></ng-icon>
             </pk-button>
           </div>

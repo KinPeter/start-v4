@@ -1,7 +1,7 @@
 import { Component, input, output, signal } from '@angular/core';
 import { NgStyle } from '@angular/common';
 
-export type PkButtonAccent = 'default' | 'filled' | 'outline' | 'link' | 'subtle';
+export type PkButtonVariant = 'default' | 'filled' | 'outline' | 'link' | 'subtle';
 
 @Component({
   selector: 'pk-button',
@@ -26,7 +26,7 @@ export type PkButtonAccent = 'default' | 'filled' | 'outline' | 'link' | 'subtle
 
         &:focus-visible {
           outline: none;
-          border: 1px solid var(--color-primary);
+          box-shadow: var(--focus-box-shadow);
         }
 
         &:disabled {
@@ -41,6 +41,72 @@ export type PkButtonAccent = 'default' | 'filled' | 'outline' | 'link' | 'subtle
         &.pressed {
           position: relative;
           top: 1px;
+        }
+
+        &.filled {
+          border: none;
+          background-color: var(--color-primary);
+
+          &:hover {
+            background-color: var(--color-primary-hover);
+          }
+
+          &:disabled {
+            background-color: var(--color-primary);
+          }
+        }
+
+        &.outline {
+          border-color: var(--color-primary);
+          color: var(--color-primary);
+
+          &:hover {
+            background-color: var(--color-primary-outline-hover);
+          }
+
+          &:disabled {
+            color: var(--color-text-disabled);
+
+            &:hover {
+              background-color: var(--color-bg);
+            }
+          }
+        }
+
+        &.subtle {
+          background-color: transparent;
+          color: var(--color-primary);
+          border: none;
+
+          &:hover {
+            background-color: var(--color-primary-outline-hover);
+          }
+
+          &:disabled {
+            color: var(--color-text-disabled);
+
+            &:hover {
+              background-color: var(--color-bg);
+            }
+          }
+        }
+
+        &.link {
+          background-color: transparent;
+          color: var(--color-primary);
+          border: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+
+          &:disabled {
+            color: var(--color-text-disabled);
+
+            &:hover {
+              background-color: transparent;
+            }
+          }
         }
 
         &.icon {
@@ -59,20 +125,20 @@ export type PkButtonAccent = 'default' | 'filled' | 'outline' | 'link' | 'subtle
     <button
       [type]="type()"
       [disabled]="disabled()"
-      [class]="accent()"
+      [class]="variant()"
       [class.icon]="icon()"
       [class.pressed]="pressed()"
       [ngStyle]="{
         width: icon() ? 'auto' : size() ? size() : 'auto',
         fontSize: !icon() ? 'revert' : size() ? size() : '22px',
       }"
-      (click)="click.emit()"
+      (click)="onClick.emit()"
       (mousedown)="pressed.set(true)"
       (mouseup)="pressed.set(false)"
       (keydown)="pressed.set(true)"
       (keyup)="pressed.set(false)"
-      (keyup.enter)="click.emit()"
-      (keyup.space)="click.emit()">
+      (keyup.enter)="onClick.emit()"
+      (keyup.space)="onClick.emit()">
       @if (loading()) {
         <span>...</span>
       } @else {
@@ -85,11 +151,11 @@ export class PkButtonComponent {
   public disabled = input(false);
   public type = input('button');
   public loading = input(false);
-  public accent = input<PkButtonAccent>('default');
+  public variant = input<PkButtonVariant>('default');
   public icon = input(false);
   public size = input('');
 
   public pressed = signal(false);
 
-  public click = output<void>();
+  public onClick = output<void>();
 }
