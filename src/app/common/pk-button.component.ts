@@ -53,7 +53,7 @@ export type PkButtonVariant = 'default' | 'filled' | 'outline' | 'link' | 'subtl
           }
 
           &:disabled {
-            background-color: var(--color-primary);
+            background-color: var(--color-bg);
           }
         }
 
