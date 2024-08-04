@@ -97,6 +97,21 @@ import { LOGIN_CODE_REGEX } from '../constants/regex';
         <pk-button variant="link" (onClick)="step.set(0)"> I need a new login code </pk-button>
       }
     </div>
+
+    <div
+      [ngStyle]="{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        display: 'flex',
+        gap: '8px',
+      }">
+      <pk-button (onClick)="addMessage('error')">error</pk-button>
+      <pk-button (onClick)="addMessage('warning')">warning</pk-button>
+      <pk-button (onClick)="addMessage('info')">info</pk-button>
+      <pk-button (onClick)="addMessage('success')">success</pk-button>
+      <pk-button (onClick)="addMessage('log')">log</pk-button>
+    </div>
   `,
 })
 export class AuthComponent {
@@ -117,6 +132,20 @@ export class AuthComponent {
     private router: Router,
     private notificationService: NotificationService
   ) {}
+
+  public addMessage(type: string) {
+    if (type === 'error')
+      this.notificationService.showError(
+        'An error occurred during your request. We apologize for your inconvenience'
+      );
+    if (type === 'warning')
+      this.notificationService.showWarning('Please be careful when doing this!');
+    if (type === 'info') this.notificationService.showInfo('Your request has been sent');
+    if (type === 'success')
+      this.notificationService.showSuccess('Great! Item has been saved successfully.');
+    if (type === 'log')
+      this.notificationService.showLog('Just FYI something happened at this point');
+  }
 
   public onRequestLoginCode(): void {
     if (this.usePassword()) {

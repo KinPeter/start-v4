@@ -2,9 +2,11 @@ import { computed, Injectable } from '@angular/core';
 import { Store } from '../utils/store';
 
 export enum MessageType {
-  ERROR = 'ERROR',
-  SUCCESS = 'SUCCESS',
-  WARNING = 'WARNING',
+  ERROR = 'error',
+  SUCCESS = 'success',
+  WARNING = 'warning',
+  INFO = 'info',
+  LOG = 'log',
 }
 
 export interface Notification {
@@ -66,6 +68,32 @@ export class NotificationService extends Store<NotificationState> {
       notifications: [
         {
           type: MessageType.SUCCESS,
+          date: new Date(),
+          message,
+        },
+        ...this.state().notifications,
+      ],
+    });
+  }
+
+  public showInfo(message: string): void {
+    this.setState({
+      notifications: [
+        {
+          type: MessageType.INFO,
+          date: new Date(),
+          message,
+        },
+        ...this.state().notifications,
+      ],
+    });
+  }
+
+  public showLog(message: string): void {
+    this.setState({
+      notifications: [
+        {
+          type: MessageType.LOG,
           date: new Date(),
           message,
         },
