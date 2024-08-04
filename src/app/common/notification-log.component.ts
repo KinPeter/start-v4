@@ -59,6 +59,7 @@ import { DatePipe } from '@angular/common';
       width: 100vw;
       height: 30vh;
       padding: 0.4rem;
+      overflow-y: auto;
 
       p {
         margin: 0;
