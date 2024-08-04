@@ -1,4 +1,9 @@
 html {
   --radius-default: 1rem;
   --focus-box-shadow: 0 0 2px 1px var(--color-primary);
+
+  // global Z-indexes
+  --notification-log-z-index: 3;
+  --popup-content-z-index: 2;
+  --backdrop-z-index: 1;
 }

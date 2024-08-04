@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
       position: fixed;
       bottom: -30vh;
       left: 0;
+      z-index: var(--notification-log-z-index);
       transition: bottom 0.3s ease-in-out;
 
       &.open {
