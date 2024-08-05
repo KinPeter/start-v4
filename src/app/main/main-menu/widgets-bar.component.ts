@@ -16,27 +16,27 @@ import { WidgetToggleComponent } from './widget-toggle.component';
   template: `
     <div class="widgets">
       <pk-widget-toggle
-        widget="notes"
+        widget="Notes"
         [open]="service.notesOpen()"
         (toggle)="service.toggleNotes()" />
       <pk-widget-toggle
-        widget="cycling"
+        widget="Cycling"
         [open]="service.cyclingOpen()"
         (toggle)="service.toggleCycling()" />
       <pk-widget-toggle
-        widget="personalData"
+        widget="Personal Data"
         [open]="service.personalDataOpen()"
         (toggle)="service.togglePersonalData()" />
       <pk-widget-toggle
-        widget="birthdays"
+        widget="Birthdays"
         [open]="service.birthdaysOpen()"
         (toggle)="service.toggleBirthdays()" />
       <pk-widget-toggle
-        widget="korean"
+        widget="Korean"
         [open]="service.koreanOpen()"
         (toggle)="service.toggleKorean()" />
       <pk-widget-toggle
-        widget="weather"
+        widget="Weather"
         [open]="service.weatherOpen()"
         (toggle)="service.toggleWeather()" />
     </div>

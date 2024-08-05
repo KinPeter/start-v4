@@ -18,7 +18,7 @@ import { MenuWeatherComponent } from './menu-weather.component';
   providers: [],
   styles: ``,
   template: `
-    <pk-drawer [size]="drawerSize()" title="Start v4" [open]="open()" (onClose)="onClose.emit()">
+    <pk-drawer [size]="drawerSize()" name="Start v4" [open]="open()" (onClose)="onClose.emit()">
       <pk-widgets-bar />
       <hr />
       <pk-menu-weather></pk-menu-weather>

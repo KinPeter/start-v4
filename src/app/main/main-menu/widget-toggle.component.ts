@@ -9,7 +9,7 @@ import {
   tablerTemperatureSun,
 } from '@ng-icons/tabler-icons';
 
-type Widgets = 'cycling' | 'notes' | 'weather' | 'birthdays' | 'korean' | 'personalData';
+type Widgets = 'Cycling' | 'Notes' | 'Weather' | 'Birthdays' | 'Korean' | 'Personal Data';
 
 @Component({
   selector: 'pk-widget-toggle',
@@ -53,7 +53,7 @@ type Widgets = 'cycling' | 'notes' | 'weather' | 'birthdays' | 'korean' | 'perso
     }
   `,
   template: `
-    <button type="button" [class.open]="open()" (click)="toggle.emit()">
+    <button type="button" [title]="widget()" [class.open]="open()" (click)="toggle.emit()">
       <ng-icon [name]="icon()" />
     </button>
   `,
@@ -64,17 +64,17 @@ export class WidgetToggleComponent {
   public toggle = output<void>();
   public icon = computed(() => {
     switch (this.widget()) {
-      case 'birthdays':
+      case 'Birthdays':
         return 'tablerCalendar';
-      case 'korean':
+      case 'Korean':
         return 'tablerAlphabetKorean';
-      case 'notes':
+      case 'Notes':
         return 'tablerNote';
-      case 'weather':
+      case 'Weather':
         return 'tablerTemperatureSun';
-      case 'personalData':
+      case 'Personal Data':
         return 'tablerCreditCard';
-      case 'cycling':
+      case 'Cycling':
         return 'tablerBike';
       default:
         return undefined;

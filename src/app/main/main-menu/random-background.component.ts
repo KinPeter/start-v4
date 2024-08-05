@@ -42,10 +42,18 @@ import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
       <ng-icon name="tablerPhoto" [class.enabled]="randomBgEnabled()" />
       @if (randomBgEnabled()) {
         <div class="actions">
-          <pk-icon-button variant="ghost" [accent]="true" (onClick)="loadNewBackground()">
+          <pk-icon-button
+            tooltip="Load new image"
+            variant="ghost"
+            [accent]="true"
+            (onClick)="loadNewBackground()">
             <ng-icon name="tablerRefresh" size="1.2rem" />
           </pk-icon-button>
-          <pk-icon-button variant="ghost" [accent]="true" (onClick)="removeBackground()">
+          <pk-icon-button
+            tooltip="Remove background"
+            variant="ghost"
+            [accent]="true"
+            (onClick)="removeBackground()">
             <ng-icon name="tablerSquareX" size="1.2rem" />
           </pk-icon-button>
         </div>

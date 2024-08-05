@@ -140,6 +140,7 @@ export type PkIconButtonVariant = 'default' | 'filled' | 'outline' | 'subtle' | 
   template: `
     <button
       [type]="type()"
+      [title]="tooltip()"
       [disabled]="disabled()"
       [class]="variant()"
       [class.pressed]="pressed()"
@@ -161,6 +162,7 @@ export class PkIconButtonComponent {
   public type = input('button');
   public variant = input<PkIconButtonVariant>('default');
   public accent = input(false);
+  public tooltip = input<string | undefined>();
 
   public pressed = signal(false);
 

@@ -111,7 +111,7 @@ import { tablerX } from '@ng-icons/tabler-icons';
     <div class="backdrop" [class.open]="open()"></div>
     <div class="drawer" [class.open]="open()" [class.enabled]="enabled()" [class]="size()">
       <div class="header">
-        <h1>{{ title() }}</h1>
+        <h1>{{ name() }}</h1>
         <button type="button" (click)="onClose.emit()">
           <ng-icon name="tablerX" />
         </button>
@@ -122,7 +122,7 @@ import { tablerX } from '@ng-icons/tabler-icons';
 })
 export class DrawerComponent implements AfterViewInit {
   public open = input<boolean>(true);
-  public title = input<string>('');
+  public name = input<string>('');
   public size = input<'sm' | 'md' | 'lg'>('md');
 
   public enabled = signal(false);
