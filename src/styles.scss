@@ -13,3 +13,8 @@ body {
   background-color: var(--color-body);
   color: var(--color-text);
 }
+
+hr {
+  border: 1px solid var(--color-border);
+  margin: 0.75rem 0;
+}

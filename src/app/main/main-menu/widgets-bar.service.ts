@@ -2,7 +2,7 @@ import { computed, Injectable } from '@angular/core';
 import { StoreKeys } from '../../constants/constants';
 import { LocalStore } from '../../utils/store';
 
-export interface AppBarState {
+export interface WidgetsBarState {
   weatherOpen: boolean;
   notesOpen: boolean;
   birthdaysOpen: boolean;
@@ -11,7 +11,7 @@ export interface AppBarState {
   cyclingOpen: boolean;
 }
 
-const initialState: AppBarState = {
+const initialState: WidgetsBarState = {
   birthdaysOpen: false,
   koreanOpen: false,
   notesOpen: true,
@@ -21,7 +21,7 @@ const initialState: AppBarState = {
 };
 
 @Injectable({ providedIn: 'root' })
-export class AppBarService extends LocalStore<AppBarState> {
+export class WidgetsBarService extends LocalStore<WidgetsBarState> {
   constructor() {
     super(StoreKeys.APP_BAR, initialState);
   }

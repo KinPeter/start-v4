@@ -1,6 +1,6 @@
 import { computed, effect, Injectable } from '@angular/core';
-import { Store } from '../utils/store';
-import { SettingsStore } from './settings.store';
+import { Store } from '../../utils/store';
+import { SettingsStore } from '../../services/settings.store';
 import { HttpClient } from '@angular/common/http';
 
 interface State {
@@ -40,14 +40,17 @@ export class RandomBackgroundService extends Store<State> {
     private http: HttpClient
   ) {
     super(initialState);
-    effect(() => {
-      const { unsplashApiKey } = this.settingsStore.apiKeys();
-      this.setState({ apiKey: unsplashApiKey, enabled: !!unsplashApiKey });
-      if (unsplashApiKey && !this.initialFetchDone) {
-        this.initialFetchDone = true;
-        this.getNewImage();
-      }
-    });
+    effect(
+      () => {
+        const { unsplashApiKey } = this.settingsStore.apiKeys();
+        this.setState({ apiKey: unsplashApiKey, enabled: !!unsplashApiKey });
+        if (unsplashApiKey && !this.initialFetchDone) {
+          this.initialFetchDone = true;
+          this.getNewImage();
+        }
+      },
+      { allowSignalWrites: true }
+    );
   }
 
   public getNewImage(): void {

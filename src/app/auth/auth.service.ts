@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { differenceInHours, isAfter, parseISO } from 'date-fns';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { StoreKeys } from '../constants/constants';
-import { AppBarService } from '../main/app-bar/app-bar.service';
+import { WidgetsBarService } from '../main/main-menu/widgets-bar.service';
 import { ApiRoutes } from '../constants/api-routes';
 import { ApiService } from '../services/api.service';
 import { SettingsStore } from '../services/settings.store';
@@ -25,7 +25,7 @@ export class AuthService {
   constructor(
     private authStore: AuthStore,
     private api: ApiService,
-    private appBarService: AppBarService,
+    private widgetsBarService: WidgetsBarService,
     private notificationService: NotificationService,
     private settingsStore: SettingsStore
   ) {}
@@ -83,7 +83,7 @@ export class AuthService {
   public logout(): void {
     this.authStore.setLogout();
     this.settingsStore.clearSettings();
-    this.appBarService.resetState();
+    this.widgetsBarService.resetState();
     this.unscheduleTokenRefresh();
     localStorage.removeItem(StoreKeys.BIRTHDAYS);
     localStorage.removeItem(StoreKeys.KOREAN);

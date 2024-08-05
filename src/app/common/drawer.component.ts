@@ -79,6 +79,10 @@ import { tablerX } from '@ng-icons/tabler-icons';
         justify-content: space-between;
         margin-right: -0.7rem;
 
+        h1 {
+          margin-top: 0.35rem;
+        }
+
         button {
           border: none;
           outline: none;
@@ -87,7 +91,7 @@ import { tablerX } from '@ng-icons/tabler-icons';
           align-items: center;
           justify-content: center;
           color: var(--color-text-disabled);
-          font-size: 2rem;
+          font-size: 1.75rem;
           padding: 0.5rem;
           cursor: pointer;
           border-radius: 50%;
@@ -96,7 +100,7 @@ import { tablerX } from '@ng-icons/tabler-icons';
             color: var(--color-text);
           }
 
-          &:focus {
+          &:focus-visible {
             box-shadow: var(--focus-box-shadow);
           }
         }

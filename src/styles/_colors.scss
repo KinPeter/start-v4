@@ -4,8 +4,14 @@ html {
   --color-primary-light: var(--color-tomato-3);
   --color-primary-light-hover: var(--color-tomato-4);
   --color-primary-outline-hover: rgba(246, 158, 110, 0.05);
+  --color-accent: var(--color-blue-7);
+  --color-accent-hover: var(--color-blue-8);
+  --color-accent-light: var(--color-blue-3);
+  --color-accent-light-hover: var(--color-blue-4);
+  --color-accent-outline-hover: rgba(116, 192, 252, 0.05);
   --color-text: var(--color-dark-0);
   --color-text-primary: var(--color-tomato-4);
+  --color-text-accent: var(--color-blue-4);
   --color-text-disabled: var(--color-dark-2);
   --color-error: var(--color-red-8);
   --color-warning: var(--color-yellow-6);

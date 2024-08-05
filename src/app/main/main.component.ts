@@ -1,23 +1,19 @@
 import { Component, signal } from '@angular/core';
 import { DrawerComponent } from '../common/drawer.component';
 import { PkButtonComponent } from '../common/pk-button.component';
+import { MainMenuComponent } from './main-menu/main-menu.component';
 
 @Component({
   selector: 'pk-main',
   standalone: true,
-  imports: [DrawerComponent, PkButtonComponent],
-  template: ` <p>main works!</p>
-    <pk-button (onClick)="open.set(true)">Open drawer</pk-button>
-    <pk-drawer [size]="drawerSize()" title="Start v4" [open]="open()" (onClose)="open.set(false)">
-      <pk-button (onClick)="changeSize()">Go!</pk-button>
-    </pk-drawer>`,
+  imports: [DrawerComponent, PkButtonComponent, MainMenuComponent],
+  template: `
+    <p>main works!</p>
+    <pk-button (onClick)="mainMenuOpen.set(true)">Open drawer</pk-button>
+    <pk-main-menu [open]="mainMenuOpen()" (onClose)="mainMenuOpen.set(false)" />
+  `,
   styles: ``,
 })
 export class MainComponent {
-  public open = signal(false);
-  public drawerSize = signal<'sm' | 'md'>('sm');
-
-  public changeSize() {
-    this.drawerSize.update(size => (size === 'md' ? 'sm' : 'md'));
-  }
+  public mainMenuOpen = signal(false);
 }
