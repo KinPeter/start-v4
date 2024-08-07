@@ -15,6 +15,7 @@ import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
       align-items: center;
       justify-content: space-between;
       padding: 0 0.5rem;
+      margin-bottom: 0.5rem;
 
       > ng-icon {
         font-size: 1.5rem;

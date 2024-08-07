@@ -31,6 +31,7 @@ import { tablerX } from '@ng-icons/tabler-icons';
       left: -1000px;
       width: 100vw;
       height: 100vh;
+      overflow-y: auto;
       z-index: var(--popup-content-z-index);
       background-color: var(--color-bg);
       border-right: 1px solid var(--color-border);
@@ -84,24 +85,16 @@ import { tablerX } from '@ng-icons/tabler-icons';
         }
 
         button {
-          border: none;
-          outline: none;
-          background: none;
           display: flex;
           align-items: center;
           justify-content: center;
           color: var(--color-text-disabled);
           font-size: 1.75rem;
           padding: 0.5rem;
-          cursor: pointer;
           border-radius: 50%;
 
           &:hover {
             color: var(--color-text);
-          }
-
-          &:focus-visible {
-            box-shadow: var(--focus-box-shadow);
           }
         }
       }

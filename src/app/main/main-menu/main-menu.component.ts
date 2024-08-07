@@ -4,6 +4,7 @@ import { PkButtonComponent } from '../../common/pk-button.component';
 import { WidgetsBarComponent } from './widgets-bar.component';
 import { RandomBackgroundComponent } from './random-background.component';
 import { MenuWeatherComponent } from './menu-weather.component';
+import { MainMenuItemsComponent } from './main-menu-items.component';
 
 @Component({
   selector: 'pk-main-menu',
@@ -14,6 +15,7 @@ import { MenuWeatherComponent } from './menu-weather.component';
     WidgetsBarComponent,
     RandomBackgroundComponent,
     MenuWeatherComponent,
+    MainMenuItemsComponent,
   ],
   providers: [],
   styles: ``,
@@ -21,11 +23,11 @@ import { MenuWeatherComponent } from './menu-weather.component';
     <pk-drawer [size]="drawerSize()" name="Start v4" [open]="open()" (onClose)="onClose.emit()">
       <pk-widgets-bar />
       <hr />
-      <pk-menu-weather></pk-menu-weather>
+      <pk-menu-weather />
       <hr />
       <pk-random-background />
       <hr />
-      <pk-button (onClick)="changeSize()">Go!</pk-button>
+      <pk-main-menu-items (openSettings)="changeSize()" (openShortcuts)="changeSize()" />
     </pk-drawer>
   `,
 })
