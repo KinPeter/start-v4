@@ -1,14 +1,13 @@
 import { Component, Signal } from '@angular/core';
 import { RandomBackgroundService } from './random-background.service';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { tablerPhoto, tablerRefresh, tablerSquareX } from '@ng-icons/tabler-icons';
+import { NgIconComponent } from '@ng-icons/core';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 
 @Component({
   selector: 'pk-random-background',
   standalone: true,
   imports: [NgIconComponent, PkIconButtonComponent],
-  providers: [provideIcons({ tablerPhoto, tablerRefresh, tablerSquareX })],
+  providers: [],
   styles: `
     .top-row {
       display: flex;

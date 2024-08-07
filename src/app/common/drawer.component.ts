@@ -1,13 +1,12 @@
 import { AfterViewInit, Component, input, output, signal } from '@angular/core';
 import { NgClass, NgStyle } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { tablerX } from '@ng-icons/tabler-icons';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'pk-drawer',
   standalone: true,
   imports: [NgStyle, NgClass, NgIcon],
-  providers: [provideIcons({ tablerX })],
+  providers: [],
   styles: `
     .backdrop {
       position: absolute;

@@ -1,13 +1,5 @@
 import { Component, computed, input, output } from '@angular/core';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import {
-  tablerAlphabetKorean,
-  tablerBike,
-  tablerCalendar,
-  tablerCreditCard,
-  tablerNote,
-  tablerTemperatureSun,
-} from '@ng-icons/tabler-icons';
+import { NgIcon } from '@ng-icons/core';
 
 type Widgets = 'Cycling' | 'Notes' | 'Weather' | 'Birthdays' | 'Korean' | 'Personal Data';
 
@@ -15,16 +7,7 @@ type Widgets = 'Cycling' | 'Notes' | 'Weather' | 'Birthdays' | 'Korean' | 'Perso
   selector: 'pk-widget-toggle',
   standalone: true,
   imports: [NgIcon],
-  providers: [
-    provideIcons({
-      tablerBike,
-      tablerTemperatureSun,
-      tablerAlphabetKorean,
-      tablerNote,
-      tablerCalendar,
-      tablerCreditCard,
-    }),
-  ],
+  providers: [],
   styles: `
     button {
       border: none;

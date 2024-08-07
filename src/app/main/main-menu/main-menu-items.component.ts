@@ -1,28 +1,13 @@
 import { Component, output } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { DataBackupService } from '../../services/data-backup.service';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import {
-  tablerBrandWindows,
-  tablerCloudDown,
-  tablerCloudDownload,
-  tablerLogout,
-  tablerSettingsCode,
-} from '@ng-icons/tabler-icons';
+import { NgIconComponent } from '@ng-icons/core';
 
 @Component({
   selector: 'pk-main-menu-items',
   standalone: true,
   imports: [NgIconComponent],
-  providers: [
-    provideIcons({
-      tablerLogout,
-      tablerCloudDown,
-      tablerCloudDownload,
-      tablerBrandWindows,
-      tablerSettingsCode,
-    }),
-  ],
+  providers: [],
   styles: `
     button {
       display: flex;

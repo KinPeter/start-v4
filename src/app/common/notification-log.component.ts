@@ -1,14 +1,13 @@
 import { Component, effect, signal, Signal } from '@angular/core';
 import { MessageType, Notification, NotificationService } from '../services/notification.service';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { tablerChevronDown, tablerChevronUp, tablerX } from '@ng-icons/tabler-icons';
+import { NgIconComponent } from '@ng-icons/core';
 import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'pk-notification-log',
   standalone: true,
   imports: [NgIconComponent, DatePipe],
-  providers: [provideIcons({ tablerChevronUp, tablerChevronDown, tablerX })],
+  providers: [],
   styles: `
     .container {
       font-family: monospace;
