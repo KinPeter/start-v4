@@ -43,7 +43,7 @@ import { LOGIN_CODE_REGEX } from '../constants/regex';
         @if (usePassword()) {
           <pk-input label="Password" [withAsterisk]="true" width="250px">
             <input
-              pkInput="other"
+              pkInput
               type="password"
               [(ngModel)]="password"
               (keyup.enter)="onPasswordLogin()" />

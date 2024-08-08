@@ -5,6 +5,37 @@ import { WidgetsBarComponent } from './widgets-bar.component';
 import { RandomBackgroundComponent } from './random-background.component';
 import { MenuWeatherComponent } from './menu-weather.component';
 import { MainMenuItemsComponent } from './main-menu-items.component';
+import { SettingsComponent } from '../settings/settings.component';
+
+interface DrawerState {
+  title: string;
+  size: 'sm' | 'md';
+  content: 'menu' | 'settings' | 'shortcuts';
+}
+
+interface DrawerStates {
+  menu: DrawerState;
+  settings: DrawerState;
+  shortcuts: DrawerState;
+}
+
+const states: DrawerStates = {
+  menu: {
+    title: 'Start v4',
+    size: 'sm',
+    content: 'menu',
+  },
+  settings: {
+    title: 'Settings',
+    size: 'md',
+    content: 'settings',
+  },
+  shortcuts: {
+    title: 'Shortcut tiles',
+    size: 'md',
+    content: 'shortcuts',
+  },
+};
 
 @Component({
   selector: 'pk-main-menu',
@@ -16,27 +47,61 @@ import { MainMenuItemsComponent } from './main-menu-items.component';
     RandomBackgroundComponent,
     MenuWeatherComponent,
     MainMenuItemsComponent,
+    SettingsComponent,
   ],
   providers: [],
   styles: ``,
   template: `
-    <pk-drawer [size]="drawerSize()" name="Start v4" [open]="open()" (onClose)="onClose.emit()">
-      <pk-widgets-bar />
-      <hr />
-      <pk-menu-weather />
-      <hr />
-      <pk-random-background />
-      <hr />
-      <pk-main-menu-items (openSettings)="changeSize()" (openShortcuts)="changeSize()" />
+    <pk-drawer
+      [size]="state().size"
+      [name]="state().title"
+      [open]="open()"
+      (onClose)="closeDrawer()">
+      @switch (state().content) {
+        @case ('menu') {
+          <pk-widgets-bar />
+          <hr />
+          <pk-menu-weather />
+          <hr />
+          <pk-random-background />
+          <hr />
+          <pk-main-menu-items (openSettings)="showSettings()" (openShortcuts)="showShortcuts()" />
+        }
+        @case ('settings') {
+          <pk-settings (done)="showMenu()" />
+        }
+      }
     </pk-drawer>
   `,
 })
 export class MainMenuComponent {
   public open = input(false);
   public onClose = output<void>();
-  public drawerSize = signal<'sm' | 'md'>('sm');
+  public state = signal<DrawerState>(states.menu);
 
-  public changeSize() {
-    this.drawerSize.update(size => (size === 'md' ? 'sm' : 'md'));
+  constructor() {
+    document.addEventListener('keyup', (e: KeyboardEvent) => {
+      if (this.open() && e.key === 'Escape') {
+        this.onClose.emit();
+        this.state.set(states.menu);
+      }
+    });
+  }
+
+  public showMenu(): void {
+    this.state.set(states.menu);
+  }
+
+  public showSettings(): void {
+    this.state.set(states.settings);
+  }
+
+  public showShortcuts(): void {
+    this.state.set(states.shortcuts);
+  }
+
+  public closeDrawer(): void {
+    this.onClose.emit();
+    this.state.set(states.menu);
   }
 }

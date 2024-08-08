@@ -1,7 +1,7 @@
 import { computed, Injectable } from '@angular/core';
 import { PkStartSettings } from '@kinpeter/pk-common';
-import { StoreKeys } from '../constants/constants';
-import { LocalStore } from '../utils/store';
+import { StoreKeys } from '../../constants/constants';
+import { LocalStore } from '../../utils/store';
 
 export type UserSettings = Omit<PkStartSettings, 'userId'>;
 

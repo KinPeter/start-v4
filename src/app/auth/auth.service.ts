@@ -6,7 +6,7 @@ import { StoreKeys } from '../constants/constants';
 import { WidgetsBarService } from '../main/main-menu/widgets-bar.service';
 import { ApiRoutes } from '../constants/api-routes';
 import { ApiService } from '../services/api.service';
-import { SettingsStore } from '../services/settings.store';
+import { SettingsStore } from '../main/settings/settings.store';
 import { AuthState, AuthStore } from './auth.store';
 import {
   AuthData,

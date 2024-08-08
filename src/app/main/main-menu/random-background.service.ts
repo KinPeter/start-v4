@@ -1,6 +1,6 @@
 import { computed, effect, Injectable } from '@angular/core';
 import { Store } from '../../utils/store';
-import { SettingsStore } from '../../services/settings.store';
+import { SettingsStore } from '../settings/settings.store';
 import { HttpClient } from '@angular/common/http';
 
 interface State {
