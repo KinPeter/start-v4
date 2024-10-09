@@ -86,11 +86,11 @@ import { DatePipe } from '@angular/common';
     <div class="container" [class.open]="open()">
       <div class="top-row">
         @if (open()) {
-          <button (click)="open.set(false)">
+          <button (click)="togglePanel()">
             <ng-icon name="tablerChevronDown" />
           </button>
         } @else {
-          <button (click)="open.set(true)">
+          <button (click)="togglePanel()">
             <ng-icon name="tablerChevronUp" />
           </button>
         }
@@ -115,15 +115,24 @@ import { DatePipe } from '@angular/common';
 })
 export class NotificationLogComponent {
   public notifications: Signal<Notification[]> = signal([]);
-  public open = signal<boolean>(false);
   public lastDisplayed = signal<Notification | null>(null);
+  public open: Signal<boolean>;
 
   private hideTimer: ReturnType<typeof setTimeout> | undefined;
 
   constructor(private notificationService: NotificationService) {
     this.notifications = this.notificationService.notifications;
+    this.open = this.notificationService.isLogOpen;
 
     effect(() => this.handleLastNotification(this.notifications()), { allowSignalWrites: true });
+  }
+
+  public togglePanel(): void {
+    if (this.open()) {
+      this.notificationService.closeLogPanel();
+    } else {
+      this.notificationService.openLogPanel();
+    }
   }
 
   public hideLastNotification(): void {

@@ -1,4 +1,4 @@
-import { computed, Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { Store } from '../utils/store';
 
 export enum MessageType {
@@ -25,11 +25,14 @@ const initialState: NotificationState = {
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService extends Store<NotificationState> {
+  private logOpen = signal<boolean>(false);
+
   constructor() {
     super(initialState);
   }
 
   public notifications = computed(() => this.state().notifications);
+  public isLogOpen = computed(() => this.logOpen());
 
   public clearState(): void {
     this.setState({
@@ -100,5 +103,13 @@ export class NotificationService extends Store<NotificationState> {
         ...this.state().notifications,
       ],
     });
+  }
+
+  public openLogPanel(): void {
+    this.logOpen.set(true);
+  }
+
+  public closeLogPanel(): void {
+    this.logOpen.set(false);
   }
 }

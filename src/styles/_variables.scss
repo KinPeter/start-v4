@@ -3,6 +3,8 @@ html {
   --focus-box-shadow: 0 0 2px 1px var(--color-primary);
 
   // global Z-indexes
+  --shortcuts-z-index: 5;
+  --shortcuts-backdrop-z-index: 4;
   --notification-log-z-index: 3;
   --popup-content-z-index: 2;
   --backdrop-z-index: 1;
