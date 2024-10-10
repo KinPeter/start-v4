@@ -45,7 +45,6 @@ import { NgOptimizedImage } from '@angular/common';
   template: `
     <button class="shortcut" (click)="onOpen()">
       <img [ngSrc]="iconUrl" width="48" height="48" [alt]="shortcut()?.name" />
-      <!--      <img [src]="iconUrl" [alt]="shortcut()?.name" />-->
       <p>{{ shortcut()?.name }}</p>
     </button>
   `,

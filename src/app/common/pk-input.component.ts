@@ -29,12 +29,16 @@ export class PkInputComponent {
   public error = input('');
   public disabled = input(false);
   public width = input('auto');
+  public type = input<'text' | 'select'>('text');
 
   private container: Signal<ElementRef<HTMLLabelElement>> = viewChild.required('container');
 
   constructor() {
     effect(() => {
-      const inputElement = this.container()?.nativeElement?.querySelector('input');
+      const selector = this.type() === 'text' ? 'input' : this.type() === 'select' ? 'select' : '';
+      const inputElement = this.container()?.nativeElement?.querySelector(selector) as
+        | HTMLInputElement
+        | HTMLSelectElement;
       if (!inputElement) return;
       inputElement.style.width = this.width();
       if (this.error()) {

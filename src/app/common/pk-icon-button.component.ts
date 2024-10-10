@@ -15,7 +15,7 @@ export type PkIconButtonVariant = 'default' | 'filled' | 'outline' | 'subtle' | 
         height: auto;
         width: auto;
         padding: 0.375rem;
-        border: none;
+        border: 1px solid transparent;
         border-radius: 50%;
         background: none;
         color: var(--color-text);
@@ -45,7 +45,7 @@ export type PkIconButtonVariant = 'default' | 'filled' | 'outline' | 'subtle' | 
         }
 
         &.filled {
-          border: none;
+          border: 1px solid transparent;
           background-color: var(--color-primary);
 
           &:hover {
@@ -66,6 +66,8 @@ export type PkIconButtonVariant = 'default' | 'filled' | 'outline' | 'subtle' | 
         }
 
         &.outline {
+          border-width: 1px;
+          border-style: solid;
           border-color: var(--color-primary);
           color: var(--color-primary);
 
@@ -84,6 +86,7 @@ export type PkIconButtonVariant = 'default' | 'filled' | 'outline' | 'subtle' | 
 
           &:disabled {
             color: var(--color-text-disabled);
+            border-color: var(--color-text-disabled);
 
             &:hover {
               background-color: var(--color-bg);
@@ -94,7 +97,7 @@ export type PkIconButtonVariant = 'default' | 'filled' | 'outline' | 'subtle' | 
         &.subtle {
           background-color: transparent;
           color: var(--color-primary);
-          border: none;
+          border: 1px solid transparent;
 
           &:hover {
             background-color: var(--color-primary-outline-hover);
@@ -120,7 +123,7 @@ export type PkIconButtonVariant = 'default' | 'filled' | 'outline' | 'subtle' | 
         &.ghost {
           background-color: transparent;
           color: var(--color-text);
-          border: none;
+          border: 1px transparent;
 
           &:hover {
             color: var(--color-primary-light);

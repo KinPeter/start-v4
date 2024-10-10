@@ -23,7 +23,8 @@ label.pk-input {
   }
 }
 
-input.pk-input {
+input.pk-input,
+select.pk-input {
   background-color: var(--color-bg-lighter);
   color: var(--color-text);
   border: 1px solid var(--color-border);
@@ -47,4 +48,10 @@ input.pk-input {
     border-color: var(--color-error);
     color: var(--color-text);
   }
+}
+
+select.pk-input {
+  appearance: none; /* Remove default arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }

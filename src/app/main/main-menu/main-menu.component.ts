@@ -6,6 +6,7 @@ import { RandomBackgroundComponent } from './random-background.component';
 import { MenuWeatherComponent } from './menu-weather.component';
 import { MainMenuItemsComponent } from './main-menu-items.component';
 import { SettingsComponent } from '../settings/settings.component';
+import { ShortcutsSettingsComponent } from '../shortcuts/shortcuts-settings.component';
 
 interface DrawerState {
   title: string;
@@ -48,6 +49,7 @@ const states: DrawerStates = {
     MenuWeatherComponent,
     MainMenuItemsComponent,
     SettingsComponent,
+    ShortcutsSettingsComponent,
   ],
   providers: [],
   styles: ``,
@@ -69,6 +71,9 @@ const states: DrawerStates = {
         }
         @case ('settings') {
           <pk-settings (done)="showMenu()" />
+        }
+        @case ('shortcuts') {
+          <pk-shortcuts-settings (done)="showMenu()" />
         }
       }
     </pk-drawer>
