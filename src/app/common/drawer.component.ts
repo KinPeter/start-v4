@@ -83,6 +83,11 @@ import { NgIcon } from '@ng-icons/core';
           margin-top: 0.35rem;
         }
 
+        > div {
+          display: flex;
+          gap: 0.5rem;
+        }
+
         button {
           display: flex;
           align-items: center;
@@ -104,9 +109,16 @@ import { NgIcon } from '@ng-icons/core';
     <div class="drawer" [class.open]="open()" [class.enabled]="enabled()" [class]="size()">
       <div class="header">
         <h1>{{ name() }}</h1>
-        <button type="button" (click)="onClose.emit()">
-          <ng-icon name="tablerX" />
-        </button>
+        <div>
+          @if (showBack()) {
+            <button type="button" (click)="onBack.emit()">
+              <ng-icon name="tablerChevronLeft" />
+            </button>
+          }
+          <button type="button" (click)="onClose.emit()">
+            <ng-icon name="tablerX" />
+          </button>
+        </div>
       </div>
       <ng-content />
     </div>
@@ -114,12 +126,14 @@ import { NgIcon } from '@ng-icons/core';
 })
 export class DrawerComponent implements AfterViewInit {
   public open = input<boolean>(true);
+  public showBack = input<boolean>(false);
   public name = input<string>('');
   public size = input<'sm' | 'md' | 'lg'>('md');
 
   public enabled = signal(false);
 
   public onClose = output<void>();
+  public onBack = output<void>();
 
   ngAfterViewInit() {
     this.enabled.set(true);

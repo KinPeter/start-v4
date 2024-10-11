@@ -58,7 +58,9 @@ const states: DrawerStates = {
       [size]="state().size"
       [name]="state().title"
       [open]="open()"
-      (onClose)="closeDrawer()">
+      [showBack]="state().content !== 'menu'"
+      (onClose)="closeDrawer()"
+      (onBack)="showMenu()">
       @switch (state().content) {
         @case ('menu') {
           <pk-widgets-bar />
