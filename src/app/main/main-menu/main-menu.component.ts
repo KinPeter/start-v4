@@ -1,6 +1,5 @@
 import { Component, input, output, signal } from '@angular/core';
 import { DrawerComponent } from '../../common/drawer.component';
-import { PkButtonComponent } from '../../common/pk-button.component';
 import { WidgetsBarComponent } from './widgets-bar.component';
 import { RandomBackgroundComponent } from './random-background.component';
 import { MenuWeatherComponent } from './menu-weather.component';
@@ -40,10 +39,8 @@ const states: DrawerStates = {
 
 @Component({
   selector: 'pk-main-menu',
-  standalone: true,
   imports: [
     DrawerComponent,
-    PkButtonComponent,
     WidgetsBarComponent,
     RandomBackgroundComponent,
     MenuWeatherComponent,

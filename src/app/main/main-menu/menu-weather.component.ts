@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'pk-menu-weather',
-  standalone: true,
   imports: [],
   providers: [],
   styles: `

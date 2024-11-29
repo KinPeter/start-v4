@@ -7,7 +7,6 @@ import { environment } from '../environments/environment';
 
 @Component({
   selector: 'pk-root',
-  standalone: true,
   imports: [RouterOutlet, NotificationLogComponent],
   providers: [],
   template: ` <router-outlet />

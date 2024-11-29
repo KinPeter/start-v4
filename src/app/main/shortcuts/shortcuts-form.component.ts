@@ -9,7 +9,6 @@ import { Shortcut, ShortcutRequest } from '@kinpeter/pk-common';
 
 @Component({
   selector: 'pk-shortcuts-form',
-  standalone: true,
   imports: [PkInputComponent, PkInputDirective, ReactiveFormsModule, PkButtonComponent],
   providers: [],
   styles: `

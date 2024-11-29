@@ -10,7 +10,6 @@ import { NoteComponent } from './note.component';
 
 @Component({
   selector: 'pk-notes',
-  standalone: true,
   imports: [PkLoaderComponent, PkIconButtonComponent, NgIcon, PkWidgetDirective, NoteComponent],
   providers: [],
   styles: `

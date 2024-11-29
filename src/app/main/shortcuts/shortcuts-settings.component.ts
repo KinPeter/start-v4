@@ -2,7 +2,6 @@ import { Component, computed, effect, output, Signal, signal } from '@angular/co
 import { PkInputComponent } from '../../common/pk-input.component';
 import { PkInputDirective } from '../../common/pk-input.directive';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PkButtonComponent } from '../../common/pk-button.component';
 import { ShortcutsFormComponent } from './shortcuts-form.component';
 import { Shortcut, ShortcutRequest, UUID } from '@kinpeter/pk-common';
 import { ShortcutsService } from './shortcuts.service';
@@ -16,12 +15,10 @@ import { PkLoaderComponent } from '../../common/pk-loader.component';
 
 @Component({
   selector: 'pk-shortcuts-settings',
-  standalone: true,
   imports: [
     PkInputComponent,
     PkInputDirective,
     ReactiveFormsModule,
-    PkButtonComponent,
     ShortcutsFormComponent,
     PkIconButtonComponent,
     NgIcon,
@@ -163,12 +160,9 @@ export class ShortcutsSettingsComponent {
     private settingsStore: SettingsStore,
     private notificationService: NotificationService
   ) {
-    effect(
-      () => {
-        this.shortcuts.set(this.shortcutsService.shortcuts()[this.selectedCategory()]);
-      },
-      { allowSignalWrites: true }
-    );
+    effect(() => {
+      this.shortcuts.set(this.shortcutsService.shortcuts()[this.selectedCategory()]);
+    });
     this.loading = this.shortcutsService.loading;
   }
 

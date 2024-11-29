@@ -6,7 +6,6 @@ export type PkButtonVariant = 'default' | 'filled' | 'outline' | 'link' | 'subtl
 
 @Component({
   selector: 'pk-button',
-  standalone: true,
   imports: [NgStyle, PkLoaderComponent, NgClass],
   styles: [
     `

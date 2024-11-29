@@ -3,7 +3,6 @@ import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'pk-loader',
-  standalone: true,
   styles: `
     :host {
       --ellipsis-size: 13.33333px;

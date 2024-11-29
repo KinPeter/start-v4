@@ -1,11 +1,9 @@
 import { AfterViewInit, Component, input, output, signal } from '@angular/core';
-import { NgClass, NgStyle } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'pk-drawer',
-  standalone: true,
-  imports: [NgStyle, NgClass, NgIcon],
+  imports: [NgIcon],
   providers: [],
   styles: `
     .backdrop {

@@ -5,7 +5,6 @@ import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'pk-shortcut',
-  standalone: true,
   imports: [NgOptimizedImage],
   providers: [],
   styles: `

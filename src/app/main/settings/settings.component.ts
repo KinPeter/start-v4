@@ -11,7 +11,6 @@ import { PkButtonComponent } from '../../common/pk-button.component';
 
 @Component({
   selector: 'pk-settings',
-  standalone: true,
   imports: [PkInputComponent, PkInputDirective, ReactiveFormsModule, PkButtonComponent],
   providers: [],
   styles: `

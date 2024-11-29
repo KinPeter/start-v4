@@ -7,7 +7,6 @@ import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'pk-shortcuts-menu',
-  standalone: true,
   imports: [PkLoaderComponent, NgIcon],
   providers: [],
   styles: `

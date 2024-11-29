@@ -5,7 +5,6 @@ import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'pk-notification-log',
-  standalone: true,
   imports: [NgIconComponent, DatePipe],
   providers: [],
   styles: `
@@ -124,7 +123,7 @@ export class NotificationLogComponent {
     this.notifications = this.notificationService.notifications;
     this.open = this.notificationService.isLogOpen;
 
-    effect(() => this.handleLastNotification(this.notifications()), { allowSignalWrites: true });
+    effect(() => this.handleLastNotification(this.notifications()));
   }
 
   public togglePanel(): void {

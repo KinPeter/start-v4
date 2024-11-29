@@ -40,17 +40,14 @@ export class RandomBackgroundService extends Store<State> {
     private http: HttpClient
   ) {
     super(initialState);
-    effect(
-      () => {
-        const { unsplashApiKey } = this.settingsStore.apiKeys();
-        this.setState({ apiKey: unsplashApiKey, enabled: !!unsplashApiKey });
-        if (unsplashApiKey && !this.initialFetchDone) {
-          this.initialFetchDone = true;
-          this.getNewImage();
-        }
-      },
-      { allowSignalWrites: true }
-    );
+    effect(() => {
+      const { unsplashApiKey } = this.settingsStore.apiKeys();
+      this.setState({ apiKey: unsplashApiKey, enabled: !!unsplashApiKey });
+      if (unsplashApiKey && !this.initialFetchDone) {
+        this.initialFetchDone = true;
+        this.getNewImage();
+      }
+    });
   }
 
   public getNewImage(): void {

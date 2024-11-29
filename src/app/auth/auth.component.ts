@@ -9,20 +9,11 @@ import { NgStyle } from '@angular/common';
 import { PkInputDirective } from '../common/pk-input.directive';
 import { PkInputComponent } from '../common/pk-input.component';
 import { PkButtonComponent } from '../common/pk-button.component';
-import { PkLoaderComponent } from '../common/pk-loader.component';
 import { LOGIN_CODE_REGEX } from '../constants/regex';
 
 @Component({
   selector: 'pk-auth',
-  standalone: true,
-  imports: [
-    FormsModule,
-    NgStyle,
-    PkInputDirective,
-    PkInputComponent,
-    PkButtonComponent,
-    PkLoaderComponent,
-  ],
+  imports: [FormsModule, NgStyle, PkInputDirective, PkInputComponent, PkButtonComponent],
   providers: [],
   styles: `
     .container {

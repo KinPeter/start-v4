@@ -5,7 +5,6 @@ type Widgets = 'Cycling' | 'Notes' | 'Weather' | 'Birthdays' | 'Korean' | 'Perso
 
 @Component({
   selector: 'pk-widget-toggle',
-  standalone: true,
   imports: [NgIcon],
   providers: [],
   styles: `

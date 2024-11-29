@@ -4,7 +4,6 @@ export type PkIconButtonVariant = 'default' | 'filled' | 'outline' | 'subtle' | 
 
 @Component({
   selector: 'pk-icon-button',
-  standalone: true,
   imports: [],
   styles: [
     `

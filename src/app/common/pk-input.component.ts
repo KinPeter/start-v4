@@ -4,7 +4,6 @@ import { NgClass, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'pk-input',
-  standalone: true,
   imports: [PkInputDirective, NgClass, NgStyle],
   template: `
     <!-- eslint-disable-next-line @angular-eslint/template/label-has-associated-control -->

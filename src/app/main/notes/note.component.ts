@@ -5,7 +5,6 @@ import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'pk-note',
-  standalone: true,
   imports: [NgIcon, NgClass],
   providers: [],
   styles: `

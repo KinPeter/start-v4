@@ -5,7 +5,6 @@ import { NgIconComponent } from '@ng-icons/core';
 
 @Component({
   selector: 'pk-main-menu-items',
-  standalone: true,
   imports: [NgIconComponent],
   providers: [],
   styles: `

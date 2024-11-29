@@ -4,7 +4,6 @@ import { WidgetToggleComponent } from './widget-toggle.component';
 
 @Component({
   selector: 'pk-widgets-bar',
-  standalone: true,
   imports: [WidgetToggleComponent],
   providers: [],
   styles: `

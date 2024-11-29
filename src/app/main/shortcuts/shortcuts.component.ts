@@ -7,7 +7,6 @@ import { ShortcutsMenuComponent } from './shortcuts-menu.component';
 
 @Component({
   selector: 'pk-shortcuts',
-  standalone: true,
   imports: [ShortcutsMenuComponent, ShortcutComponent],
   providers: [],
   styles: `

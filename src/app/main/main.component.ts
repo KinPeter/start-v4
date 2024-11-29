@@ -1,6 +1,4 @@
 import { Component, Signal, signal } from '@angular/core';
-import { DrawerComponent } from '../common/drawer.component';
-import { PkButtonComponent } from '../common/pk-button.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { RandomBackgroundService } from './main-menu/random-background.service';
 import { ShortcutsComponent } from './shortcuts/shortcuts.component';
@@ -9,14 +7,7 @@ import { NotesComponent } from './notes/notes.component';
 
 @Component({
   selector: 'pk-main',
-  standalone: true,
-  imports: [
-    DrawerComponent,
-    PkButtonComponent,
-    MainMenuComponent,
-    ShortcutsComponent,
-    NotesComponent,
-  ],
+  imports: [MainMenuComponent, ShortcutsComponent, NotesComponent],
   styles: `
     .main-content {
       width: 100%;

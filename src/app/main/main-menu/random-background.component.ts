@@ -5,7 +5,6 @@ import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 
 @Component({
   selector: 'pk-random-background',
-  standalone: true,
   imports: [NgIconComponent, PkIconButtonComponent],
   providers: [],
   styles: `
