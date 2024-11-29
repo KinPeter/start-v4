@@ -1,5 +1,7 @@
 import {
   tablerAlphabetKorean,
+  tablerArchive,
+  tablerArchiveOff,
   tablerBike,
   tablerBrandGoogle,
   tablerBrandWindows,
@@ -19,6 +21,8 @@ import {
   tablerMoodSmileBeam,
   tablerNote,
   tablerPhoto,
+  tablerPinned,
+  tablerPinnedOff,
   tablerPlus,
   tablerRefresh,
   tablerSettingsCode,
@@ -60,4 +64,8 @@ export const icons = {
   tablerCheck,
   tablerTextPlus,
   tablerLink,
+  tablerPinned,
+  tablerPinnedOff,
+  tablerArchive,
+  tablerArchiveOff,
 };

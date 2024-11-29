@@ -1,11 +1,12 @@
-import { Component, input } from '@angular/core';
-import { Note } from '@kinpeter/pk-common';
+import { Component, input, output } from '@angular/core';
+import { Note, UUID } from '@kinpeter/pk-common';
 import { NgIcon } from '@ng-icons/core';
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
+import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 
 @Component({
   selector: 'pk-note',
-  imports: [NgIcon, NgClass],
+  imports: [NgIcon, NgClass, PkIconButtonComponent, DatePipe],
   providers: [],
   styles: `
     .card {
@@ -17,8 +18,9 @@ import { NgClass } from '@angular/common';
       font-size: 0.9rem;
       white-space: pre-wrap;
 
-      ul {
+      ul.links {
         list-style-type: none;
+        margin-top: 0.35rem;
       }
 
       a {
@@ -33,14 +35,27 @@ import { NgClass } from '@angular/common';
       &.archived {
         opacity: 0.6;
       }
+
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0.35rem;
+
+        .date {
+          font-size: 0.65rem;
+        }
+
+        .actions {
+          display: flex;
+        }
+      }
     }
   `,
   template: `
     <div class="card" [ngClass]="{ pinned: note()?.pinned, archived: note()?.archived }">
       @if (note()?.text) {
-        <p class="text">
-          {{ note()?.text }}
-        </p>
+        <p class="text">{{ note()?.text }}</p>
       }
       @if (note()?.links?.length) {
         <ul class="links">
@@ -54,9 +69,37 @@ import { NgClass } from '@angular/common';
           }
         </ul>
       }
+      <footer>
+        <div class="date">{{ note()?.createdAt | date: 'yyyy.MM.dd H:mm' }}</div>
+        <div class="actions">
+          <pk-icon-button tooltip="Edit" (onClick)="edit.emit(note()?.id!)">
+            <ng-icon name="tablerEdit" size="1rem" />
+          </pk-icon-button>
+          <pk-icon-button
+            [tooltip]="note()?.pinned ? 'Unpin' : 'Pin'"
+            [disabled]="note()?.archived ?? false"
+            (onClick)="pin.emit(note()?.id!)">
+            <ng-icon [name]="note()?.pinned ? 'tablerPinnedOff' : 'tablerPinned'" size="1rem" />
+          </pk-icon-button>
+          <pk-icon-button
+            [tooltip]="note()?.archived ? 'Unarchive' : 'Archive'"
+            [disabled]="note()?.pinned ?? false"
+            (onClick)="archive.emit(note()?.id!)">
+            <ng-icon [name]="note()?.archived ? 'tablerArchiveOff' : 'tablerArchive'" size="1rem" />
+          </pk-icon-button>
+          <pk-icon-button tooltip="Delete" (onClick)="delete.emit(note()?.id!)">
+            <ng-icon name="tablerTrash" size="1rem" />
+          </pk-icon-button>
+        </div>
+      </footer>
     </div>
   `,
 })
 export class NoteComponent {
   public note = input<Note>();
+
+  public edit = output<UUID>();
+  public pin = output<UUID>();
+  public archive = output<UUID>();
+  public delete = output<UUID>();
 }

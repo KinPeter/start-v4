@@ -22,10 +22,10 @@ import { NoteComponent } from './note.component';
       <header>
         <h1>Notes</h1>
         <div class="actions">
-          <pk-icon-button>
+          <pk-icon-button tooltip="Create note">
             <ng-icon name="tablerTextPlus" size="1.2rem" />
           </pk-icon-button>
-          <pk-icon-button (onClick)="close()">
+          <pk-icon-button tooltip="Close" (onClick)="close()">
             <ng-icon name="tablerX" size="1.2rem" />
           </pk-icon-button>
         </div>
