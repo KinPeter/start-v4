@@ -14,6 +14,7 @@ import {
   tablerCreditCard,
   tablerDots,
   tablerEdit,
+  tablerLink,
   tablerLogout,
   tablerMoodSmileBeam,
   tablerNote,
@@ -24,6 +25,7 @@ import {
   tablerSquareX,
   tablerStar,
   tablerTemperatureSun,
+  tablerTextPlus,
   tablerTrash,
   tablerX,
 } from '@ng-icons/tabler-icons';
@@ -56,4 +58,6 @@ export const icons = {
   tablerEdit,
   tablerTrash,
   tablerCheck,
+  tablerTextPlus,
+  tablerLink,
 };

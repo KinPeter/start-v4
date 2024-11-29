@@ -4,11 +4,19 @@ import { PkButtonComponent } from '../common/pk-button.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { RandomBackgroundService } from './main-menu/random-background.service';
 import { ShortcutsComponent } from './shortcuts/shortcuts.component';
+import { WidgetsBarService } from './main-menu/widgets-bar.service';
+import { NotesComponent } from './notes/notes.component';
 
 @Component({
   selector: 'pk-main',
   standalone: true,
-  imports: [DrawerComponent, PkButtonComponent, MainMenuComponent, ShortcutsComponent],
+  imports: [
+    DrawerComponent,
+    PkButtonComponent,
+    MainMenuComponent,
+    ShortcutsComponent,
+    NotesComponent,
+  ],
   styles: `
     .main-content {
       width: 100%;
@@ -40,6 +48,11 @@ import { ShortcutsComponent } from './shortcuts/shortcuts.component';
   `,
   template: `
     <div class="main-content" [style.background-image]="imageUrl()">
+      <div class="widgets">
+        @if (widgets.notesOpen()) {
+          <pk-notes />
+        }
+      </div>
       <div
         class="open-menu-zone"
         (mouseenter)="handleMenuZoneEnter()"
@@ -55,7 +68,10 @@ export class MainComponent {
 
   private openMenuZoneTimer: ReturnType<typeof setTimeout> | undefined;
 
-  constructor(private randomBackgroundService: RandomBackgroundService) {
+  constructor(
+    private randomBackgroundService: RandomBackgroundService,
+    public widgets: WidgetsBarService
+  ) {
     this.imageUrl = this.randomBackgroundService.imageUrl;
   }
 

@@ -1,0 +1,34 @@
+div.pk-widget {
+  max-width: 370px;
+  width: 370px;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-default);
+  background-color: var(--color-bg);
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+
+    h1 {
+      margin: 0.25rem;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  main {
+    .loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      margin-top: 50%;
+    }
+  }
+}
