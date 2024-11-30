@@ -1,0 +1,42 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ci-cd:
+    name: Frontend CI/CD
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '>=22.5.1'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check code format
+        run: npm run format:check
+
+      - name: Lint all workspaces
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+        env:
+          PK_API_URL_PROD: ${{ secrets.PROD_API_URL }}
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/browser/
+          server-dir: ${{ secrets.FTP_FOLDER }}
