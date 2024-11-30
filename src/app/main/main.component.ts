@@ -4,10 +4,11 @@ import { RandomBackgroundService } from './main-menu/random-background.service';
 import { ShortcutsComponent } from './shortcuts/shortcuts.component';
 import { WidgetsBarService } from './main-menu/widgets-bar.service';
 import { NotesComponent } from './notes/notes.component';
+import { PersonalDataComponent } from './personal-data/personal-data.component';
 
 @Component({
   selector: 'pk-main',
-  imports: [MainMenuComponent, ShortcutsComponent, NotesComponent],
+  imports: [MainMenuComponent, ShortcutsComponent, NotesComponent, PersonalDataComponent],
   styles: `
     .main-content {
       width: 100%;
@@ -36,12 +37,21 @@ import { NotesComponent } from './notes/notes.component';
         opacity: 0.3;
       }
     }
+
+    .widgets {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
   `,
   template: `
     <div class="main-content" [style.background-image]="imageUrl()">
       <div class="widgets">
         @if (widgets.notesOpen()) {
           <pk-notes />
+        }
+        @if (widgets.personalDataOpen()) {
+          <pk-personal-data />
         }
       </div>
       <div

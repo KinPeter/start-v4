@@ -63,10 +63,10 @@ import { PkButtonComponent } from '../../common/pk-button.component';
       @for (link of links; let idx = $index; track idx) {
         <div [formGroup]="link" class="link-form">
           <div class="inputs">
-            <pk-input width="100%">
+            <pk-input width="100%" [error]="hasError(idx, 'name') ? 'Name is required' : ''">
               <input pkInput title="Name" placeholder="Name" type="text" formControlName="name" />
             </pk-input>
-            <pk-input width="100%">
+            <pk-input width="100%" [error]="hasError(idx, 'url') ? 'Invalid URL' : ''">
               <input pkInput title="Url" placeholder="Url" type="text" formControlName="url" />
             </pk-input>
           </div>
@@ -145,5 +145,10 @@ export class NoteFormComponent {
   public removeLink(index: number): void {
     const links = this.form.get('links') as FormArray;
     links.removeAt(index);
+  }
+
+  public hasError(index: number, formControlName: string): boolean {
+    const control = (this.form?.get('links') as FormArray).at(index).get(formControlName);
+    return (control?.errors && (control?.dirty || !control?.untouched)) ?? false;
   }
 }

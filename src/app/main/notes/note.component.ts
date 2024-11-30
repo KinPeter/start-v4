@@ -3,29 +3,19 @@ import { Note, UUID } from '@kinpeter/pk-common';
 import { NgIcon } from '@ng-icons/core';
 import { DatePipe, NgClass } from '@angular/common';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
+import { PkCardDirective } from '../../common/pk-card.directive';
 
 @Component({
   selector: 'pk-note',
-  imports: [NgIcon, NgClass, PkIconButtonComponent, DatePipe],
+  imports: [NgIcon, NgClass, PkIconButtonComponent, DatePipe, PkCardDirective],
   providers: [],
   styles: `
     .card {
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-sm);
-      padding: 0.5rem;
-      background-color: var(--color-bg-lighter);
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
       white-space: pre-wrap;
 
       ul.links {
         list-style-type: none;
         margin-top: 0.35rem;
-      }
-
-      a {
-        color: var(--color-text-accent);
-        text-decoration: none;
       }
 
       &.pinned {
@@ -53,7 +43,7 @@ import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
     }
   `,
   template: `
-    <div class="card" [ngClass]="{ pinned: note()?.pinned, archived: note()?.archived }">
+    <div pkCard class="card" [ngClass]="{ pinned: note()?.pinned, archived: note()?.archived }">
       @if (note()?.text) {
         <p class="text">{{ note()?.text }}</p>
       }

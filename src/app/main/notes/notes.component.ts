@@ -30,6 +30,10 @@ import { parseError } from '../../utils/parse-error';
     .note-form {
       padding: 2px;
     }
+
+    main .loader {
+      margin-top: 30%;
+    }
   `,
   template: `
     <div pkWidget class="container">
