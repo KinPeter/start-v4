@@ -20,6 +20,7 @@ type Widgets = 'Cycling' | 'Notes' | 'Weather' | 'Birthdays' | 'Korean' | 'Perso
       padding: 0.5rem;
       cursor: pointer;
       border-radius: 50%;
+      position: relative;
 
       &:hover {
         color: var(--color-text);
@@ -33,16 +34,36 @@ type Widgets = 'Cycling' | 'Notes' | 'Weather' | 'Birthdays' | 'Korean' | 'Perso
         box-shadow: var(--focus-box-shadow);
       }
     }
+
+    .badge {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: var(--color-accent);
+      color: var(--color-white);
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+    }
   `,
   template: `
     <button type="button" [title]="widget()" [class.open]="open()" (click)="toggle.emit()">
       <ng-icon [name]="icon()" />
+      @if (badgeCount()) {
+        <div class="badge">{{ badgeCount() }}</div>
+      }
     </button>
   `,
 })
 export class WidgetToggleComponent {
   public open = input<boolean>(false);
   public widget = input<Widgets | undefined>();
+  public badgeCount = input<number | undefined>();
   public toggle = output<void>();
   public icon = computed(() => {
     switch (this.widget()) {

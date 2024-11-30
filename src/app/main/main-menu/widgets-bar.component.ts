@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { WidgetsBarService } from './widgets-bar.service';
 import { WidgetToggleComponent } from './widget-toggle.component';
+import { BirthdaysService } from '../birthdays/birthdays.service';
 
 @Component({
   selector: 'pk-widgets-bar',
@@ -29,6 +30,7 @@ import { WidgetToggleComponent } from './widget-toggle.component';
       <pk-widget-toggle
         widget="Birthdays"
         [open]="service.birthdaysOpen()"
+        [badgeCount]="birthdayCount()"
         (toggle)="service.toggleBirthdays()" />
       <pk-widget-toggle
         widget="Korean"
@@ -42,5 +44,12 @@ import { WidgetToggleComponent } from './widget-toggle.component';
   `,
 })
 export class WidgetsBarComponent {
-  constructor(public service: WidgetsBarService) {}
+  public birthdayCount: Signal<number | undefined>;
+
+  constructor(
+    public service: WidgetsBarService,
+    private birthdaysService: BirthdaysService
+  ) {
+    this.birthdayCount = this.birthdaysService.hasBirthdaysToday;
+  }
 }

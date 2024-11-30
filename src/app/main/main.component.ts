@@ -5,10 +5,17 @@ import { ShortcutsComponent } from './shortcuts/shortcuts.component';
 import { WidgetsBarService } from './main-menu/widgets-bar.service';
 import { NotesComponent } from './notes/notes.component';
 import { PersonalDataComponent } from './personal-data/personal-data.component';
+import { BirthdaysComponent } from './birthdays/birthdays.component';
 
 @Component({
   selector: 'pk-main',
-  imports: [MainMenuComponent, ShortcutsComponent, NotesComponent, PersonalDataComponent],
+  imports: [
+    MainMenuComponent,
+    ShortcutsComponent,
+    NotesComponent,
+    PersonalDataComponent,
+    BirthdaysComponent,
+  ],
   styles: `
     .main-content {
       width: 100%;
@@ -52,6 +59,9 @@ import { PersonalDataComponent } from './personal-data/personal-data.component';
         }
         @if (widgets.personalDataOpen()) {
           <pk-personal-data />
+        }
+        @if (widgets.birthdaysOpen()) {
+          <pk-birthdays />
         }
       </div>
       <div
