@@ -28,8 +28,9 @@ button {
   background: none;
   cursor: pointer;
   color: var(--color-text);
+}
 
-  &:focus-visible {
-    box-shadow: var(--focus-box-shadow);
-  }
+*:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-box-shadow);
 }

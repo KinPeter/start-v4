@@ -152,9 +152,7 @@ export type PkIconButtonVariant = 'default' | 'filled' | 'outline' | 'subtle' | 
       (mouseup)="pressed.set(false)"
       (keydown.enter)="pressed.set(true)"
       (keydown.space)="pressed.set(true)"
-      (keyup)="pressed.set(false)"
-      (keyup.enter)="onClick.emit()"
-      (keyup.space)="onClick.emit()">
+      (keyup)="pressed.set(false)">
       <ng-content></ng-content>
     </button>
   `,

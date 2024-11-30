@@ -20,6 +20,13 @@ export type PkButtonVariant = 'default' | 'filled' | 'outline' | 'link' | 'subtl
         display: block;
         cursor: pointer;
 
+        &.icon-prefix {
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+          padding-left: 1rem;
+        }
+
         &:hover {
           background-color: var(--color-border);
         }
@@ -125,6 +132,7 @@ export type PkButtonVariant = 'default' | 'filled' | 'outline' | 'link' | 'subtl
       [ngClass]="{
         pressed: pressed(),
         loading: loading(),
+        'icon-prefix': iconPrefix(),
       }"
       [ngStyle]="{
         width: size() ? size() : 'auto',
@@ -134,9 +142,7 @@ export type PkButtonVariant = 'default' | 'filled' | 'outline' | 'link' | 'subtl
       (mouseup)="pressed.set(false)"
       (keydown.enter)="pressed.set(true)"
       (keydown.space)="pressed.set(true)"
-      (keyup)="pressed.set(false)"
-      (keyup.enter)="onClick.emit()"
-      (keyup.space)="onClick.emit()">
+      (keyup)="pressed.set(false)">
       @if (loading()) {
         <pk-loader [size]="'sm'" />
       } @else {
@@ -151,6 +157,7 @@ export class PkButtonComponent {
   public loading = input(false);
   public variant = input<PkButtonVariant>('default');
   public size = input('');
+  public iconPrefix = input(false);
 
   public pressed = signal(false);
 

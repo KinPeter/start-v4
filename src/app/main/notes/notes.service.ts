@@ -66,10 +66,10 @@ export class NotesService extends Store<NotesState> {
     );
   }
 
-  public updateNote(note: Note): Observable<Note> {
+  public updateNote(id: UUID, note: NoteRequest): Observable<Note> {
     this.setState({ loading: true });
     const request = omit(note, ['createdAt', 'userId', 'id']);
-    return this.apiService.put<NoteRequest, Note>(ApiRoutes.NOTES + `/${note.id}`, request).pipe(
+    return this.apiService.put<NoteRequest, Note>(ApiRoutes.NOTES + `/${id}`, request).pipe(
       tap({
         next: () => this.setState({ loading: false }),
         error: () => this.setState({ loading: false }),

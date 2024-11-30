@@ -23,12 +23,15 @@ div.pk-widget {
   }
 
   main {
+    max-height: calc(100vh - 130px);
+    overflow-y: auto;
+
     .loader {
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100%;
-      margin-top: 50%;
+      margin-top: 30%;
     }
   }
 }
