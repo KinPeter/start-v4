@@ -103,7 +103,7 @@ import { NgIcon } from '@ng-icons/core';
     }
   `,
   template: `
-    <div class="backdrop" [class.open]="open()"></div>
+    <div class="backdrop" [class.open]="open()" (click)="onClose.emit()"></div>
     <div class="drawer" [class.open]="open()" [class.enabled]="enabled()" [class]="size()">
       <div class="header">
         <h1>{{ name() }}</h1>

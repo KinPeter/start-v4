@@ -19,49 +19,76 @@ import { BirthdaysComponent } from './birthdays/birthdays.component';
   styles: `
     .main-content {
       width: 100%;
-      height: 100vh;
+      height: calc(100vh - 60px);
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       gap: 1rem;
       overflow-y: auto;
-      padding: 1rem;
+      padding: 0;
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
+
+      @media screen and (min-width: 420px) {
+        padding: 1rem;
+        height: 100vh;
+      }
     }
 
     .open-menu-zone {
-      width: 30px;
-      height: 30px;
+      width: 0;
+      height: 100vh;
       position: fixed;
       top: 0;
       left: 0;
-      border-bottom-right-radius: 50%;
+
+      @media screen and (min-width: 420px) {
+        width: 1rem;
+      }
 
       &:hover {
         background-color: var(--color-primary);
-        opacity: 0.3;
+        opacity: 0.2;
       }
     }
 
     .widgets {
       width: 100%;
+      max-height: 100vh;
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      > div {
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
     }
   `,
   template: `
     <div class="main-content" [style.background-image]="imageUrl()">
       <div class="widgets">
         @if (widgets.notesOpen()) {
-          <pk-notes />
+          <div class="left">
+            @if (widgets.notesOpen()) {
+              <pk-notes />
+            }
+          </div>
         }
-        @if (widgets.personalDataOpen()) {
-          <pk-personal-data />
-        }
-        @if (widgets.birthdaysOpen()) {
-          <pk-birthdays />
+        @if (widgets.personalDataOpen() || widgets.birthdaysOpen()) {
+          <div class="right">
+            @if (widgets.personalDataOpen()) {
+              <pk-personal-data />
+            }
+            @if (widgets.birthdaysOpen()) {
+              <pk-birthdays />
+            }
+          </div>
         }
       </div>
       <div

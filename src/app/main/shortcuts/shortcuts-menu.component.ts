@@ -13,7 +13,7 @@ import { NotificationService } from '../../services/notification.service';
     .shortcuts-menu {
       width: 320px;
       height: 52px;
-      position: absolute;
+      position: fixed;
       bottom: 0;
       left: calc(100vw / 2 - 320px / 2);
       background-color: var(--color-bg);
