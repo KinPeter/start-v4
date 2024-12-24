@@ -6,6 +6,7 @@ import { WidgetsBarService } from './main-menu/widgets-bar.service';
 import { NotesComponent } from './notes/notes.component';
 import { PersonalDataComponent } from './personal-data/personal-data.component';
 import { BirthdaysComponent } from './birthdays/birthdays.component';
+import { WeatherComponent } from './weather/weather.component';
 
 @Component({
   selector: 'pk-main',
@@ -15,6 +16,7 @@ import { BirthdaysComponent } from './birthdays/birthdays.component';
     NotesComponent,
     PersonalDataComponent,
     BirthdaysComponent,
+    WeatherComponent,
   ],
   styles: `
     .main-content {
@@ -68,6 +70,14 @@ import { BirthdaysComponent } from './birthdays/birthdays.component';
         flex-direction: column;
         gap: 1rem;
       }
+
+      .left {
+        flex-wrap: wrap;
+      }
+
+      .right {
+        flex-wrap: wrap-reverse;
+      }
     }
   `,
   template: `
@@ -80,8 +90,11 @@ import { BirthdaysComponent } from './birthdays/birthdays.component';
             }
           </div>
         }
-        @if (widgets.personalDataOpen() || widgets.birthdaysOpen()) {
+        @if (widgets.personalDataOpen() || widgets.birthdaysOpen() || widgets.weatherOpen()) {
           <div class="right">
+            @if (widgets.weatherOpen()) {
+              <pk-weather />
+            }
             @if (widgets.personalDataOpen()) {
               <pk-personal-data />
             }
