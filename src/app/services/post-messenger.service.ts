@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { SettingsStore } from '../main/settings/settings.store';
+import { NotificationService } from './notification.service';
 
 function isSafeOrigin(url: string): boolean {
   const localUrl = /^http:\/\/localhost:\d{4}$/;
@@ -15,7 +16,10 @@ const START_CONTEXT = 'START_V4';
 export class PostMessengerService {
   private weatherIframe = signal<Window | null>(null);
 
-  constructor(private settingsStore: SettingsStore) {
+  constructor(
+    private settingsStore: SettingsStore,
+    private notificationService: NotificationService
+  ) {
     console.log('[HOST] PostMessengerService is UP');
     window.addEventListener('message', event => {
       if (
@@ -30,6 +34,13 @@ export class PostMessengerService {
       switch (event.data.topic) {
         case 'weather.handshake':
           this.handleWeatherIframe();
+          break;
+        case 'weather.errorNotification':
+          this.notificationService.showError(event.data.payload);
+          break;
+        case 'weather.infoNotification':
+          this.notificationService.showInfo(event.data.payload);
+          break;
       }
     });
   }
