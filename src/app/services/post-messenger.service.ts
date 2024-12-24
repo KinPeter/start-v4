@@ -4,7 +4,7 @@ import { NotificationService } from './notification.service';
 
 function isSafeOrigin(url: string): boolean {
   const localUrl = /^http:\/\/localhost:\d{4}$/;
-  const prodUrl = /^https:\/\/[a-zA-Z]{3,10}\.p-kin\.com$/;
+  const prodUrl = /^https:\/\/[a-zA-Z0-9]{3,10}\.p-kin\.com$/;
 
   const isLocal = localUrl.test(window.location.origin);
   return isLocal ? localUrl.test(url) : prodUrl.test(url);
