@@ -41,7 +41,11 @@ import { PostMessengerService } from '../../services/post-messenger.service';
         </div>
       </header>
       <main>
-        <iframe [src]="iframeSrc()" title="Weather iframe" #weatherFrame></iframe>
+        <iframe
+          [src]="iframeSrc()"
+          title="Weather iframe"
+          allow="geolocation *"
+          #weatherFrame></iframe>
       </main>
     </div>
   `,
