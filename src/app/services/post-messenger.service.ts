@@ -1,6 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { SettingsStore } from '../main/settings/settings.store';
 import { NotificationService } from './notification.service';
+import { WeatherUpdate } from '../main/weather/weather.types';
 
 function isSafeOrigin(url: string): boolean {
   const localUrl = /^http:\/\/localhost:\d{4}$/;
@@ -14,7 +15,10 @@ const START_CONTEXT = 'START_V4';
 
 @Injectable({ providedIn: 'root' })
 export class PostMessengerService {
+  public weatherUpdate = computed(() => this.weatherUpdateContent());
+
   private weatherIframe = signal<Window | null>(null);
+  private weatherUpdateContent = signal<WeatherUpdate | null>(null);
 
   constructor(
     private settingsStore: SettingsStore,
@@ -40,6 +44,9 @@ export class PostMessengerService {
           break;
         case 'weather.infoNotification':
           this.notificationService.showInfo(event.data.payload);
+          break;
+        case 'weather.update':
+          this.weatherUpdateContent.set(event.data.payload);
           break;
       }
     });

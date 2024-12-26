@@ -5,6 +5,7 @@ import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { WidgetsBarService } from '../main-menu/widgets-bar.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PostMessengerService } from '../../services/post-messenger.service';
+import { WeatherService } from './weather.service';
 
 @Component({
   selector: 'pk-weather',
@@ -32,7 +33,7 @@ import { PostMessengerService } from '../../services/post-messenger.service';
       <header>
         <h1>Weather</h1>
         <div class="actions">
-          <pk-icon-button tooltip="Refresh" (onClick)="refresh()">
+          <pk-icon-button [tooltip]="updatedText()" (onClick)="refresh()">
             <ng-icon name="tablerRefresh" size="1.2rem" />
           </pk-icon-button>
           <pk-icon-button tooltip="Close" (onClick)="close()">
@@ -53,10 +54,12 @@ import { PostMessengerService } from '../../services/post-messenger.service';
 export class WeatherComponent implements AfterViewInit {
   public iframeSrc: Signal<SafeResourceUrl>;
   public iframe = viewChild.required<ElementRef<HTMLIFrameElement>>('weatherFrame');
+  public updatedText: Signal<string>;
 
   constructor(
     private widgetsBarService: WidgetsBarService,
     private postMessengerService: PostMessengerService,
+    private weatherService: WeatherService,
     private sanitizer: DomSanitizer
   ) {
     this.iframeSrc = computed(() => {
@@ -65,6 +68,7 @@ export class WeatherComponent implements AfterViewInit {
         : 'https://weather.p-kin.com/';
       return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     });
+    this.updatedText = this.weatherService.updatedText;
   }
 
   ngAfterViewInit() {
