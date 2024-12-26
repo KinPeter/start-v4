@@ -40,7 +40,7 @@ import { WeatherComponent } from './weather/weather.component';
 
     .open-menu-zone {
       width: 0;
-      height: 100vh;
+      height: 65vh;
       position: fixed;
       top: 0;
       left: 0;
