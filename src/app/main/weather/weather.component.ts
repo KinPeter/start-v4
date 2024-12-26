@@ -12,7 +12,7 @@ import { PostMessengerService } from '../../services/post-messenger.service';
   providers: [],
   styles: `
     .container {
-      height: 660px;
+      height: 632px;
     }
 
     main {
