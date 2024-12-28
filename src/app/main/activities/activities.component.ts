@@ -56,7 +56,12 @@ import { NgOptimizedImage } from '@angular/common';
         } @else if (needAuth()) {
           <div class="connect">
             <a [href]="stravaOauthUrl()">
-              <img ngSrc="assets/connect.png" alt="Connect with Strava" height="48" width="193" />
+              <img
+                ngSrc="assets/connect.png"
+                priority
+                alt="Connect with Strava"
+                height="48"
+                width="193" />
             </a>
           </div>
         } @else {

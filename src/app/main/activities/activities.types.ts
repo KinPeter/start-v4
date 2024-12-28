@@ -55,7 +55,7 @@ export interface StravaActivityResponse {
   total_elevation_gain: number; // meters
 }
 
-export interface StravaRideStats {
+export interface StravaActivityStats {
   achievementCount?: number;
   activityCount: number;
   distance: number; // kilometers
@@ -74,11 +74,13 @@ export interface StravaAthleteData {
   id: number;
   primaryBike: StravaBikeData;
   longestRideEver: number; // kilometers
-  allRideTotals: StravaRideStats;
-  ytdRideTotals: StravaRideStats;
-  recentRideTotals: StravaRideStats;
-  thisWeek: StravaRideStats;
-  thisMonth: StravaRideStats;
+  allRideTotals: StravaActivityStats;
+  ytdRideTotals: StravaActivityStats;
+  recentRideTotals: StravaActivityStats;
+  rideThisWeek: StravaActivityStats;
+  rideThisMonth: StravaActivityStats;
+  walkThisWeek: StravaActivityStats;
+  walkThisMonth: StravaActivityStats;
 }
 
 export type CyclingWidget = 'stats' | 'goals' | 'chores';

@@ -16,7 +16,13 @@ import {
   StravaAthleteStatsResponse,
   StravaAuthResponse,
 } from './activities.types';
-import { convertRideStats, getPrimaryBikeData, getStats, metersToKms } from './activities.utils';
+import {
+  convertRideStats,
+  getPrimaryBikeData,
+  getRideStats,
+  getWalkStats,
+  metersToKms,
+} from './activities.utils';
 
 interface StravaApiState {
   loading: boolean;
@@ -233,7 +239,8 @@ export class StravaApiService extends LocalStore<StravaApiState> {
         }),
         tap({
           next: res => {
-            newData.thisMonth = getStats(res);
+            newData.rideThisMonth = getRideStats(res);
+            newData.walkThisMonth = getWalkStats(res);
           },
           error: () => {
             this.notificationService.showError(
@@ -257,7 +264,8 @@ export class StravaApiService extends LocalStore<StravaApiState> {
         }),
         tap({
           next: res => {
-            newData.thisWeek = getStats(res);
+            newData.rideThisWeek = getRideStats(res);
+            newData.walkThisWeek = getWalkStats(res);
           },
           error: () => {
             this.notificationService.showError(

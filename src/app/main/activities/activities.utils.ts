@@ -2,7 +2,7 @@ import {
   StravaActivityResponse,
   StravaBikeData,
   StravaBikeDataResponse,
-  StravaRideStats,
+  StravaActivityStats,
   StravaRideStatsResponse,
 } from './activities.types';
 
@@ -14,7 +14,7 @@ export function secondsToHours(seconds: number): number {
   return Math.round((seconds / 60 / 60) * 10) / 10;
 }
 
-export function convertRideStats(res: StravaRideStatsResponse): StravaRideStats {
+export function convertRideStats(res: StravaRideStatsResponse): StravaActivityStats {
   return {
     achievementCount: res.achievement_count,
     activityCount: res.count,
@@ -43,17 +43,26 @@ export function getPrimaryBikeData(bikes: StravaBikeDataResponse[]): StravaBikeD
   return convertBikeData(primaryBike);
 }
 
-export function getStats(activities: StravaActivityResponse[]): StravaRideStats {
+export function getRideStats(activities: StravaActivityResponse[]): StravaActivityStats {
   const rides = activities.filter(({ sport_type }) =>
     ['Ride', 'MountainBikeRide', 'VirtualRide', 'EBikeRide', 'GravelRide'].includes(sport_type)
   );
-  const statsBase: StravaRideStats = {
-    activityCount: rides.length,
+  return getStats(rides);
+}
+
+export function getWalkStats(activities: StravaActivityResponse[]): StravaActivityStats {
+  const walks = activities.filter(({ sport_type }) => sport_type === 'Walk');
+  return getStats(walks);
+}
+
+export function getStats(activities: StravaActivityResponse[]): StravaActivityStats {
+  const statsBase: StravaActivityStats = {
+    activityCount: activities.length,
     movingTime: 0,
     elevationGain: 0,
     distance: 0,
   };
-  const stats = rides.reduce((acc, { total_elevation_gain, moving_time, distance }) => {
+  const stats = activities.reduce((acc, { total_elevation_gain, moving_time, distance }) => {
     return {
       ...acc,
       movingTime: acc.movingTime + moving_time,
