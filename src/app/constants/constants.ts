@@ -5,6 +5,6 @@ export enum StoreKeys {
   BIRTHDAYS = 'pk-start-birthdays',
   KOREAN = 'pk-start-korean',
   LOCATION = 'pk-start-location',
-  CYCLING = 'pk-start-cycling',
-  STRAVA_AUTH = 'pk-start-strava-auth',
+  ACTIVITIES = 'pk-start-activities',
+  STRAVA = 'pk-start-strava',
 }

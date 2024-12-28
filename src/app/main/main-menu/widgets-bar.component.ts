@@ -20,9 +20,9 @@ import { BirthdaysService } from '../birthdays/birthdays.service';
         [open]="service.notesOpen()"
         (toggle)="service.toggleNotes()" />
       <pk-widget-toggle
-        widget="Cycling"
-        [open]="service.cyclingOpen()"
-        (toggle)="service.toggleCycling()" />
+        widget="Activities"
+        [open]="service.activitiesOpen()"
+        (toggle)="service.toggleActivities()" />
       <pk-widget-toggle
         widget="Personal Data"
         [open]="service.personalDataOpen()"

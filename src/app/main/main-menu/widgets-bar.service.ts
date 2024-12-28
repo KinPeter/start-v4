@@ -1,5 +1,5 @@
 import { computed, Injectable } from '@angular/core';
-import { StoreKeys } from '../../constants/constants';
+import { StoreKeys } from '../../constants';
 import { LocalStore } from '../../utils/store';
 
 export interface WidgetsBarState {
@@ -8,7 +8,7 @@ export interface WidgetsBarState {
   birthdaysOpen: boolean;
   koreanOpen: boolean;
   personalDataOpen: boolean;
-  cyclingOpen: boolean;
+  activitiesOpen: boolean;
 }
 
 const initialState: WidgetsBarState = {
@@ -17,7 +17,7 @@ const initialState: WidgetsBarState = {
   notesOpen: true,
   weatherOpen: false,
   personalDataOpen: false,
-  cyclingOpen: false,
+  activitiesOpen: false,
 };
 
 @Injectable({ providedIn: 'root' })
@@ -31,7 +31,7 @@ export class WidgetsBarService extends LocalStore<WidgetsBarState> {
   public birthdaysOpen = computed(() => this.state().birthdaysOpen);
   public personalDataOpen = computed(() => this.state().personalDataOpen);
   public koreanOpen = computed(() => this.state().koreanOpen);
-  public cyclingOpen = computed(() => this.state().cyclingOpen);
+  public activitiesOpen = computed(() => this.state().activitiesOpen);
 
   public toggleWeather(): void {
     this.setState({ weatherOpen: !this.state().weatherOpen });
@@ -53,8 +53,8 @@ export class WidgetsBarService extends LocalStore<WidgetsBarState> {
     this.setState({ koreanOpen: !this.state().koreanOpen });
   }
 
-  public toggleCycling(): void {
-    this.setState({ cyclingOpen: !this.state().cyclingOpen });
+  public toggleActivities(): void {
+    this.setState({ activitiesOpen: !this.state().activitiesOpen });
   }
 
   public resetState(): void {

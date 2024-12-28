@@ -7,6 +7,7 @@ import { NotesComponent } from './notes/notes.component';
 import { PersonalDataComponent } from './personal-data/personal-data.component';
 import { BirthdaysComponent } from './birthdays/birthdays.component';
 import { WeatherComponent } from './weather/weather.component';
+import { ActivitiesComponent } from './activities/activities.component';
 
 @Component({
   selector: 'pk-main',
@@ -17,6 +18,7 @@ import { WeatherComponent } from './weather/weather.component';
     PersonalDataComponent,
     BirthdaysComponent,
     WeatherComponent,
+    ActivitiesComponent,
   ],
   styles: `
     .main-content {
@@ -83,10 +85,13 @@ import { WeatherComponent } from './weather/weather.component';
   template: `
     <div class="main-content" [style.background-image]="imageUrl()">
       <div class="widgets">
-        @if (widgets.notesOpen()) {
+        @if (widgets.notesOpen() || widgets.activitiesOpen()) {
           <div class="left">
             @if (widgets.notesOpen()) {
               <pk-notes />
+            }
+            @if (widgets.activitiesOpen()) {
+              <pk-activities />
             }
           </div>
         }
