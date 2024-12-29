@@ -6,6 +6,7 @@ import { WidgetsBarService } from '../main-menu/widgets-bar.service';
 import { StravaApiService } from './strava-api.service';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { NgOptimizedImage } from '@angular/common';
+import { ActivitiesService } from './activities.service';
 
 @Component({
   selector: 'pk-activities',
@@ -79,7 +80,8 @@ export class ActivitiesComponent {
 
   constructor(
     private widgetsBarService: WidgetsBarService,
-    private stravaApiService: StravaApiService
+    private stravaApiService: StravaApiService,
+    private activitiesService: ActivitiesService
   ) {
     this.disabled = this.stravaApiService.disabled;
     this.needAuth = this.stravaApiService.needAuth;
