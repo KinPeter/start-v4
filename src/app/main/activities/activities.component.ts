@@ -7,10 +7,20 @@ import { StravaApiService } from './strava-api.service';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { NgOptimizedImage } from '@angular/common';
 import { ActivitiesService } from './activities.service';
+import { StravaAthleteData } from './activities.types';
+import { Activities } from '@kinpeter/pk-common';
+import { ActivitiesWrapperComponent } from './activities-wrapper.component';
 
 @Component({
   selector: 'pk-activities',
-  imports: [PkWidgetDirective, NgIcon, PkIconButtonComponent, PkLoaderComponent, NgOptimizedImage],
+  imports: [
+    PkWidgetDirective,
+    NgIcon,
+    PkIconButtonComponent,
+    PkLoaderComponent,
+    NgOptimizedImage,
+    ActivitiesWrapperComponent,
+  ],
   providers: [],
   styles: `
     .container {
@@ -46,11 +56,7 @@ import { ActivitiesService } from './activities.service';
         </div>
       </header>
       <main>
-        @if (disabled()) {
-          <div class="not-available">
-            <p>Strava service is not available.</p>
-          </div>
-        } @else if (loading()) {
+        @if (loading()) {
           <div class="loader">
             <pk-loader size="sm" />
           </div>
@@ -65,8 +71,14 @@ import { ActivitiesService } from './activities.service';
                 width="193" />
             </a>
           </div>
+        } @else if (disabled() || !stravaData() || !activitiesData()) {
+          <div class="not-available">
+            <p>Strava service is not available.</p>
+          </div>
         } @else {
-          <p>Logged in!</p>
+          <pk-activities-wrapper
+            [stravaData]="stravaData()!"
+            [activitiesData]="activitiesData()!" />
         }
       </main>
     </div>
@@ -77,6 +89,8 @@ export class ActivitiesComponent {
   public needAuth: Signal<boolean>;
   public loading: Signal<boolean>;
   public stravaOauthUrl: Signal<string>;
+  public stravaData: Signal<StravaAthleteData | null>;
+  public activitiesData: Signal<Activities | null>;
 
   constructor(
     private widgetsBarService: WidgetsBarService,
@@ -87,6 +101,8 @@ export class ActivitiesComponent {
     this.needAuth = this.stravaApiService.needAuth;
     this.loading = this.stravaApiService.loading;
     this.stravaOauthUrl = this.stravaApiService.stravaOauthUrl;
+    this.stravaData = this.stravaApiService.data;
+    this.activitiesData = this.activitiesService.data;
   }
 
   public close(): void {

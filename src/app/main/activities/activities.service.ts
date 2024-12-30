@@ -1,4 +1,4 @@
-import { effect, Injectable, untracked } from '@angular/core';
+import { computed, effect, Injectable, untracked } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { NotificationService } from '../../services/notification.service';
 import { LocalStore } from '../../utils/store';
@@ -30,17 +30,9 @@ export class ActivitiesService extends LocalStore<ActivitiesState> {
         untracked(() => this.fetchActivitiesData());
       }
     });
-
-    effect(() => {
-      const stravaData = this.stravaApiService.data();
-      const activities = this.state().data;
-      if (stravaData && activities) {
-        untracked(() => {
-          console.log('do something ', stravaData, activities);
-        });
-      }
-    });
   }
+
+  public data = computed(() => this.state().data);
 
   public fetchActivitiesData(): void {
     this.setState({ loading: true });
