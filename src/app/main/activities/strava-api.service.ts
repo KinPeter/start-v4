@@ -1,6 +1,5 @@
-import { computed, Injectable } from '@angular/core';
+import { computed, effect, Injectable, untracked } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
@@ -60,27 +59,32 @@ export class StravaApiService extends LocalStore<StravaApiState> {
     private router: Router
   ) {
     super(StoreKeys.STRAVA, initialState);
-    toObservable(this.settingsStore.stravaSettings).subscribe(settings => {
-      if (!settings.stravaClientId || !settings.stravaClientSecret) {
-        this.setState({
-          loading: false,
-          disabled: true,
-          accessToken: null,
-          refreshToken: null,
-          tokenExpiresAt: null,
-          athleteId: null,
-          data: null,
-        });
-        return;
-      }
-      if (this.state().accessToken && !this.isLoggedInToStrava) {
-        this.refreshStravaToken().subscribe();
-      } else if (!this.state().accessToken) {
-        this.setState({ disabled: false, needAuth: true, loading: false, data: null });
-      } else if (this.isLoggedInToStrava) {
-        this.setState({ disabled: false, needAuth: false, loading: false });
-        this.fetchStravaData();
-      }
+    effect(() => {
+      const { stravaClientId, stravaClientSecret } = this.settingsStore.stravaSettings();
+      untracked(() => {
+        if (!stravaClientId || !stravaClientSecret) {
+          this.setState({
+            loading: false,
+            disabled: true,
+            accessToken: null,
+            refreshToken: null,
+            tokenExpiresAt: null,
+            athleteId: null,
+            data: null,
+          });
+          return;
+        }
+        if (this.state().accessToken && !this.isLoggedInToStrava()) {
+          this.refreshStravaToken().subscribe(() => {
+            this.fetchStravaData();
+          });
+        } else if (!this.state().accessToken) {
+          this.setState({ disabled: false, needAuth: true, loading: false, data: null });
+        } else if (this.isLoggedInToStrava()) {
+          this.setState({ disabled: false, needAuth: false, loading: false });
+          this.fetchStravaData();
+        }
+      });
     });
 
     this.route.queryParams.subscribe(params => {
@@ -107,22 +111,22 @@ export class StravaApiService extends LocalStore<StravaApiState> {
     return `${this.stravaAuthBaseUrl}?client_id=${stravaClientId}&redirect_uri=${redirectUri}&response_type=code&scope=read_all,activity:read_all,profile:read_all`;
   });
 
+  public isLoggedInToStrava = computed(() => {
+    const { accessToken, tokenExpiresAt } = this.state();
+    if (!accessToken || !tokenExpiresAt) return false;
+    const now = new Date();
+    const expiry = new Date(tokenExpiresAt * 1000);
+    return now < expiry;
+  });
+
   public fetchStravaData(): void {
-    if (!this.isLoggedInToStrava) {
+    if (!this.isLoggedInToStrava()) {
       this.refreshStravaToken().subscribe(() => {
         this.getAthleteData();
       });
     } else {
       this.getAthleteData();
     }
-  }
-
-  private get isLoggedInToStrava(): boolean {
-    const { accessToken, tokenExpiresAt } = this.state();
-    if (!accessToken || !tokenExpiresAt) return false;
-    const now = new Date();
-    const expiry = new Date(tokenExpiresAt * 1000);
-    return now < expiry;
   }
 
   private exchangeOauthCodeToToken(code: string): Observable<StravaAuthResponse | null> {

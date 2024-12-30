@@ -26,7 +26,7 @@ export class ActivitiesService extends LocalStore<ActivitiesState> {
   ) {
     super(StoreKeys.ACTIVITIES, initialState);
     effect(() => {
-      if (!this.stravaApiService.needAuth() && !this.stravaApiService.disabled()) {
+      if (this.stravaApiService.isLoggedInToStrava()) {
         untracked(() => this.fetchActivitiesData());
       }
     });
