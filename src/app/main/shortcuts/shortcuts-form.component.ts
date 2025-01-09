@@ -92,7 +92,7 @@ export class ShortcutsFormComponent {
   public save = output<ShortcutRequest>();
   public form: FormGroup;
   public categories = Object.values(ShortcutCategory);
-  public priorities = [1, 2, 3, 4, 5];
+  public priorities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   constructor(private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
