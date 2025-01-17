@@ -1,6 +1,6 @@
 import { computed, Injectable } from '@angular/core';
-import { ShortcutRequest, Shortcut, IdObject, UUID } from '@kinpeter/pk-common';
-import { ShortcutCategory, ApiRoutes } from '../../constants';
+import { ShortcutRequest, Shortcut, ShortcutCategory, IdObject, UUID } from '@kinpeter/pk-common';
+import { ApiRoutes } from '../../constants';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Store } from '../../utils/store';

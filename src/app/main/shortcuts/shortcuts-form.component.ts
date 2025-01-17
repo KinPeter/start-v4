@@ -4,8 +4,7 @@ import { PkInputDirective } from '../../common/pk-input.directive';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PkButtonComponent } from '../../common/pk-button.component';
 import { CustomValidators } from '../../utils/validators';
-import { ShortcutCategory } from '../../constants';
-import { Shortcut, ShortcutRequest } from '@kinpeter/pk-common';
+import { Shortcut, ShortcutCategory, ShortcutRequest } from '@kinpeter/pk-common';
 
 @Component({
   selector: 'pk-shortcuts-form',

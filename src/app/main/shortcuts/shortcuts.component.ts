@@ -1,9 +1,9 @@
 import { Component, output, Signal, signal, WritableSignal } from '@angular/core';
 import { ShortcutComponent } from './shortcut.component';
 import { ShortcutsService } from './shortcuts.service';
-import { ShortcutCategory } from '../../constants';
 import { ShortcutsByCategory } from './shortcuts.types';
 import { ShortcutsMenuComponent } from './shortcuts-menu.component';
+import { ShortcutCategory } from '@kinpeter/pk-common';
 
 @Component({
   selector: 'pk-shortcuts',

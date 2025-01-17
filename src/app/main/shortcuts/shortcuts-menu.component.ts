@@ -1,9 +1,9 @@
 import { Component, output, Signal } from '@angular/core';
-import { ShortcutCategory } from '../../constants';
 import { ShortcutsService } from './shortcuts.service';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { NgIcon } from '@ng-icons/core';
 import { NotificationService } from '../../services/notification.service';
+import { ShortcutCategory } from '@kinpeter/pk-common';
 
 @Component({
   selector: 'pk-shortcuts-menu',

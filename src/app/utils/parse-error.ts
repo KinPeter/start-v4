@@ -1,4 +1,4 @@
-import { ApiError, ApiErrorMap } from '../constants';
+import { ApiError, ApiErrorMap } from '@kinpeter/pk-common';
 
 // eslint-disable-next-line
 export function parseError(e: any): string {

@@ -1,5 +1,4 @@
-import { Shortcut, UUID } from '@kinpeter/pk-common';
-import { ShortcutCategory } from '../../constants';
+import { Shortcut, ShortcutCategory, UUID } from '@kinpeter/pk-common';
 import { ShortcutsByCategory } from './shortcuts.types';
 
 export function distributeShortcuts(shortcuts: Shortcut[]): {

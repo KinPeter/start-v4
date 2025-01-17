@@ -9,7 +9,7 @@ import { NgStyle } from '@angular/common';
 import { PkInputDirective } from '../common/pk-input.directive';
 import { PkInputComponent } from '../common/pk-input.component';
 import { PkButtonComponent } from '../common/pk-button.component';
-import { LOGIN_CODE_REGEX } from '../constants/regex';
+import { LOGIN_CODE_REGEX } from '@kinpeter/pk-common';
 
 @Component({
   selector: 'pk-auth',
@@ -95,7 +95,7 @@ export class AuthComponent {
   public loginCode = signal('');
   public password = signal('');
   public step = signal(0);
-  public usePassword = signal(true);
+  public usePassword = signal(false);
   public loading = signal(false);
   public hasEmailSaved = computed(() => !!this.authStore.email());
   public emailInvalid = computed(() => !this.email().includes('@'));

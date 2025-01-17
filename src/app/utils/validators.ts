@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { FLEXIBLE_URL_REGEX } from '../constants/regex';
+import { FLEXIBLE_URL_REGEX } from '@kinpeter/pk-common';
 
 export const STRICT_URL_REGEX = new RegExp(
   // eslint-disable-next-line

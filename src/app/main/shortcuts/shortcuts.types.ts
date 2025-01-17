@@ -1,4 +1,3 @@
-import { Shortcut } from '@kinpeter/pk-common';
-import { ShortcutCategory } from '../../constants';
+import { Shortcut, ShortcutCategory } from '@kinpeter/pk-common';
 
 export type ShortcutsByCategory = Record<ShortcutCategory, Shortcut[]>;
