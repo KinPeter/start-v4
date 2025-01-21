@@ -3,18 +3,26 @@ import { StravaAthleteData } from './activities.types';
 import { Activities } from '@kinpeter/pk-common';
 import { ActivitiesMenuComponent } from './activities-menu.component';
 import { ChoresComponent } from './chores.component';
-import { CyclingCardComponent } from './cycling-card.component';
-import { WalkCardComponent } from './walk-card.component';
+import { CyclingGoalsCardComponent } from './cycling-goals-card.component';
+import { WalkGoalsCardComponent } from './walk-goals-card.component';
+import { CyclingStatsCardComponent } from './cycling-stats-card.component';
 
 @Component({
   selector: 'pk-activities-wrapper',
-  imports: [ActivitiesMenuComponent, ChoresComponent, CyclingCardComponent, WalkCardComponent],
+  imports: [
+    ActivitiesMenuComponent,
+    ChoresComponent,
+    CyclingGoalsCardComponent,
+    WalkGoalsCardComponent,
+    CyclingStatsCardComponent,
+  ],
   providers: [],
   styles: ``,
   template: `
     <pk-activities-menu />
-    <pk-walk-card [stravaData]="stravaData()!" [activitiesData]="activitiesData()!" />
-    <pk-cycling-card [stravaData]="stravaData()!" [activitiesData]="activitiesData()!" />
+    <pk-walk-goals-card [stravaData]="stravaData()!" [activitiesData]="activitiesData()!" />
+    <pk-cycling-goals-card [stravaData]="stravaData()!" [activitiesData]="activitiesData()!" />
+    <pk-cycling-stats-card [stravaData]="stravaData()!" />
     <pk-chores [stravaData]="stravaData()!" [chores]="activitiesData()!.chores ?? []" />
   `,
 })

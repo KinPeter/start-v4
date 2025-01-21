@@ -8,6 +8,7 @@ import { Component, input, computed } from '@angular/core';
       div {
         display: inline-block;
       }
+
       .progress-circle {
         transform: rotate(-90deg); /* Start the progress from the top */
       }
@@ -61,7 +62,7 @@ import { Component, input, computed } from '@angular/core';
           [attr.y]="radius() + strokeWidth() / 2"
           [attr.font-size]="fontSize() + 'em'"
           class="percentage-text">
-          {{ percentage() }}%
+          {{ roundedPercentage() }}%
         </text>
       </svg>
     </div>
@@ -70,6 +71,10 @@ import { Component, input, computed } from '@angular/core';
 export class CircularProgressComponent {
   public percentage = input.required<number>();
   public radius = input<number>(45);
+
+  public roundedPercentage = computed(() => {
+    return Math.round(this.percentage());
+  });
 
   public circumference = computed(() => {
     return 2 * Math.PI * this.radius();
