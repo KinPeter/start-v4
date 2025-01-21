@@ -4,7 +4,7 @@
   "description": "Web Frontend for PKStart",
   "scripts": {
     "ng": "ng",
-    "update:common": "npm install @kinpeter/pk-common && ./scripts/update-common.sh",
+    "update:common": "npm install @kinpeter/pk-common@latest",
     "start": "npm run setenv && ng serve --port 4444",
     "start:prod": "npm run setenv && ng serve --port 4444 --configuration production",
     "build": "npm run setenv && ng build",
@@ -14,8 +14,7 @@
     "lint": "ng lint",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "prepare": "husky",
-    "postinstall": "./scripts/update-common.sh"
+    "prepare": "husky"
   },
   "private": true,
   "engines": {
@@ -30,7 +29,7 @@
     "@angular/platform-browser": "^19.0.1",
     "@angular/platform-browser-dynamic": "^19.0.1",
     "@angular/router": "^19.0.1",
-    "@kinpeter/pk-common": "^1.0.21",
+    "@kinpeter/pk-common": "^1.0.23",
     "@ng-icons/core": "^29.0.0",
     "@ng-icons/tabler-icons": "^29.0.0",
     "date-fns": "^3.6.0",
