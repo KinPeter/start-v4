@@ -33,6 +33,7 @@ export class ActivitiesService extends LocalStore<ActivitiesState> {
   }
 
   public data = computed(() => this.state().data);
+  public loading = computed(() => this.state().loading);
 
   public fetchActivitiesData(): void {
     this.setState({ loading: true });

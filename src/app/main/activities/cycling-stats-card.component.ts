@@ -38,10 +38,8 @@ import { NgIcon } from '@ng-icons/core';
       }
 
       .title {
-        //color: var(--color-primary);
-
         td {
-          padding-top: 0.5rem;
+          padding-top: 0.35rem;
         }
       }
 
@@ -49,7 +47,7 @@ import { NgIcon } from '@ng-icons/core';
         border-bottom: 1px solid var(--color-border);
 
         td {
-          padding-bottom: 0.25rem;
+          padding-bottom: 0.2rem;
         }
       }
     }

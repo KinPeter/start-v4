@@ -1,7 +1,10 @@
 import {
+  tablerAlertTriangle,
   tablerAlphabetKorean,
   tablerArchive,
   tablerArchiveOff,
+  tablerBellCog,
+  tablerBellPlus,
   tablerBike,
   tablerBrandGoogle,
   tablerBrandWindows,
@@ -44,9 +47,12 @@ import {
 } from '@ng-icons/tabler-icons';
 
 export const icons = {
+  tablerAlertTriangle,
   tablerAlphabetKorean,
   tablerArchive,
   tablerArchiveOff,
+  tablerBellCog,
+  tablerBellPlus,
   tablerBike,
   tablerBrandGoogle,
   tablerBrandWindows,
