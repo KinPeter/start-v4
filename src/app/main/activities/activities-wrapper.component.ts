@@ -23,11 +23,13 @@ import { CyclingStatsCardComponent } from './cycling-stats-card.component';
     <pk-chores
       [stravaData]="stravaData()!"
       [chores]="activitiesData()!.chores ?? []"
-      (edit)="editChore.emit($event)" />
+      (edit)="editChore.emit($event)"
+      (delete)="deleteChore.emit($event)" />
   `,
 })
 export class ActivitiesWrapperComponent {
   public stravaData = input.required<StravaAthleteData>();
   public activitiesData = input.required<Activities>();
   public editChore = output<UUID>();
+  public deleteChore = output<UUID>();
 }

@@ -8,7 +8,13 @@ import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { NgOptimizedImage } from '@angular/common';
 import { ActivitiesService } from './activities.service';
 import { StravaAthleteData } from './activities.types';
-import { Activities, CyclingChore, UUID } from '@kinpeter/pk-common';
+import {
+  Activities,
+  CyclingChore,
+  CyclingChoreRequest,
+  SetGoalsRequest,
+  UUID,
+} from '@kinpeter/pk-common';
 import { ActivitiesWrapperComponent } from './activities-wrapper.component';
 import { ChoreFormComponent } from './chore-form.component';
 import { GoalsFormComponent } from './goals-form.component';
@@ -97,17 +103,20 @@ type ActivityView = 'home' | 'chore' | 'goals';
           <pk-activities-wrapper
             [stravaData]="stravaData()!"
             [activitiesData]="activitiesData()!"
-            (editChore)="handleEditChore($event)" />
+            (editChore)="handleEditChore($event)"
+            (deleteChore)="handleDeleteChore($event)" />
         } @else if (currentView() === 'chore') {
           <pk-chore-form
             [data]="choreToEdit()"
             [loading]="loading()"
-            (cancel)="handleCancelChore()" />
+            (cancel)="handleCancelChore()"
+            (save)="handleSaveChore($event)" />
         } @else if (currentView() === 'goals') {
           <pk-goals-form
             [data]="activitiesData()"
             [loading]="loading()"
-            (cancel)="currentView.set('home')" />
+            (cancel)="currentView.set('home')"
+            (save)="handleSaveGoals($event)" />
         }
       </main>
     </div>
@@ -144,14 +153,32 @@ export class ActivitiesComponent {
     this.stravaApiService.fetchStravaData();
   }
 
+  public handleSaveGoals(goals: SetGoalsRequest): void {
+    this.activitiesService.setGoals(goals);
+    this.currentView.set('home');
+  }
+
   public handleEditChore(id: UUID): void {
     const chore = this.activitiesData()?.chores?.find(chore => chore.id === id) ?? null;
     this.choreToEdit.set(chore);
     this.currentView.set('chore');
   }
 
+  public handleDeleteChore(id: UUID): void {
+    this.activitiesService.deleteChore(id);
+  }
+
   public handleCancelChore(): void {
     this.choreToEdit.set(null);
+    this.currentView.set('home');
+  }
+
+  public handleSaveChore(chore: CyclingChoreRequest): void {
+    if (this.choreToEdit()) {
+      this.activitiesService.editChore(this.choreToEdit()!.id, chore);
+    } else {
+      this.activitiesService.addNewChore(chore);
+    }
     this.currentView.set('home');
   }
 }

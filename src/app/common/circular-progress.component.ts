@@ -73,6 +73,9 @@ export class CircularProgressComponent {
   public radius = input<number>(45);
 
   public roundedPercentage = computed(() => {
+    if (this.percentage() === Infinity) {
+      return '-';
+    }
     return Math.round(this.percentage());
   });
 
@@ -89,7 +92,8 @@ export class CircularProgressComponent {
   });
 
   public dashOffset = computed(() => {
-    const clampedPercentage = Math.min(100, Math.max(0, this.percentage()));
+    const percentage = this.percentage() === Infinity ? 0 : this.percentage();
+    const clampedPercentage = Math.min(100, Math.max(0, percentage));
     return this.circumference() - (clampedPercentage / 100) * this.circumference();
   });
 }
