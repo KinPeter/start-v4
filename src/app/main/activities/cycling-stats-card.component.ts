@@ -60,24 +60,32 @@ import { NgIcon } from '@ng-icons/core';
         ({{ stravaData().primaryBike.distance }}km)
       </h3>
       <table>
-        <tr class="title">
-          <td>This month</td>
-        </tr>
-        <tr class="data">
-          <td><ng-icon name="tablerHash" /> {{ stravaData().rideThisMonth.activityCount }}</td>
-          <td><ng-icon name="tablerRoad" /> {{ stravaData().rideThisMonth.distance }}km</td>
-          <td><ng-icon name="tablerMountain" /> {{ stravaData().rideThisMonth.elevationGain }}m</td>
-          <td><ng-icon name="tablerClock" /> {{ stravaData().rideThisMonth.movingTime }}hrs</td>
-        </tr>
-        <tr class="title">
-          <td>This year</td>
-        </tr>
-        <tr class="data">
-          <td><ng-icon name="tablerHash" /> {{ stravaData().ytdRideTotals.activityCount }}</td>
-          <td><ng-icon name="tablerRoad" /> {{ stravaData().ytdRideTotals.distance }}km</td>
-          <td><ng-icon name="tablerMountain" /> {{ stravaData().ytdRideTotals.elevationGain }}m</td>
-          <td><ng-icon name="tablerClock" /> {{ stravaData().ytdRideTotals.movingTime }}hrs</td>
-        </tr>
+        @if (stravaData().rideThisMonth.activityCount > 0) {
+          <tr class="title">
+            <td>This month</td>
+          </tr>
+          <tr class="data">
+            <td><ng-icon name="tablerHash" /> {{ stravaData().rideThisMonth.activityCount }}</td>
+            <td><ng-icon name="tablerRoad" /> {{ stravaData().rideThisMonth.distance }}km</td>
+            <td>
+              <ng-icon name="tablerMountain" /> {{ stravaData().rideThisMonth.elevationGain }}m
+            </td>
+            <td><ng-icon name="tablerClock" /> {{ stravaData().rideThisMonth.movingTime }}hrs</td>
+          </tr>
+        }
+        @if (stravaData().ytdRideTotals.activityCount > 0) {
+          <tr class="title">
+            <td>This year</td>
+          </tr>
+          <tr class="data">
+            <td><ng-icon name="tablerHash" /> {{ stravaData().ytdRideTotals.activityCount }}</td>
+            <td><ng-icon name="tablerRoad" /> {{ stravaData().ytdRideTotals.distance }}km</td>
+            <td>
+              <ng-icon name="tablerMountain" /> {{ stravaData().ytdRideTotals.elevationGain }}m
+            </td>
+            <td><ng-icon name="tablerClock" /> {{ stravaData().ytdRideTotals.movingTime }}hrs</td>
+          </tr>
+        }
         <tr class="title">
           <td>All times</td>
         </tr>
