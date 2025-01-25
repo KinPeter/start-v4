@@ -53,6 +53,17 @@ import { PkLoaderComponent } from '../../common/pk-loader.component';
         align-items: center;
         justify-content: flex-start;
         gap: 0.5rem;
+        cursor: pointer;
+
+        ng-icon {
+          display: none;
+        }
+
+        &:hover {
+          ng-icon {
+            display: inline-block;
+          }
+        }
       }
 
       .right {
@@ -100,12 +111,20 @@ import { PkLoaderComponent } from '../../common/pk-loader.component';
         <div class="shortcut-list">
           @for (item of shortcutsList(); track item.id) {
             <div class="list-item">
-              <div class="left">
+              <div class="left" tabindex="0" role="button" (click)="open(item.url)">
                 <img [ngSrc]="item.iconUrl" width="24" height="24" [alt]="item.name" />
                 <span>{{ item.name }}</span>
+                <ng-icon name="tablerExternalLink" size="1rem" />
               </div>
               <div class="right">
                 @if (shortcutToDelete()?.id !== item.id) {
+                  <pk-icon-button
+                    variant="default"
+                    tooltip="Open"
+                    [disabled]="formOpen() || loading()"
+                    (onClick)="open(item.url)">
+                    <ng-icon name="tablerExternalLink" size="1rem" />
+                  </pk-icon-button>
                   <pk-icon-button
                     variant="default"
                     tooltip="Edit"
@@ -205,6 +224,10 @@ export class ShortcutsSettingsComponent {
     const category = (event.target as HTMLSelectElement).value as ShortcutCategory;
     this.selectedCategory.set(category);
     this.shortcuts.set(this.shortcutsService.shortcuts()[category]);
+  }
+
+  public open(url: string): void {
+    window.open(url, '_blank');
   }
 
   public selectForEdit(id: UUID): void {

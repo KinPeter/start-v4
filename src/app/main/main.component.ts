@@ -24,17 +24,13 @@ import { ActivitiesComponent } from './activities/activities.component';
     .main-content {
       width: 100%;
       height: calc(100vh - 60px);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 1rem;
       overflow-y: auto;
       padding: 0;
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
 
-      @media screen and (min-width: 420px) {
+      @media screen and (min-width: 430px) {
         padding: 1rem;
         height: 100vh;
       }
@@ -59,55 +55,69 @@ import { ActivitiesComponent } from './activities/activities.component';
 
     .widgets {
       width: 100%;
+      height: 100%;
       max-height: 100vh;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       flex-wrap: wrap;
       gap: 1rem;
 
-      > div {
+      .col {
         max-height: calc(100vh - 70px);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
         overflow-y: auto;
+      }
+
+      > div {
         display: flex;
         flex-direction: column;
         gap: 1rem;
       }
 
-      .left {
+      .col-1,
+      .col-2 {
         flex-wrap: wrap;
       }
 
-      .right {
+      .col-2,
+      .col-3 {
         flex-wrap: wrap-reverse;
+      }
+
+      .col-x {
+        flex-grow: 1;
       }
     }
   `,
   template: `
     <div class="main-content" [style.background-image]="imageUrl()">
       <div class="widgets">
-        @if (widgets.notesOpen() || widgets.activitiesOpen()) {
-          <div class="left">
-            @if (widgets.notesOpen()) {
-              <pk-notes />
-            }
-            @if (widgets.activitiesOpen()) {
-              <pk-activities />
-            }
-          </div>
-        }
-        @if (widgets.personalDataOpen() || widgets.birthdaysOpen() || widgets.weatherOpen()) {
-          <div class="right">
-            @if (widgets.weatherOpen()) {
-              <pk-weather />
-            }
-            @if (widgets.personalDataOpen()) {
-              <pk-personal-data />
-            }
-            @if (widgets.birthdaysOpen()) {
-              <pk-birthdays />
-            }
-          </div>
-        }
+        <div class="col col-1">
+          @if (widgets.notesOpen()) {
+            <pk-notes />
+          }
+        </div>
+        <div class="col col-2">
+          @if (widgets.activitiesOpen()) {
+            <pk-activities />
+          }
+        </div>
+        <div class="col col-x"></div>
+        <div class="col col-3">
+          @if (widgets.personalDataOpen()) {
+            <pk-personal-data />
+          }
+        </div>
+        <div class="col col-4">
+          @if (widgets.weatherOpen()) {
+            <pk-weather />
+          }
+          @if (widgets.birthdaysOpen()) {
+            <pk-birthdays />
+          }
+        </div>
       </div>
       <div
         class="open-menu-zone"

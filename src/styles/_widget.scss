@@ -2,7 +2,7 @@ div.pk-widget {
   max-width: 100vw;
   width: 100vw;
   padding: 0.5rem 0.75rem;
-  border-radius: var(--radius-default);
+  border-radius: 0;
   background-color: var(--color-bg);
 
   header {
@@ -34,9 +34,10 @@ div.pk-widget {
     }
   }
 
-  @media screen and (min-width: 420px) {
-    max-width: 370px;
-    width: 370px;
+  @media screen and (min-width: 430px) {
+    max-width: 365px;
+    width: 365px;
+    border-radius: var(--radius-default);
   }
 }
 

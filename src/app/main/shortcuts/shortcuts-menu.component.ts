@@ -30,6 +30,25 @@ import { ShortcutCategory } from '@kinpeter/pk-common';
         z-index: var(--backdrop-z-index);
       }
 
+      .shortcut-buttons {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+
+        @media screen and (min-width: 800px) {
+          display: flex;
+        }
+      }
+
+      .maximize-button {
+        display: inline-block;
+
+        @media screen and (min-width: 800px) {
+          display: none;
+        }
+      }
+
       button {
         border: none;
         background: none;
@@ -57,41 +76,18 @@ import { ShortcutCategory } from '@kinpeter/pk-common';
       @if (loading()) {
         <pk-loader size="sm" />
       } @else {
-        <button
-          (click)="clickMenu.emit(category.TOP)"
-          (mouseenter)="enterMenu.emit(category.TOP)"
-          (mouseleave)="mouseLeave.emit()">
-          <ng-icon name="tablerStar" />
-        </button>
-        <button
-          (click)="clickMenu.emit(category.CODING)"
-          (mouseenter)="enterMenu.emit(category.CODING)"
-          (mouseleave)="mouseLeave.emit()">
-          <ng-icon name="tablerCode" />
-        </button>
-        <button
-          (click)="clickMenu.emit(category.GOOGLE)"
-          (mouseenter)="enterMenu.emit(category.GOOGLE)"
-          (mouseleave)="mouseLeave.emit()">
-          <ng-icon name="tablerBrandGoogle" />
-        </button>
-        <button
-          (click)="clickMenu.emit(category.CYCLING)"
-          (mouseenter)="enterMenu.emit(category.CYCLING)"
-          (mouseleave)="mouseLeave.emit()">
-          <ng-icon name="tablerBike" />
-        </button>
-        <button
-          (click)="clickMenu.emit(category.FUN)"
-          (mouseenter)="enterMenu.emit(category.FUN)"
-          (mouseleave)="mouseLeave.emit()">
-          <ng-icon name="tablerMoodSmileBeam" />
-        </button>
-        <button
-          (click)="clickMenu.emit(category.OTHERS)"
-          (mouseenter)="enterMenu.emit(category.OTHERS)"
-          (mouseleave)="mouseLeave.emit()">
-          <ng-icon name="tablerDots" />
+        <div class="shortcut-buttons">
+          @for (button of shortcutButtons; track button.category) {
+            <button
+              (click)="clickMenu.emit(button.category)"
+              (mouseenter)="enterMenu.emit(button.category)"
+              (mouseleave)="mouseLeave.emit()">
+              <ng-icon [name]="button.icon" />
+            </button>
+          }
+        </div>
+        <button class="maximize-button" (click)="enterFullScreen()">
+          <ng-icon name="tablerArrowsMaximize" />
         </button>
       }
     </div>
@@ -103,7 +99,6 @@ export class ShortcutsMenuComponent {
   public clickMenu = output<ShortcutCategory>();
   public enterMenu = output<ShortcutCategory>();
 
-  public category = ShortcutCategory;
   public loading: Signal<boolean>;
   public notificationPanelOpen: Signal<boolean>;
 
@@ -113,5 +108,21 @@ export class ShortcutsMenuComponent {
   ) {
     this.loading = this.shortcutsService.loading;
     this.notificationPanelOpen = this.notificationService.isLogOpen;
+  }
+
+  public shortcutButtons = [
+    { category: ShortcutCategory.TOP, icon: 'tablerStar' },
+    { category: ShortcutCategory.CODING, icon: 'tablerCode' },
+    { category: ShortcutCategory.GOOGLE, icon: 'tablerBrandGoogle' },
+    { category: ShortcutCategory.CYCLING, icon: 'tablerBike' },
+    { category: ShortcutCategory.FUN, icon: 'tablerMoodSmileBeam' },
+    { category: ShortcutCategory.OTHERS, icon: 'tablerDots' },
+  ];
+
+  public enterFullScreen(): void {
+    const element = document.documentElement;
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    }
   }
 }
