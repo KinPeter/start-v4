@@ -72,7 +72,7 @@ import { detectSwipeRight } from '../utils/swipe-handlers';
       gap: 1rem;
 
       .col {
-        max-height: calc(100vh - 70px);
+        max-height: calc(100vh - 60px);
         display: flex;
         flex-direction: column;
         gap: 1rem;
