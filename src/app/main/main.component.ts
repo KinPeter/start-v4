@@ -1,4 +1,12 @@
-import { Component, Signal, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  Signal,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { RandomBackgroundService } from './main-menu/random-background.service';
 import { ShortcutsComponent } from './shortcuts/shortcuts.component';
@@ -8,6 +16,7 @@ import { PersonalDataComponent } from './personal-data/personal-data.component';
 import { BirthdaysComponent } from './birthdays/birthdays.component';
 import { WeatherComponent } from './weather/weather.component';
 import { ActivitiesComponent } from './activities/activities.component';
+import { detectSwipeRight } from '../utils/swipe-handlers';
 
 @Component({
   selector: 'pk-main',
@@ -92,7 +101,7 @@ import { ActivitiesComponent } from './activities/activities.component';
     }
   `,
   template: `
-    <div class="main-content" [style.background-image]="imageUrl()">
+    <div class="main-content" [style.background-image]="imageUrl()" #mainContent>
       <div class="widgets">
         <div class="col col-1">
           @if (widgets.notesOpen()) {
@@ -128,17 +137,31 @@ import { ActivitiesComponent } from './activities/activities.component';
     </div>
   `,
 })
-export class MainComponent {
+export class MainComponent implements AfterViewInit, OnDestroy {
   public mainMenuOpen = signal(false);
   public imageUrl: Signal<string | null>;
+  public mainContent = viewChild.required<ElementRef<HTMLDivElement>>('mainContent');
 
   private openMenuZoneTimer: ReturnType<typeof setTimeout> | undefined;
+  private clearSwipeHandlers: (() => void) | undefined;
 
   constructor(
     private randomBackgroundService: RandomBackgroundService,
     public widgets: WidgetsBarService
   ) {
     this.imageUrl = this.randomBackgroundService.imageUrl;
+  }
+
+  public ngAfterViewInit(): void {
+    this.clearSwipeHandlers = detectSwipeRight(this.mainContent().nativeElement, () => {
+      if (!this.mainMenuOpen()) {
+        this.mainMenuOpen.set(true);
+      }
+    });
+  }
+
+  public ngOnDestroy(): void {
+    this.clearSwipeHandlers?.();
   }
 
   public handleMenuZoneEnter(): void {

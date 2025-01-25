@@ -11,11 +11,11 @@ import { ShortcutCategory } from '@kinpeter/pk-common';
   providers: [],
   styles: `
     .shortcuts-menu {
-      width: 320px;
+      width: 140px;
       height: 52px;
       position: fixed;
       bottom: 0;
-      left: calc(100vw / 2 - 320px / 2);
+      left: calc(100vw / 2 - 140px / 2);
       background-color: var(--color-bg);
       padding: 0.5rem 1rem;
       display: flex;
@@ -25,6 +25,11 @@ import { ShortcutCategory } from '@kinpeter/pk-common';
       border-top-left-radius: 16px;
       border-top-right-radius: 16px;
       z-index: var(--shortcuts-z-index);
+
+      @media screen and (min-width: 800px) {
+        width: 320px;
+        left: calc(100vw / 2 - 320px / 2);
+      }
 
       &.behind {
         z-index: var(--backdrop-z-index);
