@@ -131,7 +131,7 @@ export class BirthdaysComponent {
   }
 
   public close(): void {
-    this.widgetsBarService.togglePersonalData();
+    this.widgetsBarService.toggleBirthdays();
   }
 
   public refetch(): void {

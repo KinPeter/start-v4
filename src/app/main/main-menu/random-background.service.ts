@@ -51,7 +51,7 @@ export class RandomBackgroundService extends Store<State> {
   }
 
   public getNewImage(): void {
-    if (this.state().enabled && this.state().apiKey) {
+    if (this.state().enabled && this.state().apiKey && window.innerWidth > 430) {
       const topics = '6sMVjTLSkeQ,bo8jQKTaE0Y,Fzo3zuOHN6w'; // Nature, Travel, Wallpapers / scroll down for topics
       this.http
         .get<UnsplashResponse>(

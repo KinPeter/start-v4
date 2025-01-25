@@ -64,6 +64,11 @@ export class MainMenuItemsComponent {
       action: () => this.dataBackupService.getBackupData(),
     },
     {
+      icon: 'tablerArrowsMaximize',
+      label: 'Enter fullscreen',
+      action: () => this.enterFullScreen(),
+    },
+    {
       icon: 'tablerLogout',
       label: 'Log out',
       action: () => {
@@ -72,4 +77,11 @@ export class MainMenuItemsComponent {
       },
     },
   ];
+
+  private enterFullScreen(): void {
+    const element = document.documentElement;
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    }
+  }
 }

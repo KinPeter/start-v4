@@ -45,6 +45,7 @@ import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
             tooltip="Load new image"
             variant="ghost"
             [accent]="true"
+            [disabled]="isSmallScreen"
             (onClick)="loadNewBackground()">
             <ng-icon name="tablerRefresh" size="1.2rem" />
           </pk-icon-button>
@@ -52,6 +53,7 @@ import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
             tooltip="Remove background"
             variant="ghost"
             [accent]="true"
+            [disabled]="isSmallScreen"
             (onClick)="removeBackground()">
             <ng-icon name="tablerSquareX" size="1.2rem" />
           </pk-icon-button>
@@ -59,8 +61,10 @@ import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
       }
     </div>
     <div class="bg-info">
-      @if (randomBgEnabled()) {
+      @if (randomBgEnabled() && !isSmallScreen) {
         <p>Current image: {{ imageDescription() }}</p>
+      } @else if (randomBgEnabled() && isSmallScreen) {
+        <p>No background image on small screen</p>
       } @else {
         <p>Random background service is not available</p>
       }
@@ -70,6 +74,7 @@ import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 export class RandomBackgroundComponent {
   public randomBgEnabled: Signal<boolean>;
   public imageDescription: Signal<string | null>;
+  public isSmallScreen = window.innerWidth < 430;
 
   constructor(private randomBackgroundService: RandomBackgroundService) {
     this.randomBgEnabled = this.randomBackgroundService.enabled;

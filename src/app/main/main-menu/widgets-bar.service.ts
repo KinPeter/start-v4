@@ -1,4 +1,4 @@
-import { computed, Injectable, OnDestroy } from '@angular/core';
+import { computed, Injectable } from '@angular/core';
 import { StoreKeys } from '../../constants';
 import { LocalStore } from '../../utils/store';
 
@@ -21,10 +21,9 @@ const initialState: WidgetsBarState = {
 };
 
 @Injectable({ providedIn: 'root' })
-export class WidgetsBarService extends LocalStore<WidgetsBarState> implements OnDestroy {
+export class WidgetsBarService extends LocalStore<WidgetsBarState> {
   constructor() {
     super(StoreKeys.APP_BAR, initialState);
-    this.initKeyListener();
   }
 
   public weatherOpen = computed(() => this.state().weatherOpen);
@@ -60,40 +59,5 @@ export class WidgetsBarService extends LocalStore<WidgetsBarState> implements On
 
   public resetState(): void {
     this.setState({ ...initialState });
-  }
-
-  private initKeyListener(): void {
-    document.addEventListener('keyup', this.handleKeyUp);
-  }
-
-  private handleKeyUp = (event: KeyboardEvent): void => {
-    const target = event.target as HTMLElement;
-    if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA') {
-      this.toggleWidgetByKey(event.key);
-    }
-  };
-
-  private toggleWidgetByKey(key: string): void {
-    switch (key) {
-      case 'n':
-        this.toggleNotes();
-        break;
-      case 'a':
-        this.toggleActivities();
-        break;
-      case 'p':
-        this.togglePersonalData();
-        break;
-      case 'b':
-        this.toggleBirthdays();
-        break;
-      case 'w':
-        this.toggleWeather();
-        break;
-    }
-  }
-
-  public ngOnDestroy(): void {
-    document.removeEventListener('keyup', this.handleKeyUp);
   }
 }

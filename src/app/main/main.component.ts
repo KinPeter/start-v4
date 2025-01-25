@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnDestroy,
-  Signal,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, Signal, viewChild } from '@angular/core';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { RandomBackgroundService } from './main-menu/random-background.service';
 import { ShortcutsComponent } from './shortcuts/shortcuts.component';
@@ -16,7 +8,8 @@ import { PersonalDataComponent } from './personal-data/personal-data.component';
 import { BirthdaysComponent } from './birthdays/birthdays.component';
 import { WeatherComponent } from './weather/weather.component';
 import { ActivitiesComponent } from './activities/activities.component';
-import { detectSwipeRight } from '../utils/swipe-handlers';
+import { MainMenuService } from './main-menu/main-menu.service';
+import { KeyboardTogglesService } from '../services/keyboard-toggles.service';
 
 @Component({
   selector: 'pk-main',
@@ -98,28 +91,32 @@ import { detectSwipeRight } from '../utils/swipe-handlers';
       .col-x {
         flex-grow: 1;
       }
+
+      .hidden {
+        display: none;
+      }
     }
   `,
   template: `
     <div class="main-content" [style.background-image]="imageUrl()" #mainContent>
       <div class="widgets">
-        <div class="col col-1">
+        <div class="col col-1" [class.hidden]="!widgets.notesOpen()">
           @if (widgets.notesOpen()) {
             <pk-notes />
           }
         </div>
-        <div class="col col-2">
+        <div class="col col-2" [class.hidden]="!widgets.activitiesOpen()">
           @if (widgets.activitiesOpen()) {
             <pk-activities />
           }
         </div>
         <div class="col col-x"></div>
-        <div class="col col-3">
+        <div class="col col-3" [class.hidden]="!widgets.personalDataOpen()">
           @if (widgets.personalDataOpen()) {
             <pk-personal-data />
           }
         </div>
-        <div class="col col-4">
+        <div class="col col-4" [class.hidden]="!widgets.weatherOpen() && !widgets.birthdaysOpen()">
           @if (widgets.weatherOpen()) {
             <pk-weather />
           }
@@ -132,32 +129,40 @@ import { detectSwipeRight } from '../utils/swipe-handlers';
         class="open-menu-zone"
         (mouseenter)="handleMenuZoneEnter()"
         (mouseleave)="handleMenuZoneLeave()"></div>
-      <pk-main-menu [open]="mainMenuOpen()" (onClose)="mainMenuOpen.set(false)" />
-      <pk-shortcuts (openMainMenu)="mainMenuOpen.set(!mainMenuOpen())" />
+      <pk-main-menu [open]="mainMenuOpen()" (onClose)="closeMainMenu()" />
+      <pk-shortcuts (openMainMenu)="toggleMainMenu()" />
     </div>
   `,
 })
 export class MainComponent implements AfterViewInit, OnDestroy {
-  public mainMenuOpen = signal(false);
   public imageUrl: Signal<string | null>;
+  public mainMenuOpen: Signal<boolean>;
   public mainContent = viewChild.required<ElementRef<HTMLDivElement>>('mainContent');
 
-  private openMenuZoneTimer: ReturnType<typeof setTimeout> | undefined;
   private clearSwipeHandlers: (() => void) | undefined;
 
   constructor(
+    private mainMenuService: MainMenuService,
+    private _keyboardTogglesService: KeyboardTogglesService,
     private randomBackgroundService: RandomBackgroundService,
     public widgets: WidgetsBarService
   ) {
     this.imageUrl = this.randomBackgroundService.imageUrl;
+    this.mainMenuOpen = this.mainMenuService.isMainMenuOpen;
+  }
+
+  public toggleMainMenu(): void {
+    this.mainMenuService.toggleMainMenu();
+  }
+
+  public closeMainMenu(): void {
+    this.mainMenuService.closeMainMenu();
   }
 
   public ngAfterViewInit(): void {
-    this.clearSwipeHandlers = detectSwipeRight(this.mainContent().nativeElement, () => {
-      if (!this.mainMenuOpen()) {
-        this.mainMenuOpen.set(true);
-      }
-    });
+    this.clearSwipeHandlers = this.mainMenuService.handleSwipeRight(
+      this.mainContent().nativeElement
+    );
   }
 
   public ngOnDestroy(): void {
@@ -165,17 +170,10 @@ export class MainComponent implements AfterViewInit, OnDestroy {
   }
 
   public handleMenuZoneEnter(): void {
-    this.openMenuZoneTimer = setTimeout(() => {
-      if (!this.mainMenuOpen()) {
-        this.mainMenuOpen.set(true);
-      }
-    }, 300);
+    this.mainMenuService.handleMenuZoneEnter();
   }
 
   public handleMenuZoneLeave(): void {
-    if (this.openMenuZoneTimer) {
-      clearTimeout(this.openMenuZoneTimer);
-      this.openMenuZoneTimer = undefined;
-    }
+    this.mainMenuService.handleMenuZoneLeave();
   }
 }
