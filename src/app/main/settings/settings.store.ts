@@ -7,11 +7,10 @@ export type UserSettings = Omit<PkStartSettings, 'userId'>;
 
 const initialState: UserSettings = {
   shortcutIconBaseUrl: null,
-  weatherApiKey: null,
-  locationApiKey: null,
+  openWeatherApiKey: null,
+  locationIqApiKey: null,
   unsplashApiKey: null,
   birthdaysUrl: null,
-  koreanUrl: null,
   stravaClientId: null,
   stravaClientSecret: null,
   stravaRedirectUri: null,
@@ -26,8 +25,8 @@ export class SettingsStore extends LocalStore<UserSettings> {
   }
 
   public apiKeys = computed(() => {
-    const { weatherApiKey, locationApiKey, unsplashApiKey } = this.state();
-    return { weatherApiKey, locationApiKey, unsplashApiKey };
+    const { openWeatherApiKey, locationIqApiKey, unsplashApiKey } = this.state();
+    return { openWeatherApiKey, locationIqApiKey, unsplashApiKey };
   });
 
   public stravaSettings = computed(() => {
@@ -41,10 +40,6 @@ export class SettingsStore extends LocalStore<UserSettings> {
 
   public get birthdaysUrl(): string | null {
     return this.state().birthdaysUrl;
-  }
-
-  public get koreanUrl(): string | null {
-    return this.state().koreanUrl;
   }
 
   public get allState(): UserSettings {

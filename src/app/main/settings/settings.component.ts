@@ -26,15 +26,6 @@ import { PkButtonComponent } from '../../common/pk-button.component';
         <pk-input label="Display name" width="100%">
           <input pkInput formControlName="name" type="text" />
         </pk-input>
-        <pk-input label="LocationIQ API key" width="100%">
-          <input pkInput formControlName="locationApiKey" type="text" />
-        </pk-input>
-        <pk-input label="OpenWeatherMap API key" width="100%">
-          <input pkInput formControlName="weatherApiKey" type="text" />
-        </pk-input>
-        <pk-input label="Unsplash API key" width="100%">
-          <input pkInput formControlName="unsplashApiKey" type="text" />
-        </pk-input>
         <pk-input
           label="Shortcut tiles icon base URL"
           width="100%"
@@ -46,18 +37,6 @@ import { PkButtonComponent } from '../../common/pk-button.component';
           width="100%"
           [error]="form.get('birthdaysUrl')?.errors ? 'Invalid URL' : ''">
           <input pkInput formControlName="birthdaysUrl" type="text" />
-        </pk-input>
-        <pk-input
-          label="Korean Google Sheet URL"
-          width="100%"
-          [error]="form.get('koreanUrl')?.errors ? 'Invalid URL' : ''">
-          <input pkInput formControlName="koreanUrl" type="text" />
-        </pk-input>
-        <pk-input label="Strava Client ID" width="100%">
-          <input pkInput formControlName="stravaClientId" type="text" />
-        </pk-input>
-        <pk-input label="Strava Client Secret" width="100%">
-          <input pkInput formControlName="stravaClientSecret" type="text" />
         </pk-input>
         <pk-input label="Strava OAuth redirect URL" width="100%">
           <input pkInput formControlName="stravaRedirectUri" type="text" />
@@ -90,14 +69,8 @@ export class SettingsComponent {
     const data = this.settingsStore.allState;
     this.form = this.formBuilder.group({
       name: [data.name],
-      locationApiKey: [data.locationApiKey],
-      weatherApiKey: [data.weatherApiKey],
-      unsplashApiKey: [data.unsplashApiKey],
       shortcutIconBaseUrl: [data.shortcutIconBaseUrl, CustomValidators.url],
       birthdaysUrl: [data.birthdaysUrl, CustomValidators.url],
-      koreanUrl: [data.koreanUrl, CustomValidators.url],
-      stravaClientId: [data.stravaClientId],
-      stravaClientSecret: [data.stravaClientSecret],
       stravaRedirectUri: [data.stravaRedirectUri],
     });
   }

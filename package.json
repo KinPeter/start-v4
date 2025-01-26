@@ -29,7 +29,7 @@
     "@angular/platform-browser": "^19.0.1",
     "@angular/platform-browser-dynamic": "^19.0.1",
     "@angular/router": "^19.0.1",
-    "@kinpeter/pk-common": "^1.0.23",
+    "@kinpeter/pk-common": "^1.0.24",
     "@ng-icons/core": "^29.0.0",
     "@ng-icons/tabler-icons": "^29.0.0",
     "date-fns": "^3.6.0",

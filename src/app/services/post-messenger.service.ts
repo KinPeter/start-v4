@@ -75,7 +75,10 @@ export class PostMessengerService {
   }
 
   private handleWeatherIframe(): void {
-    const { weatherApiKey, locationApiKey } = this.settingsStore.apiKeys();
-    this.sendMessageToWeatherWidget('weather.apiKeys', { weatherApiKey, locationApiKey });
+    const { openWeatherApiKey, locationIqApiKey } = this.settingsStore.apiKeys();
+    this.sendMessageToWeatherWidget('weather.apiKeys', {
+      weatherApiKey: openWeatherApiKey,
+      locationApiKey: locationIqApiKey,
+    });
   }
 }
