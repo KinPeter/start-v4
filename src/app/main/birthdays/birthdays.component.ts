@@ -7,10 +7,18 @@ import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { PkWidgetDirective } from '../../common/pk-widget.directive';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { PkCardDirective } from '../../common/pk-card.directive';
+import { FocusFirstDirective } from '../../common/focus-first.directive';
 
 @Component({
   selector: 'pk-birthdays',
-  imports: [NgIcon, PkIconButtonComponent, PkWidgetDirective, PkLoaderComponent, PkCardDirective],
+  imports: [
+    NgIcon,
+    PkIconButtonComponent,
+    PkWidgetDirective,
+    PkLoaderComponent,
+    PkCardDirective,
+    FocusFirstDirective,
+  ],
   providers: [],
   styles: `
     .container {
@@ -53,7 +61,7 @@ import { PkCardDirective } from '../../common/pk-card.directive';
       <header>
         <h1>Birthdays</h1>
         <div class="actions">
-          <pk-icon-button tooltip="Refresh" (onClick)="refetch()">
+          <pk-icon-button tooltip="Refresh" (onClick)="refetch()" pkFocusFirst>
             <ng-icon name="tablerRefresh" size="1.2rem" />
           </pk-icon-button>
           <pk-icon-button tooltip="Close" (onClick)="close()">

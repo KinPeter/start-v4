@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, effect, Injectable, signal } from '@angular/core';
 import { ClearSwipeHandlers, detectSwipeRight } from '../../utils/swipe-handlers';
 
 @Injectable({ providedIn: 'root' })
@@ -7,6 +7,14 @@ export class MainMenuService {
   private openMenuZoneTimer: ReturnType<typeof setTimeout> | undefined;
 
   public isMainMenuOpen = computed(() => this.isMenuOpen());
+
+  constructor() {
+    effect(() => {
+      if (this.isMenuOpen()) {
+        document.getElementById('widget-toggle-notes')?.focus();
+      }
+    });
+  }
 
   public toggleMainMenu(): void {
     this.isMenuOpen.set(!this.isMenuOpen());

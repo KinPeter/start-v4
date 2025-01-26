@@ -6,10 +6,11 @@ import { WidgetsBarService } from '../main-menu/widgets-bar.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PostMessengerService } from '../../services/post-messenger.service';
 import { WeatherService } from './weather.service';
+import { FocusFirstDirective } from '../../common/focus-first.directive';
 
 @Component({
   selector: 'pk-weather',
-  imports: [PkWidgetDirective, NgIcon, PkIconButtonComponent],
+  imports: [PkWidgetDirective, NgIcon, PkIconButtonComponent, FocusFirstDirective],
   providers: [],
   styles: `
     .container {
@@ -33,7 +34,7 @@ import { WeatherService } from './weather.service';
       <header>
         <h1>Weather</h1>
         <div class="actions">
-          <pk-icon-button [tooltip]="updatedText()" (onClick)="refresh()">
+          <pk-icon-button [tooltip]="updatedText()" (onClick)="refresh()" pkFocusFirst>
             <ng-icon name="tablerRefresh" size="1.2rem" />
           </pk-icon-button>
           <pk-icon-button tooltip="Close" (onClick)="close()">

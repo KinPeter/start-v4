@@ -12,6 +12,7 @@ import { parseError } from '../../utils/parse-error';
 import { PersonalDataFormComponent } from './personal-data-form.component';
 import { PkInputComponent } from '../../common/pk-input.component';
 import { PkInputDirective } from '../../common/pk-input.directive';
+import { FocusFirstDirective } from '../../common/focus-first.directive';
 
 @Component({
   selector: 'pk-personal-data',
@@ -24,6 +25,7 @@ import { PkInputDirective } from '../../common/pk-input.directive';
     PersonalDataFormComponent,
     PkInputComponent,
     PkInputDirective,
+    FocusFirstDirective,
   ],
   providers: [],
   styles: `
@@ -48,7 +50,7 @@ import { PkInputDirective } from '../../common/pk-input.directive';
       <header>
         <h1>Personal Data</h1>
         <div class="actions">
-          <pk-icon-button tooltip="Create personal data" (onClick)="startNewData()">
+          <pk-icon-button tooltip="Create personal data" (onClick)="startNewData()" pkFocusFirst>
             <ng-icon name="tablerPlus" size="1.2rem" />
           </pk-icon-button>
           <pk-icon-button tooltip="Close" (onClick)="close()">

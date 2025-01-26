@@ -52,7 +52,12 @@ type Widgets = 'Activities' | 'Notes' | 'Weather' | 'Birthdays' | 'Korean' | 'Pe
     }
   `,
   template: `
-    <button type="button" [title]="widget()" [class.open]="open()" (click)="toggle.emit()">
+    <button
+      type="button"
+      [title]="widget()"
+      [class.open]="open()"
+      (click)="toggle.emit()"
+      [id]="buttonId()">
       <ng-icon [name]="icon()" />
       @if (badgeCount()) {
         <div class="badge">{{ badgeCount() }}</div>
@@ -82,5 +87,8 @@ export class WidgetToggleComponent {
       default:
         return undefined;
     }
+  });
+  public buttonId = computed(() => {
+    return `widget-toggle-${this.widget()?.toLocaleLowerCase().replace(/\s/g, '-')}`;
   });
 }

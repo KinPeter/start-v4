@@ -10,6 +10,7 @@ import { NoteComponent } from './note.component';
 import { NoteFormComponent } from './note-form.component';
 import { NotificationService } from '../../services/notification.service';
 import { parseError } from '../../utils/parse-error';
+import { FocusFirstDirective } from '../../common/focus-first.directive';
 
 @Component({
   selector: 'pk-notes',
@@ -20,6 +21,7 @@ import { parseError } from '../../utils/parse-error';
     PkWidgetDirective,
     NoteComponent,
     NoteFormComponent,
+    FocusFirstDirective,
   ],
   providers: [],
   styles: `
@@ -40,7 +42,7 @@ import { parseError } from '../../utils/parse-error';
       <header>
         <h1>Notes</h1>
         <div class="actions">
-          <pk-icon-button tooltip="Create note" (onClick)="startNewNote()">
+          <pk-icon-button tooltip="Create note" (onClick)="startNewNote()" pkFocusFirst>
             <ng-icon name="tablerTextPlus" size="1.2rem" />
           </pk-icon-button>
           <pk-icon-button tooltip="Close" (onClick)="close()">

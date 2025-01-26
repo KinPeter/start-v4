@@ -18,6 +18,7 @@ import {
 import { ActivitiesWrapperComponent } from './activities-wrapper.component';
 import { ChoreFormComponent } from './chore-form.component';
 import { GoalsFormComponent } from './goals-form.component';
+import { FocusFirstDirective } from '../../common/focus-first.directive';
 
 type ActivityView = 'home' | 'chore' | 'goals';
 
@@ -32,6 +33,7 @@ type ActivityView = 'home' | 'chore' | 'goals';
     ActivitiesWrapperComponent,
     ChoreFormComponent,
     GoalsFormComponent,
+    FocusFirstDirective,
   ],
   providers: [],
   styles: `
@@ -74,7 +76,7 @@ type ActivityView = 'home' | 'chore' | 'goals';
             [disabled]="loading() || needAuth() || disabled()">
             <ng-icon name="tablerRefresh" size="1.2rem" />
           </pk-icon-button>
-          <pk-icon-button tooltip="Close" (onClick)="close()">
+          <pk-icon-button tooltip="Close" (onClick)="close()" pkFocusFirst>
             <ng-icon name="tablerX" size="1.2rem" />
           </pk-icon-button>
         </div>
