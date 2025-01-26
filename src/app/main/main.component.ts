@@ -45,7 +45,7 @@ import { KeyboardTogglesService } from '../services/keyboard-toggles.service';
       top: 0;
       left: 0;
 
-      @media screen and (min-width: 420px) {
+      @media screen and (min-width: 430px) {
         width: 1rem;
       }
 
@@ -57,12 +57,18 @@ import { KeyboardTogglesService } from '../services/keyboard-toggles.service';
 
     .widgets {
       width: 100%;
-      height: 100%;
-      max-height: 100vh;
       display: flex;
       justify-content: flex-start;
-      flex-wrap: wrap;
+      flex-direction: column;
+      flex-wrap: nowrap;
       gap: 1rem;
+
+      @media screen and (min-width: 430px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: 100%;
+        max-height: 100vh;
+      }
 
       .col {
         max-height: calc(100vh - 60px);
@@ -89,7 +95,12 @@ import { KeyboardTogglesService } from '../services/keyboard-toggles.service';
       }
 
       .col-x {
-        flex-grow: 1;
+        display: none;
+
+        @media screen and (min-width: 430px) {
+          display: block;
+          flex-grow: 1;
+        }
       }
 
       .hidden {
