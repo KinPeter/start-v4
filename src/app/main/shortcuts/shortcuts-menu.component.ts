@@ -24,7 +24,7 @@ import { ShortcutCategory } from '@kinpeter/pk-common';
       gap: 0.5rem;
       border-top-left-radius: 16px;
       border-top-right-radius: 16px;
-      z-index: var(--shortcuts-z-index);
+      z-index: var(--overlay-content-z-index);
 
       @media screen and (min-width: 800px) {
         width: 320px;

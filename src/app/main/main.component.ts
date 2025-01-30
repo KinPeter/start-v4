@@ -10,6 +10,7 @@ import { WeatherComponent } from './weather/weather.component';
 import { ActivitiesComponent } from './activities/activities.component';
 import { MainMenuService } from './main-menu/main-menu.service';
 import { KeyboardTogglesService } from '../services/keyboard-toggles.service';
+import { GlobalSearchComponent } from './global-search/global-search.component';
 
 @Component({
   selector: 'pk-main',
@@ -21,6 +22,7 @@ import { KeyboardTogglesService } from '../services/keyboard-toggles.service';
     BirthdaysComponent,
     WeatherComponent,
     ActivitiesComponent,
+    GlobalSearchComponent,
   ],
   styles: `
     .main-content {
@@ -142,6 +144,7 @@ import { KeyboardTogglesService } from '../services/keyboard-toggles.service';
         (mouseleave)="handleMenuZoneLeave()"></div>
       <pk-main-menu [open]="mainMenuOpen()" (onClose)="closeMainMenu()" />
       <pk-shortcuts (openMainMenu)="toggleMainMenu()" />
+      <pk-global-search />
     </div>
   `,
 })

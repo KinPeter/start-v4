@@ -4,6 +4,7 @@ import { ShortcutsService } from './shortcuts.service';
 import { ShortcutsByCategory } from './shortcuts.types';
 import { ShortcutsMenuComponent } from './shortcuts-menu.component';
 import { ShortcutCategory } from '@kinpeter/pk-common';
+import { MainManagerService } from '../main-manager.service';
 
 @Component({
   selector: 'pk-shortcuts',
@@ -18,12 +19,12 @@ import { ShortcutCategory } from '@kinpeter/pk-common';
       width: 100vw;
       background-color: var(--color-bg-opaque);
       backdrop-filter: blur(2px);
-      z-index: var(--shortcuts-backdrop-z-index);
+      z-index: var(--overlay-backdrop-z-index);
     }
 
     .shortcuts {
       position: absolute;
-      z-index: var(--shortcuts-z-index);
+      z-index: var(--overlay-content-z-index);
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -65,23 +66,27 @@ import { ShortcutCategory } from '@kinpeter/pk-common';
 })
 export class ShortcutsComponent {
   public openMainMenu = output<void>();
-  public showShortcuts = signal(false);
   public mouseHover = signal(false);
   public selectedCategory: WritableSignal<ShortcutCategory> = signal(ShortcutCategory.TOP);
   public shortcuts: Signal<ShortcutsByCategory>;
+  public showShortcuts: Signal<boolean>;
 
-  constructor(private shortcutsService: ShortcutsService) {
+  constructor(
+    private shortcutsService: ShortcutsService,
+    private mainManagerService: MainManagerService
+  ) {
     this.shortcuts = this.shortcutsService.shortcuts;
+    this.showShortcuts = this.mainManagerService.showShortcuts;
   }
 
   public onClickMainMenu(): void {
-    this.showShortcuts.set(false);
+    this.mainManagerService.closeShortcuts();
     this.openMainMenu.emit();
   }
 
   public onClickMenu(category: ShortcutCategory): void {
     this.selectedCategory.set(category);
-    this.showShortcuts.set(true);
+    this.mainManagerService.openShortcuts();
   }
 
   public onEnterMenu(category: ShortcutCategory): void {
@@ -90,14 +95,14 @@ export class ShortcutsComponent {
   }
 
   public onClickBackdrop(): void {
-    this.showShortcuts.set(false);
+    this.mainManagerService.closeShortcuts();
   }
 
   public onMouseEnter(): void {
     this.mouseHover.set(true);
     setTimeout(() => {
       if (this.mouseHover()) {
-        this.showShortcuts.set(true);
+        this.mainManagerService.openShortcuts();
       }
     }, 500);
   }

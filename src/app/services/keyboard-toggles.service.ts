@@ -1,10 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { WidgetsBarService } from '../main/main-menu/widgets-bar.service';
 import { MainMenuService } from '../main/main-menu/main-menu.service';
+import { MainManagerService } from '../main/main-manager.service';
 
 @Injectable({ providedIn: 'root' })
 export class KeyboardTogglesService implements OnDestroy {
   constructor(
+    private mainManagerService: MainManagerService,
     private mainMenuService: MainMenuService,
     private widgets: WidgetsBarService
   ) {
@@ -24,6 +26,10 @@ export class KeyboardTogglesService implements OnDestroy {
 
   private toggleByKey(key: string): void {
     switch (key) {
+      case 's':
+      case 'k':
+        this.mainManagerService.openSearch();
+        break;
       case 'm':
         this.mainMenuService.toggleMainMenu();
         break;

@@ -29,34 +29,43 @@ import { NotificationService } from '../../services/notification.service';
           <p>Expiry: {{ data()?.expiry }}</p>
         }
       </main>
-      <div class="actions">
-        @if (!confirmState()) {
-          <pk-icon-button tooltip="Edit" (onClick)="edit.emit(data()?.id!)">
-            <ng-icon name="tablerEdit" size="1rem" />
-          </pk-icon-button>
+      @if (!hideActions()) {
+        <div class="actions">
+          @if (!confirmState()) {
+            <pk-icon-button tooltip="Edit" (onClick)="edit.emit(data()?.id!)">
+              <ng-icon name="tablerEdit" size="1rem" />
+            </pk-icon-button>
+            <pk-icon-button tooltip="Copy" (onClick)="copy()">
+              <ng-icon [name]="showCheckmark() ? 'tablerCheck' : 'tablerCopy'" size="1rem" />
+            </pk-icon-button>
+            <pk-icon-button tooltip="Delete" (onClick)="confirmState.set(true)">
+              <ng-icon name="tablerTrash" size="1rem" />
+            </pk-icon-button>
+          } @else {
+            <pk-icon-button tooltip="Cancel" variant="subtle" (onClick)="confirmState.set(false)">
+              <ng-icon name="tablerX" size="1rem" />
+            </pk-icon-button>
+            <pk-icon-button
+              tooltip="Confirm delete"
+              variant="filled"
+              (onClick)="delete.emit(data()?.id!)">
+              <ng-icon name="tablerTrash" size="1rem" />
+            </pk-icon-button>
+          }
+        </div>
+      } @else {
+        <div class="actions">
           <pk-icon-button tooltip="Copy" (onClick)="copy()">
             <ng-icon [name]="showCheckmark() ? 'tablerCheck' : 'tablerCopy'" size="1rem" />
           </pk-icon-button>
-          <pk-icon-button tooltip="Delete" (onClick)="confirmState.set(true)">
-            <ng-icon name="tablerTrash" size="1rem" />
-          </pk-icon-button>
-        } @else {
-          <pk-icon-button tooltip="Cancel" variant="subtle" (onClick)="confirmState.set(false)">
-            <ng-icon name="tablerX" size="1rem" />
-          </pk-icon-button>
-          <pk-icon-button
-            tooltip="Confirm delete"
-            variant="filled"
-            (onClick)="delete.emit(data()?.id!)">
-            <ng-icon name="tablerTrash" size="1rem" />
-          </pk-icon-button>
-        }
-      </div>
+        </div>
+      }
     </div>
   `,
 })
 export class PersonalDataCardComponent {
   public data = input<PersonalData>();
+  public hideActions = input<boolean>(false);
 
   public edit = output<UUID>();
   public delete = output<UUID>();
