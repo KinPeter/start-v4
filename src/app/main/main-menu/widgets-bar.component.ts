@@ -33,9 +33,9 @@ import { BirthdaysService } from '../birthdays/birthdays.service';
         [badgeCount]="birthdayCount()"
         (toggle)="service.toggleBirthdays()" />
       <pk-widget-toggle
-        widget="Korean"
-        [open]="service.koreanOpen()"
-        (toggle)="service.toggleKorean()" />
+        widget="Translator"
+        [open]="service.translatorOpen()"
+        (toggle)="service.toggleTranslator()" />
       <pk-widget-toggle
         widget="Weather"
         [open]="service.weatherOpen()"

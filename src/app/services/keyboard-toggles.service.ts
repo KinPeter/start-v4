@@ -48,6 +48,9 @@ export class KeyboardTogglesService implements OnDestroy {
       case 'w':
         this.widgets.toggleWeather();
         break;
+      case 't':
+        this.widgets.toggleTranslator();
+        break;
     }
   }
 

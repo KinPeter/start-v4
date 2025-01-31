@@ -11,6 +11,7 @@ import { ActivitiesComponent } from './activities/activities.component';
 import { MainMenuService } from './main-menu/main-menu.service';
 import { KeyboardTogglesService } from '../services/keyboard-toggles.service';
 import { GlobalSearchComponent } from './global-search/global-search.component';
+import { TranslatorComponent } from './translator/translator.component';
 
 @Component({
   selector: 'pk-main',
@@ -23,6 +24,7 @@ import { GlobalSearchComponent } from './global-search/global-search.component';
     WeatherComponent,
     ActivitiesComponent,
     GlobalSearchComponent,
+    TranslatorComponent,
   ],
   styles: `
     .main-content {
@@ -124,9 +126,14 @@ import { GlobalSearchComponent } from './global-search/global-search.component';
           }
         </div>
         <div class="col col-x"></div>
-        <div class="col col-3" [class.hidden]="!widgets.personalDataOpen()">
+        <div
+          class="col col-3"
+          [class.hidden]="!widgets.personalDataOpen() && !widgets.translatorOpen()">
           @if (widgets.personalDataOpen()) {
             <pk-personal-data />
+          }
+          @if (widgets.translatorOpen()) {
+            <pk-translator />
           }
         </div>
         <div class="col col-4" [class.hidden]="!widgets.weatherOpen() && !widgets.birthdaysOpen()">

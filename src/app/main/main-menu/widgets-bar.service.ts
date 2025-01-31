@@ -6,14 +6,14 @@ export interface WidgetsBarState {
   weatherOpen: boolean;
   notesOpen: boolean;
   birthdaysOpen: boolean;
-  koreanOpen: boolean;
+  translatorOpen: boolean;
   personalDataOpen: boolean;
   activitiesOpen: boolean;
 }
 
 const initialState: WidgetsBarState = {
   birthdaysOpen: false,
-  koreanOpen: false,
+  translatorOpen: false,
   notesOpen: true,
   weatherOpen: false,
   personalDataOpen: false,
@@ -30,7 +30,7 @@ export class WidgetsBarService extends LocalStore<WidgetsBarState> {
   public notesOpen = computed(() => this.state().notesOpen);
   public birthdaysOpen = computed(() => this.state().birthdaysOpen);
   public personalDataOpen = computed(() => this.state().personalDataOpen);
-  public koreanOpen = computed(() => this.state().koreanOpen);
+  public translatorOpen = computed(() => this.state().translatorOpen);
   public activitiesOpen = computed(() => this.state().activitiesOpen);
 
   public toggleWeather(): void {
@@ -49,8 +49,8 @@ export class WidgetsBarService extends LocalStore<WidgetsBarState> {
     this.setState({ personalDataOpen: !this.state().personalDataOpen });
   }
 
-  public toggleKorean(): void {
-    this.setState({ koreanOpen: !this.state().koreanOpen });
+  public toggleTranslator(): void {
+    this.setState({ translatorOpen: !this.state().translatorOpen });
   }
 
   public toggleActivities(): void {
