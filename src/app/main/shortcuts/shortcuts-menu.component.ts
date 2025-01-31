@@ -11,11 +11,11 @@ import { ShortcutCategory } from '@kinpeter/pk-common';
   providers: [],
   styles: `
     .shortcuts-menu {
-      width: 140px;
+      width: 180px;
       height: 52px;
       position: fixed;
       bottom: 0;
-      left: calc(100vw / 2 - 140px / 2);
+      left: calc(100vw / 2 - 180px / 2);
       background-color: var(--color-bg);
       padding: 0.5rem 1rem;
       display: flex;
@@ -27,8 +27,8 @@ import { ShortcutCategory } from '@kinpeter/pk-common';
       z-index: var(--overlay-content-z-index);
 
       @media screen and (min-width: 800px) {
-        width: 320px;
-        left: calc(100vw / 2 - 320px / 2);
+        width: 360px;
+        left: calc(100vw / 2 - 360px / 2);
       }
 
       &.behind {
@@ -78,6 +78,7 @@ import { ShortcutCategory } from '@kinpeter/pk-common';
   template: `
     <div class="shortcuts-menu" [class.behind]="notificationPanelOpen()">
       <button (click)="clickMainMenu.emit()"><ng-icon name="tablerBrandWindows" /></button>
+      <button (click)="clickSearch.emit()"><ng-icon name="tablerSearch" /></button>
       @if (loading()) {
         <pk-loader size="sm" />
       } @else {
@@ -101,6 +102,7 @@ import { ShortcutCategory } from '@kinpeter/pk-common';
 export class ShortcutsMenuComponent {
   public mouseLeave = output<void>();
   public clickMainMenu = output<void>();
+  public clickSearch = output<void>();
   public clickMenu = output<ShortcutCategory>();
   public enterMenu = output<ShortcutCategory>();
 

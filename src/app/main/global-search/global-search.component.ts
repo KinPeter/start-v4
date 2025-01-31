@@ -25,9 +25,9 @@ import { SearchResultsComponent } from './search-results.component';
       position: absolute;
       z-index: var(--overlay-content-z-index);
       top: 10vh;
+      height: 80vh;
       left: 0;
       width: 100%;
-      height: 80vh;
       overflow-y: auto;
 
       header {
@@ -35,6 +35,8 @@ import { SearchResultsComponent } from './search-results.component';
       }
 
       @media (min-width: 1000px) {
+        top: 20vh;
+        height: 60vh;
         left: calc(100vw / 2 - 500px);
         width: 1000px;
 
@@ -64,7 +66,7 @@ export class GlobalSearchComponent {
   public showSearch: Signal<boolean>;
 
   constructor(
-    private globalSearchServicePdi: GlobalSearchService,
+    private globalSearchService: GlobalSearchService,
     private mainManagerService: MainManagerService
   ) {
     this.showSearch = this.mainManagerService.showSearch;
@@ -72,5 +74,6 @@ export class GlobalSearchComponent {
 
   public onClickBackdrop(): void {
     this.mainManagerService.closeSearch();
+    this.globalSearchService.clearResults();
   }
 }

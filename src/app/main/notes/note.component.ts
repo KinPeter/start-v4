@@ -61,46 +61,49 @@ import { PkCardDirective } from '../../common/pk-card.directive';
       }
       <footer>
         <div class="date">{{ note()?.createdAt | date: 'yyyy.MM.dd H:mm' }}</div>
-        <div class="actions">
-          @if (!confirmState()) {
-            <pk-icon-button tooltip="Edit" (onClick)="edit.emit(note()?.id!)">
-              <ng-icon name="tablerEdit" size="1rem" />
-            </pk-icon-button>
-            <pk-icon-button
-              [tooltip]="note()?.pinned ? 'Unpin' : 'Pin'"
-              [disabled]="note()?.archived ?? false"
-              (onClick)="pin.emit(note()?.id!)">
-              <ng-icon [name]="note()?.pinned ? 'tablerPinnedOff' : 'tablerPinned'" size="1rem" />
-            </pk-icon-button>
-            <pk-icon-button
-              [tooltip]="note()?.archived ? 'Unarchive' : 'Archive'"
-              [disabled]="note()?.pinned ?? false"
-              (onClick)="archive.emit(note()?.id!)">
-              <ng-icon
-                [name]="note()?.archived ? 'tablerArchiveOff' : 'tablerArchive'"
-                size="1rem" />
-            </pk-icon-button>
-            <pk-icon-button tooltip="Delete" (onClick)="confirmState.set(true)">
-              <ng-icon name="tablerTrash" size="1rem" />
-            </pk-icon-button>
-          } @else {
-            <pk-icon-button tooltip="Cancel" variant="subtle" (onClick)="confirmState.set(false)">
-              <ng-icon name="tablerX" size="1rem" />
-            </pk-icon-button>
-            <pk-icon-button
-              tooltip="Confirm delete"
-              variant="filled"
-              (onClick)="delete.emit(note()?.id!)">
-              <ng-icon name="tablerTrash" size="1rem" />
-            </pk-icon-button>
-          }
-        </div>
+        @if (!hideActions()) {
+          <div class="actions">
+            @if (!confirmState()) {
+              <pk-icon-button tooltip="Edit" (onClick)="edit.emit(note()?.id!)">
+                <ng-icon name="tablerEdit" size="1rem" />
+              </pk-icon-button>
+              <pk-icon-button
+                [tooltip]="note()?.pinned ? 'Unpin' : 'Pin'"
+                [disabled]="note()?.archived ?? false"
+                (onClick)="pin.emit(note()?.id!)">
+                <ng-icon [name]="note()?.pinned ? 'tablerPinnedOff' : 'tablerPinned'" size="1rem" />
+              </pk-icon-button>
+              <pk-icon-button
+                [tooltip]="note()?.archived ? 'Unarchive' : 'Archive'"
+                [disabled]="note()?.pinned ?? false"
+                (onClick)="archive.emit(note()?.id!)">
+                <ng-icon
+                  [name]="note()?.archived ? 'tablerArchiveOff' : 'tablerArchive'"
+                  size="1rem" />
+              </pk-icon-button>
+              <pk-icon-button tooltip="Delete" (onClick)="confirmState.set(true)">
+                <ng-icon name="tablerTrash" size="1rem" />
+              </pk-icon-button>
+            } @else {
+              <pk-icon-button tooltip="Cancel" variant="subtle" (onClick)="confirmState.set(false)">
+                <ng-icon name="tablerX" size="1rem" />
+              </pk-icon-button>
+              <pk-icon-button
+                tooltip="Confirm delete"
+                variant="filled"
+                (onClick)="delete.emit(note()?.id!)">
+                <ng-icon name="tablerTrash" size="1rem" />
+              </pk-icon-button>
+            }
+          </div>
+        }
       </footer>
     </div>
   `,
 })
 export class NoteComponent {
   public note = input<Note>();
+  public hideActions = input<boolean>(false);
 
   public edit = output<UUID>();
   public pin = output<UUID>();

@@ -45,6 +45,7 @@ import { MainManagerService } from '../main-manager.service';
   template: `
     <pk-shortcuts-menu
       (clickMainMenu)="onClickMainMenu()"
+      (clickSearch)="onClickSearch()"
       (clickMenu)="onClickMenu($event)"
       (enterMenu)="onEnterMenu($event)"
       (mouseLeave)="onMouseLeave()"></pk-shortcuts-menu>
@@ -81,7 +82,12 @@ export class ShortcutsComponent {
 
   public onClickMainMenu(): void {
     this.mainManagerService.closeShortcuts();
+    this.mainManagerService.closeSearch();
     this.openMainMenu.emit();
+  }
+
+  public onClickSearch(): void {
+    this.mainManagerService.openSearch();
   }
 
   public onClickMenu(category: ShortcutCategory): void {

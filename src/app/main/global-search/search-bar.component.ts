@@ -52,6 +52,7 @@ export class SearchBarComponent implements AfterViewInit, OnDestroy {
   private keyUpHandler(event: KeyboardEvent): void {
     if (event.key === 'Escape') {
       this.mainManagerService.closeSearch();
+      this.globalSearchService.clearResults();
     }
   }
 }

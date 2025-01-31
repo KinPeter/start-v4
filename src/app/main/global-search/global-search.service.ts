@@ -56,4 +56,12 @@ export class GlobalSearchService {
 
     this.results.set(results);
   }
+
+  public clearResults(): void {
+    this.results.set({
+      notes: [],
+      shortcuts: [],
+      personalData: [],
+    });
+  }
 }
