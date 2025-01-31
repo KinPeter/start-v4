@@ -12,6 +12,7 @@ import { filter } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 interface BirthdaysState {
+  allBirthdays: BirthdayItem[];
   hasBirthdaysToday: number | undefined;
   today: BirthdayItem[];
   upcoming: BirthdayItem[];
@@ -20,6 +21,7 @@ interface BirthdaysState {
 }
 
 const initialState: BirthdaysState = {
+  allBirthdays: [],
   hasBirthdaysToday: undefined,
   today: [],
   upcoming: [],
@@ -39,6 +41,7 @@ export class BirthdaysService extends Store<BirthdaysState> {
   public hasBirthdaysToday = computed(() => this.state().hasBirthdaysToday);
   public today = computed(() => this.state().today);
   public upcoming = computed(() => this.state().upcoming);
+  public allBirthdays = computed(() => this.state().allBirthdays);
 
   constructor(
     private apiService: ApiService,
@@ -63,6 +66,7 @@ export class BirthdaysService extends Store<BirthdaysState> {
             if (differenceInDays(new Date(), parseISO(parsed.lastFetch)) > 6) {
               this.fetchBirthdays();
             } else {
+              this.setState({ allBirthdays: parsed.birthdays });
               this.checkBirthdays(parsed.birthdays);
             }
           }
@@ -85,7 +89,7 @@ export class BirthdaysService extends Store<BirthdaysState> {
             birthdays: res,
           })
         );
-        this.setState({ loading: false });
+        this.setState({ allBirthdays: res, loading: false });
         this.checkBirthdays(res);
       },
       error: err => {

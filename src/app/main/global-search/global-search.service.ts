@@ -2,12 +2,14 @@ import { computed, Injectable, signal, Signal, WritableSignal } from '@angular/c
 import { ShortcutsService } from '../shortcuts/shortcuts.service';
 import { NotesService } from '../notes/notes.service';
 import { PersonalDataService } from '../personal-data/personal-data.service';
-import { Note, PersonalData, Shortcut } from '@kinpeter/pk-common';
+import { BirthdayItem, Note, PersonalData, Shortcut } from '@kinpeter/pk-common';
+import { BirthdaysService } from '../birthdays/birthdays.service';
 
 export interface GlobalSearchResult {
   notes: Note[];
   shortcuts: Shortcut[];
   personalData: PersonalData[];
+  birthdays: BirthdayItem[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -16,20 +18,24 @@ export class GlobalSearchService {
     notes: [],
     shortcuts: [],
     personalData: [],
+    birthdays: [],
   });
 
   private shortcuts: Signal<Shortcut[]>;
   private notes: Signal<Note[]>;
   private personalData: Signal<PersonalData[]>;
+  private birthdays: Signal<BirthdayItem[]>;
 
   constructor(
     private shortcutsService: ShortcutsService,
     private notesService: NotesService,
-    private personalDataService: PersonalDataService
+    private personalDataService: PersonalDataService,
+    private birthdaysService: BirthdaysService
   ) {
     this.shortcuts = computed(() => Object.values(this.shortcutsService.shortcuts()).flat());
     this.notes = this.notesService.notes;
     this.personalData = this.personalDataService.data;
+    this.birthdays = this.birthdaysService.allBirthdays;
   }
 
   public search(rawQuery: string): void {
@@ -40,6 +46,7 @@ export class GlobalSearchService {
         notes: [],
         shortcuts: [],
         personalData: [],
+        birthdays: [],
       });
       return;
     }
@@ -52,6 +59,7 @@ export class GlobalSearchService {
       ),
       shortcuts: this.shortcuts().filter(({ name }) => name.toLowerCase().includes(query)),
       personalData: this.personalData().filter(({ name }) => name.toLowerCase().includes(query)),
+      birthdays: this.birthdays().filter(({ name }) => name.toLowerCase().includes(query)),
     };
 
     this.results.set(results);
@@ -62,6 +70,7 @@ export class GlobalSearchService {
       notes: [],
       shortcuts: [],
       personalData: [],
+      birthdays: [],
     });
   }
 }
