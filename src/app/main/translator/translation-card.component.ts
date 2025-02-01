@@ -52,7 +52,9 @@ import { NotificationService } from '../../services/notification.service';
       <div class="section original">
         <div>
           <pk-icon-button
-            [tooltip]="sourceVoices().length ? 'Read out' : 'Language not supported'"
+            [tooltip]="
+              sourceVoices().length ? 'Read out' : 'Language not supported by your browser'
+            "
             [disabled]="!sourceVoices().length"
             (onClick)="readOut(sourceLang(), original())">
             <ng-icon name="tablerVolume" size="1.2rem" />
@@ -65,7 +67,9 @@ import { NotificationService } from '../../services/notification.service';
       <div class="section translation">
         <div>
           <pk-icon-button
-            [tooltip]="targetVoices().length ? 'Read out' : 'Language not supported'"
+            [tooltip]="
+              targetVoices().length ? 'Read out' : 'Language not supported by your browser'
+            "
             [disabled]="!targetVoices().length"
             (onClick)="readOut(targetLang(), translation())">
             <ng-icon name="tablerVolume" size="1.2rem" />
@@ -100,8 +104,8 @@ export class TranslationCardComponent {
     );
     untracked(() => {
       if (voices.length === 0) {
-        this.notificationService.showWarning(
-          'Your current browser does not support the selected source language for text readout.'
+        this.notificationService.showLog(
+          `Your current browser does not support the source language "${this.sourceLang()}" for text readout.`
         );
       }
     });
@@ -114,8 +118,8 @@ export class TranslationCardComponent {
     );
     untracked(() => {
       if (voices.length === 0) {
-        this.notificationService.showWarning(
-          'Your current browser does not support the selected target language for text readout.'
+        this.notificationService.showLog(
+          `Your current browser does not support the target language "${this.targetLang()}" for text readout.`
         );
       }
     });
