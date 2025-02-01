@@ -34,6 +34,7 @@ import { MainManagerService } from '../main-manager.service';
         gap: 1rem;
         justify-content: center;
         align-content: flex-start;
+        padding: 2px;
       }
 
       @media (min-width: 1000px) {
