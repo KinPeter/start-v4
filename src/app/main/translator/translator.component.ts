@@ -42,7 +42,7 @@ import { TranslationCardComponent } from './translation-card.component';
       <header>
         <h1>Translator</h1>
         <div class="actions">
-          <pk-icon-button tooltip="Close" (onClick)="close()" pkFocusFirst>
+          <pk-icon-button tooltip="Close" (onClick)="close()">
             <ng-icon name="tablerX" size="1.2rem" />
           </pk-icon-button>
         </div>
@@ -52,6 +52,7 @@ import { TranslationCardComponent } from './translation-card.component';
           <pk-input width="100%" [error]="validationError() ?? ''">
             <input
               pkInput
+              pkFocusFirst
               [title]="tooltip"
               [disabled]="loading()"
               placeholder="<langs>: <text to translate>"
@@ -64,7 +65,7 @@ import { TranslationCardComponent } from './translation-card.component';
             <pk-loader size="sm" />
           </div>
         } @else if (result()) {
-          <pk-translation-card [result]="result()!" />
+          <pk-translation-card [result]="result()!" [supportedVoices]="supportedVoices()" />
         }
       </main>
     </div>
@@ -73,6 +74,7 @@ import { TranslationCardComponent } from './translation-card.component';
 export class TranslatorComponent implements OnDestroy {
   public loading: Signal<boolean>;
   public result: Signal<TranslationResponse | null>;
+  public supportedVoices: Signal<SpeechSynthesisVoice[]>;
   public validationError: Signal<string | null>;
   public tooltip = `Available languages: ${Object.keys(DeeplLanguage).join(', ')}`;
 
@@ -83,6 +85,7 @@ export class TranslatorComponent implements OnDestroy {
     this.loading = this.translatorService.loading;
     this.result = this.translatorService.result;
     this.validationError = this.translatorService.validationError;
+    this.supportedVoices = this.translatorService.supportedVoices;
   }
 
   public close(): void {

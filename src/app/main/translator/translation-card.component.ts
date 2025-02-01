@@ -1,4 +1,4 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, input, signal, untracked } from '@angular/core';
 import { TranslationResponse } from '@kinpeter/pk-common';
 import { PkCardDirective } from '../../common/pk-card.directive';
 import { NgIcon } from '@ng-icons/core';
@@ -51,7 +51,10 @@ import { NotificationService } from '../../services/notification.service';
     <div pkCard class="card">
       <div class="section original">
         <div>
-          <pk-icon-button tooltip="Read out" (onClick)="readOut(sourceLang(), original())">
+          <pk-icon-button
+            [tooltip]="sourceVoices().length ? 'Read out' : 'Language not supported'"
+            [disabled]="!sourceVoices().length"
+            (onClick)="readOut(sourceLang(), original())">
             <ng-icon name="tablerVolume" size="1.2rem" />
           </pk-icon-button>
           <span>{{ sourceLang() }}</span>
@@ -61,7 +64,10 @@ import { NotificationService } from '../../services/notification.service';
       <hr />
       <div class="section translation">
         <div>
-          <pk-icon-button tooltip="Read out" (onClick)="readOut(targetLang(), translation())">
+          <pk-icon-button
+            [tooltip]="targetVoices().length ? 'Read out' : 'Language not supported'"
+            [disabled]="!targetVoices().length"
+            (onClick)="readOut(targetLang(), translation())">
             <ng-icon name="tablerVolume" size="1.2rem" />
           </pk-icon-button>
           <span>{{ targetLang() }}</span>
@@ -78,37 +84,52 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class TranslationCardComponent {
   public result = input.required<TranslationResponse>();
+  public supportedVoices = input.required<SpeechSynthesisVoice[]>();
   public showCheckmark = signal(false);
+
+  constructor(private notificationService: NotificationService) {}
 
   public sourceLang = computed(() => this.result().sourceLang);
   public targetLang = computed(() => this.result().targetLang);
   public translation = computed(() => this.result().translation);
   public original = computed(() => this.result().original);
 
-  private langWithWarning = '';
+  public sourceVoices = computed(() => {
+    const voices = this.supportedVoices().filter(voice =>
+      voice.lang.toLowerCase().startsWith(this.sourceLang().toLowerCase())
+    );
+    untracked(() => {
+      if (voices.length === 0) {
+        this.notificationService.showWarning(
+          'Your current browser does not support the selected source language for text readout.'
+        );
+      }
+    });
+    return voices;
+  });
 
-  constructor(private notificationService: NotificationService) {}
+  public targetVoices = computed(() => {
+    const voices = this.supportedVoices().filter(voice =>
+      voice.lang.toLowerCase().startsWith(this.targetLang().toLowerCase())
+    );
+    untracked(() => {
+      if (voices.length === 0) {
+        this.notificationService.showWarning(
+          'Your current browser does not support the selected target language for text readout.'
+        );
+      }
+    });
+    return voices;
+  });
 
   public readOut(lang: string, text: string): void {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang;
 
-    const voices = window.speechSynthesis.getVoices();
-    const matchingVoices = voices.filter(voice =>
-      voice.lang.toLowerCase().startsWith(lang.toLowerCase())
-    );
-
-    if (matchingVoices.length > 0) {
-      const randomIndex = Math.floor(Math.random() * matchingVoices.length);
-      utterance.voice = matchingVoices[randomIndex];
-    } else {
-      if (this.langWithWarning === lang) {
-        return;
-      }
-      this.notificationService.showWarning(
-        'Your current browser does not support the selected language for text readout.'
-      );
-      this.langWithWarning = lang;
+    const voices = lang === this.sourceLang() ? this.sourceVoices() : this.targetVoices();
+    if (voices.length !== 0) {
+      const randomIndex = Math.floor(Math.random() * voices.length);
+      utterance.voice = voices[randomIndex];
     }
 
     window.speechSynthesis.speak(utterance);

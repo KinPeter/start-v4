@@ -6,12 +6,15 @@ export class FocusFirstDirective implements AfterViewInit {
 
   public ngAfterViewInit(): void {
     const nativeElement = this.el.nativeElement;
-    if (nativeElement.tagName.toLowerCase() === 'button') {
+    if (
+      nativeElement.tagName.toLowerCase() === 'button' ||
+      nativeElement.tagName.toLowerCase() === 'input'
+    ) {
       nativeElement.focus();
     } else {
-      const buttonElement = nativeElement.querySelector('button');
-      if (buttonElement) {
-        buttonElement.focus();
+      const focusableElement = nativeElement.querySelector('button, input');
+      if (focusableElement) {
+        focusableElement.focus();
       }
     }
   }

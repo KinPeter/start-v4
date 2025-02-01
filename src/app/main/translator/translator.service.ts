@@ -9,12 +9,14 @@ interface TranslatorState {
   loading: boolean;
   result: TranslationResponse | null;
   validationError: string | null;
+  supportedVoices: SpeechSynthesisVoice[];
 }
 
 const initialState: TranslatorState = {
   loading: false,
   result: null,
   validationError: null,
+  supportedVoices: [],
 };
 
 @Injectable({ providedIn: 'root' })
@@ -27,11 +29,16 @@ export class TranslatorService extends Store<TranslatorState> {
     private notificationService: NotificationService
   ) {
     super(initialState);
+    this.setState({ supportedVoices: window.speechSynthesis.getVoices() });
+    window.speechSynthesis.onvoiceschanged = () => {
+      this.setState({ supportedVoices: window.speechSynthesis.getVoices() });
+    };
   }
 
   public loading = computed(() => this.state().loading);
   public result = computed(() => this.state().result);
   public validationError = computed(() => this.state().validationError);
+  public supportedVoices = computed(() => this.state().supportedVoices);
 
   public getTranslation(query: string): void {
     if (!query.trim().length) {
@@ -81,6 +88,6 @@ export class TranslatorService extends Store<TranslatorState> {
   }
 
   public reset(): void {
-    this.setState({ ...initialState });
+    this.setState({ result: null, loading: false, validationError: null });
   }
 }
