@@ -1,4 +1,4 @@
-import { Component, Signal } from '@angular/core';
+import { Component, OnDestroy, Signal } from '@angular/core';
 import { WidgetsBarService } from '../main-menu/widgets-bar.service';
 import { NgIcon } from '@ng-icons/core';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
@@ -9,6 +9,7 @@ import { PkInputComponent } from '../../common/pk-input.component';
 import { PkInputDirective } from '../../common/pk-input.directive';
 import { FocusFirstDirective } from '../../common/focus-first.directive';
 import { TranslatorService } from './translator.service';
+import { TranslationCardComponent } from './translation-card.component';
 
 @Component({
   selector: 'pk-translator',
@@ -20,6 +21,7 @@ import { TranslatorService } from './translator.service';
     PkInputComponent,
     PkInputDirective,
     FocusFirstDirective,
+    TranslationCardComponent,
   ],
   providers: [],
   styles: `
@@ -54,7 +56,7 @@ import { TranslatorService } from './translator.service';
               [disabled]="loading()"
               placeholder="<langs>: <text to translate>"
               type="text"
-              (input)="onInput($event)" />
+              (keyup.enter)="onInput($event)" />
           </pk-input>
         </div>
         @if (loading()) {
@@ -62,19 +64,17 @@ import { TranslatorService } from './translator.service';
             <pk-loader size="sm" />
           </div>
         } @else if (result()) {
-          <p>{{ result()?.translation }}</p>
+          <pk-translation-card [result]="result()!" />
         }
       </main>
     </div>
   `,
 })
-export class TranslatorComponent {
+export class TranslatorComponent implements OnDestroy {
   public loading: Signal<boolean>;
   public result: Signal<TranslationResponse | null>;
   public validationError: Signal<string | null>;
   public tooltip = `Available languages: ${Object.keys(DeeplLanguage).join(', ')}`;
-
-  private debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
     private widgetsBarService: WidgetsBarService,
@@ -90,12 +90,11 @@ export class TranslatorComponent {
   }
 
   public onInput(event: Event): void {
-    if (this.debounceTimeout) {
-      clearTimeout(this.debounceTimeout);
-    }
-    this.debounceTimeout = setTimeout(() => {
-      const target = event.target as HTMLInputElement;
-      this.translatorService.getTranslation(target.value);
-    }, 500);
+    const target = event.target as HTMLInputElement;
+    this.translatorService.getTranslation(target.value);
+  }
+
+  public ngOnDestroy() {
+    this.translatorService.reset();
   }
 }

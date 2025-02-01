@@ -34,19 +34,21 @@ export class TranslatorService extends Store<TranslatorState> {
   public validationError = computed(() => this.state().validationError);
 
   public getTranslation(query: string): void {
+    if (!query.trim().length) {
+      this.setState({ result: null });
+      return;
+    }
+
     const match = query.match(this.translateQueryRegex);
     this.setState({ validationError: null });
 
     if (!match || !match[3]?.trim().length) {
-      console.log('no match');
       return;
     }
 
     const sourceLang = match[1].toLowerCase();
     const targetLang = match[2].toLowerCase();
     const text = match[3].trim();
-    console.log('match', { sourceLang, targetLang, text });
-    console.log(this.availableLanguages);
 
     if (!this.availableLanguages.includes(sourceLang as DeeplLanguage)) {
       this.setState({ validationError: `Invalid source language: ${sourceLang.toUpperCase()}` });
@@ -73,8 +75,12 @@ export class TranslatorService extends Store<TranslatorState> {
         },
         error: err => {
           this.notificationService.showError('Could not fetch translation. ' + err.message);
-          this.setState({ loading: false });
+          this.setState({ loading: false, result: null });
         },
       });
+  }
+
+  public reset(): void {
+    this.setState({ ...initialState });
   }
 }

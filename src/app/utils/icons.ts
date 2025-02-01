@@ -1,6 +1,5 @@
 import {
   tablerAlertTriangle,
-  tablerAlphabetKorean,
   tablerArchive,
   tablerArchiveOff,
   tablerArrowsMaximize,
@@ -46,13 +45,13 @@ import {
   tablerTemperatureSun,
   tablerTextPlus,
   tablerTrash,
+  tablerVolume,
   tablerWalk,
   tablerX,
 } from '@ng-icons/tabler-icons';
 
 export const icons = {
   tablerAlertTriangle,
-  tablerAlphabetKorean,
   tablerArchive,
   tablerArchiveOff,
   tablerArrowsMaximize,
@@ -98,6 +97,7 @@ export const icons = {
   tablerTemperatureSun,
   tablerTextPlus,
   tablerTrash,
+  tablerVolume,
   tablerWalk,
   tablerX,
 };

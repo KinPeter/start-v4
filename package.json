@@ -1,6 +1,6 @@
 {
   "name": "start-v4",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Web Frontend for PKStart",
   "scripts": {
     "ng": "ng",
