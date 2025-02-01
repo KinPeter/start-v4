@@ -1,27 +1,61 @@
 # StartV4
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.2.
+Personal dashboard application to manage some everyday things, built with all the newest features of Angular v19.
 
-## Development server
+## Features:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Access to notes, personal documents data and a collection of shortcuts in widgets or with search
+- Weather information and location data
+- Birthday calendar synced with Google Sheets
+- Cycling and walking activity tracking synced with Strava
+- Multi-language translator with DeepL API
+- Full data backup service
 
-## Code scaffolding
+## Technologies used:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular v19 with Signals
+- TypeScript
+- Mobile friendly, custom CSS design
+- Microfrontend architecture - Weather widget made in Vue 3
+- ESLint, Prettier, Husky for code quality
 
-## Build
+## Development
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Prerequisites
 
-## Running unit tests
+- Node.js version >=22.5.1
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Install the dependencies and also make sure the `@kinpeter/pk-common` package is up to date.
 
-## Running end-to-end tests
+```bash
+npm ci
+npm run update:common
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Environment setup
 
-## Further help
+Have a `.env` file in the root directory with the following content:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+# URL of local API for development
+PK_API_URL_DEV=
+
+# URL of production API
+PK_API_URL_PROD=
+```
+
+### Running the application
+
+```bash
+# Development configuration
+npm run start
+
+# Production configuration
+npm run start:prod
+```
+
+### CI and deployment
+
+After automated quality checks the application is deployed to FTP with GitHub Actions: `.github/workflows/cicd.yml`.
+
+The deployment is triggered by pushing to the `main` branch.
