@@ -51,6 +51,9 @@ export class KeyboardTogglesService implements OnDestroy {
       case 't':
         this.widgets.toggleTranslator();
         break;
+      case 'f':
+        this.widgets.toggleTrips();
+        break;
     }
   }
 

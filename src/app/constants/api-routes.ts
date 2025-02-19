@@ -14,6 +14,7 @@ export enum ApiRoutes {
   ACTIVITIES = '/activities',
   ACTIVITIES_GOALS = '/activities/goals',
   ACTIVITIES_CHORE = '/activities/chore',
+  FLIGHTS = '/flights',
 }
 
 export const publicApiRoutes = [

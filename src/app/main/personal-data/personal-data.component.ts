@@ -137,7 +137,6 @@ export class PersonalDataComponent {
   }
 
   public search(event: Event): void {
-    console.log(event);
     const value = (event.target as HTMLInputElement).value;
     if (value === ' ') {
       this.results.set([...this.data()]);

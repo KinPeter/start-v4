@@ -1,7 +1,14 @@
 import { Component, computed, input, output } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 
-type Widgets = 'Activities' | 'Notes' | 'Weather' | 'Birthdays' | 'Translator' | 'Personal Data';
+type Widgets =
+  | 'Activities'
+  | 'Notes'
+  | 'Weather'
+  | 'Birthdays'
+  | 'Translator'
+  | 'Personal Data'
+  | 'Trips';
 
 @Component({
   selector: 'pk-widget-toggle',
@@ -84,6 +91,8 @@ export class WidgetToggleComponent {
         return 'tablerCreditCard';
       case 'Activities':
         return 'tablerBike';
+      case 'Trips':
+        return 'tablerPlaneDeparture';
       default:
         return undefined;
     }
