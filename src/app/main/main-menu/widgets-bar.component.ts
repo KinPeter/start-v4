@@ -41,9 +41,9 @@ import { BirthdaysService } from '../birthdays/birthdays.service';
         [open]="service.weatherOpen()"
         (toggle)="service.toggleWeather()" />
       <pk-widget-toggle
-        widget="Trips"
-        [open]="service.tripsOpen()"
-        (toggle)="service.toggleTrips()" />
+        widget="Flights"
+        [open]="service.flightsOpen()"
+        (toggle)="service.toggleFlights()" />
     </div>
   `,
 })

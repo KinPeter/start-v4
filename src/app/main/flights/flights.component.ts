@@ -5,12 +5,12 @@ import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { PkWidgetDirective } from '../../common/pk-widget.directive';
 import { WidgetsBarService } from '../main-menu/widgets-bar.service';
-import { TripsService } from './trips.service';
+import { FlightsService } from './flights.service';
 import { Flight } from '@kinpeter/pk-common';
 import { UpcomingFlightsComponent } from './upcoming-flights.component';
 
 @Component({
-  selector: 'pk-trips',
+  selector: 'pk-flights',
   imports: [
     FocusFirstDirective,
     NgIcon,
@@ -25,6 +25,10 @@ import { UpcomingFlightsComponent } from './upcoming-flights.component';
       min-height: 120px;
     }
 
+    main {
+      overflow-y: hidden !important;
+    }
+
     main .loader {
       margin-top: 5%;
     }
@@ -32,7 +36,7 @@ import { UpcomingFlightsComponent } from './upcoming-flights.component';
   template: `
     <div pkWidget class="container">
       <header>
-        <h1>Trips</h1>
+        <h1>Flights</h1>
         <div class="actions">
           <pk-icon-button tooltip="Close" (onClick)="close()" pkFocusFirst>
             <ng-icon name="tablerX" size="1.2rem" />
@@ -51,19 +55,19 @@ import { UpcomingFlightsComponent } from './upcoming-flights.component';
     </div>
   `,
 })
-export class TripsComponent {
+export class FlightsComponent {
   public loading: Signal<boolean>;
   public upcomingFlights: Signal<Flight[]>;
 
   constructor(
-    private tripsService: TripsService,
+    private flightsService: FlightsService,
     private widgetsBarService: WidgetsBarService
   ) {
-    this.upcomingFlights = this.tripsService.upcomingFlights;
-    this.loading = this.tripsService.loading;
+    this.upcomingFlights = this.flightsService.upcomingFlights;
+    this.loading = this.flightsService.loading;
   }
 
   public close(): void {
-    this.widgetsBarService.toggleTrips();
+    this.widgetsBarService.toggleFlights();
   }
 }

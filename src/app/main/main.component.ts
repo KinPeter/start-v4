@@ -12,7 +12,7 @@ import { MainMenuService } from './main-menu/main-menu.service';
 import { KeyboardTogglesService } from '../services/keyboard-toggles.service';
 import { GlobalSearchComponent } from './global-search/global-search.component';
 import { TranslatorComponent } from './translator/translator.component';
-import { TripsComponent } from './trips/trips.component';
+import { FlightsComponent } from './flights/flights.component';
 
 @Component({
   selector: 'pk-main',
@@ -26,7 +26,7 @@ import { TripsComponent } from './trips/trips.component';
     ActivitiesComponent,
     GlobalSearchComponent,
     TranslatorComponent,
-    TripsComponent,
+    FlightsComponent,
   ],
   styles: `
     .main-content {
@@ -122,12 +122,12 @@ import { TripsComponent } from './trips/trips.component';
             <pk-notes />
           }
         </div>
-        <div class="col col-2" [class.hidden]="!widgets.activitiesOpen() && !widgets.tripsOpen()">
+        <div class="col col-2" [class.hidden]="!widgets.activitiesOpen() && !widgets.flightsOpen()">
           @if (widgets.activitiesOpen()) {
             <pk-activities />
           }
-          @if (widgets.tripsOpen()) {
-            <pk-trips />
+          @if (widgets.flightsOpen()) {
+            <pk-flights />
           }
         </div>
         <div class="col col-x"></div>

@@ -6,18 +6,18 @@ import { ApiService } from '../../services/api.service';
 import { NotificationService } from '../../services/notification.service';
 import { parseError } from '../../utils/parse-error';
 
-interface TripsState {
+interface FlightsState {
   loading: boolean;
   upcomingFlights: Flight[];
 }
 
-const initialState: TripsState = {
+const initialState: FlightsState = {
   loading: false,
   upcomingFlights: [],
 };
 
 @Injectable({ providedIn: 'root' })
-export class TripsService extends Store<TripsState> {
+export class FlightsService extends Store<FlightsState> {
   public loading = computed(() => this.state().loading);
   public upcomingFlights = computed(() => this.state().upcomingFlights);
 
@@ -31,11 +31,21 @@ export class TripsService extends Store<TripsState> {
 
   public fetchData(): void {
     this.setState({ loading: true });
+    const now = new Date();
     this.apiService
       .get<Flight[]>(ApiRoutes.FLIGHTS, { params: { plannedOnly: 'true' } })
       .subscribe({
         next: res => {
-          const data = res.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+          const data = res
+            .filter(({ date, departureTime }) => {
+              const dateTime = new Date(`${date}T${departureTime}`);
+              return dateTime.getTime() > now.getTime();
+            })
+            .sort(
+              (a, b) =>
+                new Date(`${a.date}T${a.departureTime}`).getTime() -
+                new Date(`${b.date}T${b.departureTime}`).getTime()
+            );
           this.setState({
             upcomingFlights: data,
             loading: false,
