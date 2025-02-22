@@ -122,20 +122,20 @@ import { FlightsComponent } from './flights/flights.component';
             <pk-notes />
           }
         </div>
-        <div class="col col-2" [class.hidden]="!widgets.activitiesOpen() && !widgets.flightsOpen()">
+        <div
+          class="col col-2"
+          [class.hidden]="!widgets.activitiesOpen() && !widgets.personalDataOpen()">
           @if (widgets.activitiesOpen()) {
             <pk-activities />
           }
-          @if (widgets.flightsOpen()) {
-            <pk-flights />
+          @if (widgets.personalDataOpen()) {
+            <pk-personal-data />
           }
         </div>
         <div class="col col-x"></div>
-        <div
-          class="col col-3"
-          [class.hidden]="!widgets.personalDataOpen() && !widgets.translatorOpen()">
-          @if (widgets.personalDataOpen()) {
-            <pk-personal-data />
+        <div class="col col-3" [class.hidden]="!widgets.flightsOpen() && !widgets.translatorOpen()">
+          @if (widgets.flightsOpen()) {
+            <pk-flights />
           }
           @if (widgets.translatorOpen()) {
             <pk-translator />
