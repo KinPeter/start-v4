@@ -101,6 +101,7 @@ export class StravaApiService extends LocalStore<StravaApiState> {
   public disabled = computed(() => this.state().disabled);
   public data = computed(() => this.state().data);
   public needAuth = computed(() => this.state().needAuth);
+  public stravaToken = computed(() => this.state().accessToken);
 
   public stravaOauthUrl = computed(() => {
     if (!this.settingsStore.stravaSettings()) return '';

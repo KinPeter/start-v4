@@ -1,3 +1,4 @@
+import { NotificationService } from './../../services/notification.service';
 import { Component, signal, Signal, WritableSignal } from '@angular/core';
 import { PkWidgetDirective } from '../../common/pk-widget.directive';
 import { NgIcon } from '@ng-icons/core';
@@ -76,6 +77,12 @@ type ActivityView = 'home' | 'chore' | 'goals';
             [disabled]="loading() || needAuth() || disabled()">
             <ng-icon name="tablerRefresh" size="1.2rem" />
           </pk-icon-button>
+          <pk-icon-button
+            tooltip="Copy token"
+            (onClick)="copyToken()"
+            [disabled]="loading() || needAuth() || disabled()">
+            <ng-icon [name]="showCheckmark() ? 'tablerCheck' : 'tablerCopy'" size="1.2rem" />
+          </pk-icon-button>
           <pk-icon-button tooltip="Close" (onClick)="close()" pkFocusFirst>
             <ng-icon name="tablerX" size="1.2rem" />
           </pk-icon-button>
@@ -133,11 +140,13 @@ export class ActivitiesComponent {
   public activitiesData: Signal<Activities | null>;
   public currentView = signal<ActivityView>('home');
   public choreToEdit: WritableSignal<CyclingChore | null> = signal(null);
+  public showCheckmark = signal(false);
 
   constructor(
     private widgetsBarService: WidgetsBarService,
     private stravaApiService: StravaApiService,
-    private activitiesService: ActivitiesService
+    private activitiesService: ActivitiesService,
+    private notificationService: NotificationService
   ) {
     this.disabled = this.stravaApiService.disabled;
     this.needAuth = this.stravaApiService.needAuth;
@@ -153,6 +162,20 @@ export class ActivitiesComponent {
 
   public refresh() {
     this.stravaApiService.fetchStravaData();
+  }
+
+  public async copyToken() {
+    try {
+      const data = this.stravaApiService.stravaToken();
+      if (!data) return;
+      await navigator.clipboard.writeText(data);
+      this.showCheckmark.set(true);
+      setTimeout(() => {
+        this.showCheckmark.set(false);
+      }, 3000);
+    } catch (_e) {
+      this.notificationService.showError('Could not copy to clipboard.');
+    }
   }
 
   public handleSaveGoals(goals: SetGoalsRequest): void {
