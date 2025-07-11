@@ -108,7 +108,8 @@ export class BirthdaysService extends Store<BirthdaysState> {
     const isEndOfYear = now.getMonth() === 11 && now.getDate() > 15;
 
     birthdays.forEach(item => {
-      const date = setYear(new Date(item.date), currentYear);
+      const [month, day] = item.date.split('/').map(Number);
+      const date = new Date(currentYear, month - 1, day);
 
       if (isSameDay(now, date)) {
         today.push(item);
