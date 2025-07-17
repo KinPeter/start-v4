@@ -6,7 +6,7 @@ Personal dashboard application to manage some everyday things, built with all th
 
 - Access to notes, personal documents data and a collection of shortcuts in widgets or with search
 - Weather information and location data
-- Birthday calendar synced with Google Sheets
+- Birthday calendar
 - Cycling and walking activity tracking synced with Strava
 - Multi-language translator with DeepL API
 - Full data backup service
