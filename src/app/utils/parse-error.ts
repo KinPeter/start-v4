@@ -1,19 +1,15 @@
-import { ApiError, ApiErrorMap } from '@kinpeter/pk-common';
-
 // eslint-disable-next-line
 export function parseError(e: any): string {
+  let message = '';
+
   if (e.message) {
-    return e.message;
+    message += ' ' + e.message;
   }
-  if (e.error.message) {
-    return e.error.message;
+  if (e?.error?.detail && typeof e.error.detail === 'string') {
+    message += ' ' + e.error.detail;
   }
-  if (e.error.error) {
-    const apiErrorCode = e.error.error;
-    // eslint-disable-next-line
-    if (ApiErrorMap.hasOwnProperty(apiErrorCode)) {
-      return ApiErrorMap[apiErrorCode as ApiError];
-    }
+  if (e?.error.detail && (typeof e.error.detail === 'object' || Array.isArray(e.error.detail))) {
+    message += ' ' + JSON.stringify(e.error.detail);
   }
-  return JSON.stringify(e);
+  return message || 'Unknown error';
 }

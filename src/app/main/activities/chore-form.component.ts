@@ -1,5 +1,4 @@
 import { Component, effect, input, output } from '@angular/core';
-import { CyclingChore, CyclingChoreRequest } from '@kinpeter/pk-common';
 import {
   FormBuilder,
   FormGroup,
@@ -10,6 +9,7 @@ import {
 import { PkButtonComponent } from '../../common/pk-button.component';
 import { PkInputComponent } from '../../common/pk-input.component';
 import { PkInputDirective } from '../../common/pk-input.directive';
+import { CyclingChore, CyclingChoreRequest } from '../../types';
 
 @Component({
   selector: 'pk-chore-form',

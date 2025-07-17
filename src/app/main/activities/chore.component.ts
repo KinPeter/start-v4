@@ -4,8 +4,8 @@ import { DecimalPipe } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { PkCardDirective } from '../../common/pk-card.directive';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
-import { StravaAthleteData } from './activities.types';
-import { CyclingChore, UUID } from '@kinpeter/pk-common';
+import { CyclingChore } from '../../types/activities';
+import { UUID, StravaAthleteData } from '../../types';
 
 @Component({
   selector: 'pk-chore',

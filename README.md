@@ -25,11 +25,10 @@ Personal dashboard application to manage some everyday things, built with all th
 
 - Node.js version >=22.5.1
 
-Install the dependencies and also make sure the `@kinpeter/pk-common` package is up to date.
+Install the dependencies.
 
 ```bash
 npm ci
-npm run update:common
 ```
 
 ### Environment setup

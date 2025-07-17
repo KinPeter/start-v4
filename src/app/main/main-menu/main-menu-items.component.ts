@@ -58,11 +58,11 @@ export class MainMenuItemsComponent {
       label: 'Email data backup',
       action: () => this.dataBackupService.sendBackupEmailRequest(),
     },
-    {
-      icon: 'tablerCloudDownload',
-      label: 'Download data backup',
-      action: () => this.dataBackupService.getBackupData(),
-    },
+    // {
+    //   icon: 'tablerCloudDownload',
+    //   label: 'Download data backup',
+    //   action: () => this.dataBackupService.getBackupData(),
+    // },
     {
       icon: 'tablerArrowsMaximize',
       label: 'Enter fullscreen',

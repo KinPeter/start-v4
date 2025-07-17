@@ -2,10 +2,10 @@ import { computed, effect, Injectable, untracked } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { NotificationService } from '../../services/notification.service';
 import { LocalStore } from '../../utils/store';
-import { Activities, CyclingChoreRequest, SetGoalsRequest, UUID } from '@kinpeter/pk-common';
 import { ApiRoutes, StoreKeys } from '../../constants';
 import { parseError } from '../../utils/parse-error';
 import { StravaApiService } from './strava-api.service';
+import { Activities, CyclingChoreRequest, SetGoalsRequest, UUID } from '../../types';
 
 interface ActivitiesState {
   loading: boolean;

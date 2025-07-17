@@ -14,7 +14,7 @@ import {
   StravaAthleteResponse,
   StravaAthleteStatsResponse,
   StravaAuthResponse,
-} from './activities.types';
+} from '../../types';
 import {
   convertRideStats,
   getPrimaryBikeData,

@@ -8,18 +8,18 @@ import { StravaApiService } from './strava-api.service';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { NgOptimizedImage } from '@angular/common';
 import { ActivitiesService } from './activities.service';
-import { StravaAthleteData } from './activities.types';
+import { ActivitiesWrapperComponent } from './activities-wrapper.component';
+import { ChoreFormComponent } from './chore-form.component';
+import { GoalsFormComponent } from './goals-form.component';
+import { FocusFirstDirective } from '../../common/focus-first.directive';
 import {
   Activities,
   CyclingChore,
   CyclingChoreRequest,
   SetGoalsRequest,
   UUID,
-} from '@kinpeter/pk-common';
-import { ActivitiesWrapperComponent } from './activities-wrapper.component';
-import { ChoreFormComponent } from './chore-form.component';
-import { GoalsFormComponent } from './goals-form.component';
-import { FocusFirstDirective } from '../../common/focus-first.directive';
+  StravaAthleteData,
+} from '../../types';
 
 type ActivityView = 'home' | 'chore' | 'goals';
 

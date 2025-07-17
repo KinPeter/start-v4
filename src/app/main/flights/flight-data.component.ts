@@ -1,7 +1,7 @@
 import { Component, computed, input } from '@angular/core';
-import { Flight } from '@kinpeter/pk-common';
 import { NgIcon } from '@ng-icons/core';
 import { UpperCasePipe } from '@angular/common';
+import { Flight } from '../../types';
 
 @Component({
   selector: 'pk-flight-data',
@@ -74,14 +74,14 @@ import { UpperCasePipe } from '@angular/common';
       <div class="row from-to">
         <div class="info">
           <span class="label">{{ 'from' | uppercase }}</span>
-          <span class="iata">{{ flight().from.iata }}</span>
-          <span class="city">{{ flight().from.city | uppercase }}</span>
+          <span class="iata">{{ flight().departureAirport.iata }}</span>
+          <span class="city">{{ flight().departureAirport.city | uppercase }}</span>
         </div>
         <ng-icon name="tablerPlane" size="2rem" />
         <div class="info">
           <span class="label">{{ 'to' | uppercase }}</span>
-          <span class="iata">{{ flight().to.iata }}</span>
-          <span class="city">{{ flight().to.city | uppercase }}</span>
+          <span class="iata">{{ flight().arrivalAirport.iata }}</span>
+          <span class="city">{{ flight().arrivalAirport.city | uppercase }}</span>
         </div>
       </div>
     </div>

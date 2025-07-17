@@ -6,8 +6,8 @@ import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { PkWidgetDirective } from '../../common/pk-widget.directive';
 import { WidgetsBarService } from '../main-menu/widgets-bar.service';
 import { FlightsService } from './flights.service';
-import { Flight } from '@kinpeter/pk-common';
 import { UpcomingFlightsComponent } from './upcoming-flights.component';
+import { Flight } from '../../types';
 
 @Component({
   selector: 'pk-flights',

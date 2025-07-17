@@ -1,9 +1,9 @@
 import { computed, Injectable } from '@angular/core';
 import { Store } from '../../utils/store';
-import { DeeplLanguage, TranslationRequest, TranslationResponse } from '@kinpeter/pk-common';
 import { NotificationService } from '../../services/notification.service';
 import { ApiService } from '../../services/api.service';
 import { ApiRoutes } from '../../constants';
+import { DeeplLanguage, TranslationRequest, TranslationResponse } from '../../types';
 
 interface TranslatorState {
   loading: boolean;

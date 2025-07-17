@@ -1,14 +1,21 @@
 import { computed, Injectable } from '@angular/core';
-import { ShortcutRequest, Shortcut, ShortcutCategory, IdObject, UUID } from '@kinpeter/pk-common';
 import { ApiRoutes } from '../../constants';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Store } from '../../utils/store';
 import { ApiService } from '../../services/api.service';
 import { NotificationService } from '../../services/notification.service';
-import { ShortcutsByCategory } from './shortcuts.types';
 import { distributeShortcuts } from './shortcuts.utils';
 import { parseError } from '../../utils/parse-error';
+import {
+  Shortcut,
+  ShortcutCategory,
+  ShortcutsByCategory,
+  ShortcutRequest,
+  UUID,
+  IdObject,
+  ListResponse,
+} from '../../types';
 
 interface ShortcutState {
   allById: Record<UUID, Shortcut>;
@@ -22,7 +29,7 @@ const initialState: ShortcutState = {
     [ShortcutCategory.TOP]: [],
     [ShortcutCategory.CODING]: [],
     [ShortcutCategory.GOOGLE]: [],
-    [ShortcutCategory.CYCLING]: [],
+    [ShortcutCategory.HOBBIES]: [],
     [ShortcutCategory.FUN]: [],
     [ShortcutCategory.OTHERS]: [],
   },
@@ -48,9 +55,9 @@ export class ShortcutsService extends Store<ShortcutState> {
 
   public fetchShortcuts(): void {
     this.setState({ loading: true });
-    this.apiService.get<Shortcut[]>(ApiRoutes.SHORTCUTS).subscribe({
+    this.apiService.get<ListResponse<Shortcut>>(ApiRoutes.SHORTCUTS).subscribe({
       next: res => {
-        const { byCategory, byId } = distributeShortcuts(res);
+        const { byCategory, byId } = distributeShortcuts(res.entities);
         this.setState({
           allById: byId,
           shortcuts: byCategory,
@@ -77,7 +84,7 @@ export class ShortcutsService extends Store<ShortcutState> {
   public updateShortcut(request: ShortcutRequest, id: UUID): Observable<Shortcut> {
     this.setState({ loading: true });
     return this.apiService
-      .put<ShortcutRequest, Shortcut>(ApiRoutes.SHORTCUTS + `/${id}`, request)
+      .put<ShortcutRequest, Shortcut>(ApiRoutes.SHORTCUTS + `${id}`, request)
       .pipe(
         tap({
           next: () => this.setState({ loading: false }),
@@ -88,7 +95,7 @@ export class ShortcutsService extends Store<ShortcutState> {
 
   public deleteShortcut(id: UUID): Observable<IdObject> {
     this.setState({ loading: true });
-    return this.apiService.delete<IdObject>(ApiRoutes.SHORTCUTS + `/${id}`).pipe(
+    return this.apiService.delete<IdObject>(ApiRoutes.SHORTCUTS + `${id}`).pipe(
       tap({
         next: () => this.setState({ loading: false }),
         error: () => this.setState({ loading: false }),

@@ -1,5 +1,6 @@
-import { Shortcut, ShortcutCategory, UUID } from '@kinpeter/pk-common';
-import { ShortcutsByCategory } from './shortcuts.types';
+import { UUID } from '../../types/misc';
+import { Shortcut, ShortcutCategory } from '../../types/shortcuts';
+import { ShortcutsByCategory } from '../../types';
 
 export function distributeShortcuts(shortcuts: Shortcut[]): {
   byCategory: ShortcutsByCategory;
@@ -10,7 +11,7 @@ export function distributeShortcuts(shortcuts: Shortcut[]): {
     [ShortcutCategory.TOP]: [],
     [ShortcutCategory.CODING]: [],
     [ShortcutCategory.GOOGLE]: [],
-    [ShortcutCategory.CYCLING]: [],
+    [ShortcutCategory.HOBBIES]: [],
     [ShortcutCategory.FUN]: [],
     [ShortcutCategory.OTHERS]: [],
   };

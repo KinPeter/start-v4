@@ -3,7 +3,6 @@ import { PkInputComponent } from '../../common/pk-input.component';
 import { PkInputDirective } from '../../common/pk-input.directive';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShortcutsFormComponent } from './shortcuts-form.component';
-import { Shortcut, ShortcutCategory, ShortcutRequest, UUID } from '@kinpeter/pk-common';
 import { ShortcutsService } from './shortcuts.service';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { NgIcon } from '@ng-icons/core';
@@ -11,6 +10,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { SettingsStore } from '../settings/settings.store';
 import { NotificationService } from '../../services/notification.service';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
+import { Shortcut, ShortcutCategory, ShortcutRequest, UUID } from '../../types';
 
 @Component({
   selector: 'pk-shortcuts-settings',

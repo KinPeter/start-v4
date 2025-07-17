@@ -1,6 +1,5 @@
 import { Component, effect, input, output } from '@angular/core';
 import { PkButtonComponent } from '../../common/pk-button.component';
-import { Activities, SetGoalsRequest } from '@kinpeter/pk-common';
 import {
   FormBuilder,
   FormGroup,
@@ -10,6 +9,7 @@ import {
 } from '@angular/forms';
 import { PkInputComponent } from '../../common/pk-input.component';
 import { PkInputDirective } from '../../common/pk-input.directive';
+import { Activities, SetGoalsRequest } from '../../types';
 
 @Component({
   selector: 'pk-goals-form',

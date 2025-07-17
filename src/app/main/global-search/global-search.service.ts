@@ -2,8 +2,8 @@ import { computed, Injectable, signal, Signal, WritableSignal } from '@angular/c
 import { ShortcutsService } from '../shortcuts/shortcuts.service';
 import { NotesService } from '../notes/notes.service';
 import { PersonalDataService } from '../personal-data/personal-data.service';
-import { BirthdayItem, Note, PersonalData, Shortcut } from '@kinpeter/pk-common';
 import { BirthdaysService } from '../birthdays/birthdays.service';
+import { Note, Shortcut, PersonalData, BirthdayItem } from '../../types';
 
 export interface GlobalSearchResult {
   notes: Note[];

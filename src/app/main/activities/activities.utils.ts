@@ -4,7 +4,7 @@ import {
   StravaBikeDataResponse,
   StravaActivityStats,
   StravaRideStatsResponse,
-} from './activities.types';
+} from '../../types';
 
 export function metersToKms(meters: number): number {
   return Math.round(meters / 100) / 10;

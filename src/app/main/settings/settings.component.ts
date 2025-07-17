@@ -8,6 +8,7 @@ import { CustomValidators } from '../../utils/validators';
 import { PkInputComponent } from '../../common/pk-input.component';
 import { PkInputDirective } from '../../common/pk-input.directive';
 import { PkButtonComponent } from '../../common/pk-button.component';
+import { PkStartSettingsRequest } from '../../types';
 
 @Component({
   selector: 'pk-settings',
@@ -31,12 +32,6 @@ import { PkButtonComponent } from '../../common/pk-button.component';
           width="100%"
           [error]="form.get('shortcutIconBaseUrl')?.errors ? 'Invalid URL' : ''">
           <input pkInput formControlName="shortcutIconBaseUrl" type="text" />
-        </pk-input>
-        <pk-input
-          label="Birthdays Google Sheet URL"
-          width="100%"
-          [error]="form.get('birthdaysUrl')?.errors ? 'Invalid URL' : ''">
-          <input pkInput formControlName="birthdaysUrl" type="text" />
         </pk-input>
         <pk-input label="Strava OAuth redirect URL" width="100%">
           <input pkInput formControlName="stravaRedirectUri" type="text" />
@@ -70,14 +65,19 @@ export class SettingsComponent {
     this.form = this.formBuilder.group({
       name: [data.name],
       shortcutIconBaseUrl: [data.shortcutIconBaseUrl, CustomValidators.url],
-      birthdaysUrl: [data.birthdaysUrl, CustomValidators.url],
       stravaRedirectUri: [data.stravaRedirectUri],
     });
   }
 
   public saveSettings(): void {
     this.loading.set(true);
-    this.settingsService.saveSettings(this.form.value).subscribe({
+    const values: PkStartSettingsRequest = {
+      name: this.form.get('name')?.value || null,
+      shortcutIconBaseUrl: this.form.get('shortcutIconBaseUrl')?.value || null,
+      stravaRedirectUri: this.form.get('stravaRedirectUri')?.value || null,
+    };
+
+    this.settingsService.saveSettings(values).subscribe({
       next: res => {
         this.settingsStore.setSettings(res);
         this.notificationService.showSuccess('Settings have been saved');

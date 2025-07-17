@@ -1,7 +1,7 @@
 import { computed, Injectable } from '@angular/core';
-import { PkStartSettings } from '@kinpeter/pk-common';
 import { StoreKeys } from '../../constants';
 import { LocalStore } from '../../utils/store';
+import { PkStartSettings } from '../../types';
 
 export type UserSettings = Omit<PkStartSettings, 'userId'>;
 
@@ -10,7 +10,6 @@ const initialState: UserSettings = {
   openWeatherApiKey: null,
   locationIqApiKey: null,
   unsplashApiKey: null,
-  birthdaysUrl: null,
   stravaClientId: null,
   stravaClientSecret: null,
   stravaRedirectUri: null,
@@ -36,10 +35,6 @@ export class SettingsStore extends LocalStore<UserSettings> {
 
   public get shortcutIconBaseUrl(): string | null {
     return this.state().shortcutIconBaseUrl;
-  }
-
-  public get birthdaysUrl(): string | null {
-    return this.state().birthdaysUrl;
   }
 
   public get allState(): UserSettings {

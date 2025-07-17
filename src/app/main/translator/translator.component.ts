@@ -3,13 +3,13 @@ import { WidgetsBarService } from '../main-menu/widgets-bar.service';
 import { NgIcon } from '@ng-icons/core';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { PkWidgetDirective } from '../../common/pk-widget.directive';
-import { DeeplLanguage, TranslationResponse } from '@kinpeter/pk-common';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { PkInputComponent } from '../../common/pk-input.component';
 import { PkInputDirective } from '../../common/pk-input.directive';
 import { FocusFirstDirective } from '../../common/focus-first.directive';
 import { TranslatorService } from './translator.service';
 import { TranslationCardComponent } from './translation-card.component';
+import { DeeplLanguage, TranslationResponse } from '../../types';
 
 @Component({
   selector: 'pk-translator',

@@ -1,13 +1,13 @@
 import { Component, signal, Signal } from '@angular/core';
 import { BirthdaysService } from './birthdays.service';
 import { WidgetsBarService } from '../main-menu/widgets-bar.service';
-import { BirthdayItem } from '@kinpeter/pk-common';
 import { NgIcon } from '@ng-icons/core';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { PkWidgetDirective } from '../../common/pk-widget.directive';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { PkCardDirective } from '../../common/pk-card.directive';
 import { FocusFirstDirective } from '../../common/focus-first.directive';
+import { BirthdayItem } from '../../types';
 
 @Component({
   selector: 'pk-birthdays',

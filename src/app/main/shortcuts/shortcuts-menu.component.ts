@@ -3,7 +3,7 @@ import { ShortcutsService } from './shortcuts.service';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { NgIcon } from '@ng-icons/core';
 import { NotificationService } from '../../services/notification.service';
-import { ShortcutCategory } from '@kinpeter/pk-common';
+import { ShortcutCategory } from '../../types';
 
 @Component({
   selector: 'pk-shortcuts-menu',
@@ -121,7 +121,7 @@ export class ShortcutsMenuComponent {
     { category: ShortcutCategory.TOP, icon: 'tablerStar' },
     { category: ShortcutCategory.CODING, icon: 'tablerCode' },
     { category: ShortcutCategory.GOOGLE, icon: 'tablerBrandGoogle' },
-    { category: ShortcutCategory.CYCLING, icon: 'tablerBike' },
+    { category: ShortcutCategory.HOBBIES, icon: 'tablerBike' },
     { category: ShortcutCategory.FUN, icon: 'tablerMoodSmileBeam' },
     { category: ShortcutCategory.OTHERS, icon: 'tablerDots' },
   ];

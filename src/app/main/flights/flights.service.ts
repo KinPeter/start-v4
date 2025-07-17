@@ -1,10 +1,10 @@
 import { computed, Injectable } from '@angular/core';
-import { Flight } from '@kinpeter/pk-common';
 import { Store } from '../../utils/store';
 import { ApiRoutes } from '../../constants';
 import { ApiService } from '../../services/api.service';
 import { NotificationService } from '../../services/notification.service';
 import { parseError } from '../../utils/parse-error';
+import { Flight, ListResponse } from '../../types';
 
 interface FlightsState {
   loading: boolean;
@@ -33,10 +33,10 @@ export class FlightsService extends Store<FlightsState> {
     this.setState({ loading: true });
     const now = new Date();
     this.apiService
-      .get<Flight[]>(ApiRoutes.FLIGHTS, { params: { plannedOnly: 'true' } })
+      .get<ListResponse<Flight>>(ApiRoutes.FLIGHTS, { params: { plannedOnly: 'true' } })
       .subscribe({
         next: res => {
-          const data = res
+          const data = res.entities
             .filter(({ date, departureTime }) => {
               const dateTime = new Date(`${date}T${departureTime}`);
               return dateTime.getTime() > now.getTime();

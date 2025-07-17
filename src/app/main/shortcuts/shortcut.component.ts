@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
-import { Shortcut } from '@kinpeter/pk-common';
 import { SettingsStore } from '../settings/settings.store';
 import { NgOptimizedImage } from '@angular/common';
+import { Shortcut } from '../../types';
 
 @Component({
   selector: 'pk-shortcut',

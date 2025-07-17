@@ -1,6 +1,5 @@
 import { Component, signal, Signal, WritableSignal } from '@angular/core';
 import { NotesService } from './notes.service';
-import { Note, NoteRequest, UUID } from '@kinpeter/pk-common';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { NgIcon } from '@ng-icons/core';
@@ -11,6 +10,7 @@ import { NoteFormComponent } from './note-form.component';
 import { NotificationService } from '../../services/notification.service';
 import { parseError } from '../../utils/parse-error';
 import { FocusFirstDirective } from '../../common/focus-first.directive';
+import { Note, NoteRequest, UUID } from '../../types';
 
 @Component({
   selector: 'pk-notes',
@@ -120,6 +120,7 @@ export class NotesComponent {
       const note = {
         ...noteToEdit,
         ...values,
+        text: values.text || null,
       };
       this.notesService.updateNote(noteToEdit.id, note).subscribe({
         next: () => {
@@ -130,14 +131,16 @@ export class NotesComponent {
         error: e => this.notificationService.showError('Failed to update note: ' + parseError(e)),
       });
     } else {
-      this.notesService.createNote({ ...values, archived: false, pinned: false }).subscribe({
-        next: () => {
-          this.notificationService.showSuccess('Note has been created');
-          this.notesService.fetchNotes();
-          this.cancelEditing();
-        },
-        error: e => this.notificationService.showError('Failed to create note: ' + parseError(e)),
-      });
+      this.notesService
+        .createNote({ ...values, text: values.text || null, archived: false, pinned: false })
+        .subscribe({
+          next: () => {
+            this.notificationService.showSuccess('Note has been created');
+            this.notesService.fetchNotes();
+            this.cancelEditing();
+          },
+          error: e => this.notificationService.showError('Failed to create note: ' + parseError(e)),
+        });
     }
   }
 

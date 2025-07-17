@@ -1,5 +1,4 @@
 import { computed, Injectable } from '@angular/core';
-import { NoteRequest, Note, IdObject, UUID } from '@kinpeter/pk-common';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { omit } from '../../utils/objects';
@@ -9,6 +8,7 @@ import { ApiRoutes } from '../../constants';
 import { ApiService } from '../../services/api.service';
 import { NotificationService } from '../../services/notification.service';
 import { parseISO } from 'date-fns';
+import { Note, NoteRequest, UUID, IdObject, ListResponse } from '../../types';
 
 interface NotesState {
   notes: Note[];
@@ -35,10 +35,10 @@ export class NotesService extends Store<NotesState> {
 
   public fetchNotes(): void {
     this.setState({ loading: true });
-    this.apiService.get<Note[]>(ApiRoutes.NOTES).subscribe({
+    this.apiService.get<ListResponse<Note>>(ApiRoutes.NOTES).subscribe({
       next: res => {
         this.setState({
-          notes: res
+          notes: res.entities
             .sort(
               (a, b) =>
                 parseISO(b.createdAt as unknown as string).getTime() -
@@ -69,7 +69,7 @@ export class NotesService extends Store<NotesState> {
   public updateNote(id: UUID, note: NoteRequest): Observable<Note> {
     this.setState({ loading: true });
     const request = omit(note, ['createdAt', 'userId', 'id']);
-    return this.apiService.put<NoteRequest, Note>(ApiRoutes.NOTES + `/${id}`, request).pipe(
+    return this.apiService.put<NoteRequest, Note>(ApiRoutes.NOTES + `${id}`, request).pipe(
       tap({
         next: () => this.setState({ loading: false }),
         error: () => this.setState({ loading: false }),
@@ -79,7 +79,7 @@ export class NotesService extends Store<NotesState> {
 
   public deleteNote(id: UUID): Observable<IdObject> {
     this.setState({ loading: true });
-    return this.apiService.delete<IdObject>(ApiRoutes.NOTES + `/${id}`).pipe(
+    return this.apiService.delete<IdObject>(ApiRoutes.NOTES + `${id}`).pipe(
       tap({
         next: () => this.setState({ loading: false }),
         error: () => this.setState({ loading: false }),

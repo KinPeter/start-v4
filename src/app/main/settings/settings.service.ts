@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { PkStartSettings, PkStartSettingsRequest } from '@kinpeter/pk-common';
 import { Observable } from 'rxjs';
 import { ApiRoutes } from '../../constants/api-routes';
 import { ApiService } from '../../services/api.service';
+import { PkStartSettings, PkStartSettingsRequest } from '../../types';
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {

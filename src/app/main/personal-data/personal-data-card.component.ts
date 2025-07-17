@@ -1,9 +1,9 @@
 import { Component, input, output, signal } from '@angular/core';
 import { PkCardDirective } from '../../common/pk-card.directive';
-import { PersonalData, UUID } from '@kinpeter/pk-common';
 import { NgIcon } from '@ng-icons/core';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { NotificationService } from '../../services/notification.service';
+import { PersonalData, UUID } from '../../types';
 
 @Component({
   selector: 'pk-personal-data-card',

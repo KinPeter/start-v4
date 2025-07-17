@@ -8,11 +8,11 @@ import {
   signal,
   SimpleChanges,
 } from '@angular/core';
-import { Flight } from '@kinpeter/pk-common';
 import { PkCardDirective } from '../../common/pk-card.directive';
 import { interval, map, startWith, Subscription } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
 import { FlightDataComponent } from './flight-data.component';
+import { Flight } from '../../types';
 
 interface Countdown {
   days: number;

@@ -1,5 +1,4 @@
 import { computed, Injectable } from '@angular/core';
-import { PersonalDataRequest, PersonalData, IdObject, UUID } from '@kinpeter/pk-common';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Store } from '../../utils/store';
@@ -7,6 +6,7 @@ import { ApiRoutes } from '../../constants';
 import { ApiService } from '../../services/api.service';
 import { NotificationService } from '../../services/notification.service';
 import { parseError } from '../../utils/parse-error';
+import { PersonalData, PersonalDataRequest, IdObject, ListResponse, UUID } from '../../types';
 
 interface PersonalDataState {
   loading: boolean;
@@ -33,10 +33,10 @@ export class PersonalDataService extends Store<PersonalDataState> {
 
   public fetchData(): void {
     this.setState({ loading: true });
-    this.apiService.get<PersonalData[]>(ApiRoutes.PERSONAL_DATA).subscribe({
+    this.apiService.get<ListResponse<PersonalData>>(ApiRoutes.PERSONAL_DATA).subscribe({
       next: res => {
         this.setState({
-          data: res,
+          data: res.entities,
           loading: false,
         });
       },
@@ -62,7 +62,7 @@ export class PersonalDataService extends Store<PersonalDataState> {
   public updatePersonalData(id: UUID, request: PersonalDataRequest): Observable<PersonalData> {
     this.setState({ loading: true });
     return this.apiService
-      .put<PersonalDataRequest, PersonalData>(ApiRoutes.PERSONAL_DATA + `/${id}`, request)
+      .put<PersonalDataRequest, PersonalData>(ApiRoutes.PERSONAL_DATA + `${id}`, request)
       .pipe(
         tap({
           next: () => this.setState({ loading: false }),
@@ -73,7 +73,7 @@ export class PersonalDataService extends Store<PersonalDataState> {
 
   public deletePersonalData(id: UUID): Observable<IdObject> {
     this.setState({ loading: true });
-    return this.apiService.delete<IdObject>(ApiRoutes.PERSONAL_DATA + `/${id}`).pipe(
+    return this.apiService.delete<IdObject>(ApiRoutes.PERSONAL_DATA + `${id}`).pipe(
       tap({
         next: () => this.setState({ loading: false }),
         error: () => this.setState({ loading: false }),

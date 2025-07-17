@@ -1,10 +1,9 @@
 import { Component, input, output } from '@angular/core';
-import { StravaAthleteData } from './activities.types';
-import { Activities, UUID } from '@kinpeter/pk-common';
 import { ChoresComponent } from './chores.component';
 import { CyclingGoalsCardComponent } from './cycling-goals-card.component';
 import { WalkGoalsCardComponent } from './walk-goals-card.component';
 import { CyclingStatsCardComponent } from './cycling-stats-card.component';
+import { Activities, UUID, StravaAthleteData } from '../../types';
 
 @Component({
   selector: 'pk-activities-wrapper',

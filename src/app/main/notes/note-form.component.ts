@@ -1,12 +1,12 @@
 import { Component, effect, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Note } from '@kinpeter/pk-common';
 import { CustomValidators } from '../../utils/validators';
 import { PkInputComponent } from '../../common/pk-input.component';
 import { PkInputDirective } from '../../common/pk-input.directive';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { NgIcon } from '@ng-icons/core';
 import { PkButtonComponent } from '../../common/pk-button.component';
+import { Note } from '../../types';
 
 @Component({
   selector: 'pk-note-form',

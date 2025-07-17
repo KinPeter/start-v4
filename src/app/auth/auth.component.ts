@@ -9,7 +9,7 @@ import { NgStyle } from '@angular/common';
 import { PkInputDirective } from '../common/pk-input.directive';
 import { PkInputComponent } from '../common/pk-input.component';
 import { PkButtonComponent } from '../common/pk-button.component';
-import { LOGIN_CODE_REGEX } from '@kinpeter/pk-common';
+import { LOGIN_CODE_REGEX } from '../utils/regex';
 
 @Component({
   selector: 'pk-auth',

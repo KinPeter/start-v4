@@ -1,8 +1,7 @@
 import { Component, input } from '@angular/core';
 import { PkCardDirective } from '../../common/pk-card.directive';
-import { StravaAthleteData } from './activities.types';
-import { Activities } from '@kinpeter/pk-common';
 import { GoalsComponent } from './goals.component';
+import { Activities, StravaAthleteData } from '../../types';
 
 @Component({
   selector: 'pk-walk-goals-card',

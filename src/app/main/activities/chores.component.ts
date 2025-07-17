@@ -1,7 +1,6 @@
 import { Component, input, output } from '@angular/core';
-import { StravaAthleteData } from './activities.types';
-import { CyclingChore, UUID } from '@kinpeter/pk-common';
 import { ChoreComponent } from './chore.component';
+import { CyclingChore, StravaAthleteData, UUID } from '../../types';
 
 @Component({
   selector: 'pk-chores',

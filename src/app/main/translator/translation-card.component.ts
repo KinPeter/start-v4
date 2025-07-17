@@ -1,9 +1,9 @@
 import { Component, computed, input, signal, untracked } from '@angular/core';
-import { TranslationResponse } from '@kinpeter/pk-common';
 import { PkCardDirective } from '../../common/pk-card.directive';
 import { NgIcon } from '@ng-icons/core';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { NotificationService } from '../../services/notification.service';
+import { TranslationResponse } from '../../types';
 
 @Component({
   selector: 'pk-translation-card',

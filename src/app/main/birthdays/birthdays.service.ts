@@ -1,15 +1,14 @@
 import { computed, Injectable } from '@angular/core';
-import { BirthdayItem } from '@kinpeter/pk-common';
 import { differenceInDays, isSameDay, setYear, parseISO } from 'date-fns';
 import { StoreKeys, ApiRoutes } from '../../constants';
 import { Store } from '../../utils/store';
 import { ApiService } from '../../services/api.service';
 import { NotificationService } from '../../services/notification.service';
-import { SettingsStore } from '../settings/settings.store';
 import { DatetimeStore } from '../../services/datetime.store';
 import { parseError } from '../../utils/parse-error';
 import { filter } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { BirthdayItem, ListResponse } from '../../types';
 
 interface BirthdaysState {
   allBirthdays: BirthdayItem[];
@@ -46,14 +45,9 @@ export class BirthdaysService extends Store<BirthdaysState> {
   constructor(
     private apiService: ApiService,
     private datetimeStore: DatetimeStore,
-    private settingsStore: SettingsStore,
     private notificationService: NotificationService
   ) {
     super(initialState);
-    if (!this.settingsStore.birthdaysUrl) {
-      this.setState({ disabled: true });
-      return;
-    }
     this.datetimeStore.today$
       .pipe(
         filter(value => Boolean(value)),
@@ -80,17 +74,17 @@ export class BirthdaysService extends Store<BirthdaysState> {
       return;
     }
     this.setState({ loading: true });
-    this.apiService.get<BirthdayItem[]>(ApiRoutes.PROXY_BIRTHDAYS).subscribe({
+    this.apiService.get<ListResponse<BirthdayItem>>(ApiRoutes.BIRTHDAYS).subscribe({
       next: res => {
         localStorage.setItem(
           StoreKeys.BIRTHDAYS,
           JSON.stringify({
             lastFetch: new Date().toISOString(),
-            birthdays: res,
+            birthdays: res.entities,
           })
         );
-        this.setState({ allBirthdays: res, loading: false });
-        this.checkBirthdays(res);
+        this.setState({ allBirthdays: res.entities, loading: false });
+        this.checkBirthdays(res.entities);
       },
       error: err => {
         this.setState({ loading: false });

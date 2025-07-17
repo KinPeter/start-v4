@@ -1,9 +1,9 @@
 import { Component, effect, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PersonalData } from '@kinpeter/pk-common';
 import { PkInputComponent } from '../../common/pk-input.component';
 import { PkInputDirective } from '../../common/pk-input.directive';
 import { PkButtonComponent } from '../../common/pk-button.component';
+import { PersonalData } from '../../types';
 
 @Component({
   selector: 'pk-personal-data-form',

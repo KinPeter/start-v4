@@ -1,9 +1,9 @@
 import { Component, input, output, signal } from '@angular/core';
-import { Note, UUID } from '@kinpeter/pk-common';
 import { NgIcon } from '@ng-icons/core';
 import { DatePipe, NgClass } from '@angular/common';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { PkCardDirective } from '../../common/pk-card.directive';
+import { Note, UUID } from '../../types';
 
 @Component({
   selector: 'pk-note',

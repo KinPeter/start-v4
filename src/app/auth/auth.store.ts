@@ -1,7 +1,7 @@
 import { computed, Injectable } from '@angular/core';
-import { AuthData, UUID } from '@kinpeter/pk-common';
 import { StoreKeys } from '../constants/constants';
 import { LocalStore } from '../utils/store';
+import { AuthData, UUID } from '../types';
 
 export interface AuthState {
   id: UUID | null;

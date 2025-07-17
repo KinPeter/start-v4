@@ -5,7 +5,6 @@ import { WidgetsBarService } from '../main-menu/widgets-bar.service';
 import { NgIcon } from '@ng-icons/core';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { PkWidgetDirective } from '../../common/pk-widget.directive';
-import { PersonalData, PersonalDataRequest, UUID } from '@kinpeter/pk-common';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
 import { PersonalDataCardComponent } from './personal-data-card.component';
 import { parseError } from '../../utils/parse-error';
@@ -13,6 +12,7 @@ import { PersonalDataFormComponent } from './personal-data-form.component';
 import { PkInputComponent } from '../../common/pk-input.component';
 import { PkInputDirective } from '../../common/pk-input.directive';
 import { FocusFirstDirective } from '../../common/focus-first.directive';
+import { PersonalData, PersonalDataRequest, UUID } from '../../types';
 
 @Component({
   selector: 'pk-personal-data',
@@ -155,6 +155,7 @@ export class PersonalDataComponent {
       const data = {
         ...dataToEdit,
         ...values,
+        expiry: values.expiry || null,
       };
       this.personalDataService.updatePersonalData(dataToEdit.id, data).subscribe({
         next: () => {
@@ -166,7 +167,11 @@ export class PersonalDataComponent {
           this.notificationService.showError('Failed to update Personal data: ' + parseError(e)),
       });
     } else {
-      this.personalDataService.createPersonalData(values).subscribe({
+      const data = {
+        ...values,
+        expiry: values.expiry || null,
+      };
+      this.personalDataService.createPersonalData(data).subscribe({
         next: () => {
           this.notificationService.showSuccess('Personal data has been created');
           this.personalDataService.fetchData();

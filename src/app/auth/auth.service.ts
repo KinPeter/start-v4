@@ -8,15 +8,15 @@ import { ApiRoutes } from '../constants/api-routes';
 import { ApiService } from '../services/api.service';
 import { SettingsStore } from '../main/settings/settings.store';
 import { AuthState, AuthStore } from './auth.store';
+import { NotificationService } from '../services/notification.service';
+import { parseError } from '../utils/parse-error';
 import {
   AuthData,
   EmailRequest,
   LoginVerifyRequest,
   PasswordAuthRequest,
   PkStartSettings,
-} from '@kinpeter/pk-common';
-import { NotificationService } from '../services/notification.service';
-import { parseError } from '../utils/parse-error';
+} from '../types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

@@ -1,8 +1,8 @@
 import { Component, computed, input, signal } from '@angular/core';
-import { Flight } from '@kinpeter/pk-common';
 import { FlightCardComponent } from './flight-card.component';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { NgIcon } from '@ng-icons/core';
+import { Flight } from '../../types';
 
 @Component({
   selector: 'pk-upcoming-flights',
