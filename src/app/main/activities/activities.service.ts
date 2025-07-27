@@ -6,6 +6,7 @@ import { ApiRoutes, StoreKeys } from '../../constants';
 import { parseError } from '../../utils/parse-error';
 import { StravaApiService } from './strava-api.service';
 import { Activities, CyclingChoreRequest, SetGoalsRequest, UUID } from '../../types';
+import { AuthStore } from '../../auth/auth.store';
 
 interface ActivitiesState {
   loading: boolean;
@@ -21,6 +22,7 @@ const initialState: ActivitiesState = {
 export class ActivitiesService extends LocalStore<ActivitiesState> {
   constructor(
     private apiService: ApiService,
+    private authStore: AuthStore,
     private notificationService: NotificationService,
     private stravaApiService: StravaApiService
   ) {
@@ -123,5 +125,20 @@ export class ActivitiesService extends LocalStore<ActivitiesState> {
         this.setState({ loading: false });
       },
     });
+  }
+
+  public openStravaRoutes(): void {
+    const stravaToken = this.stravaApiService.stravaToken();
+    const centralToken = this.authStore.current.token;
+
+    if (!stravaToken || !centralToken) {
+      this.notificationService.showError(
+        'You need to be logged in to Strava to access this feature.'
+      );
+      return;
+    }
+
+    const url = `https://strava.p-kin.com/?stravaToken=${stravaToken}&centralToken=${centralToken}`;
+    window.open(url, '_blank');
   }
 }

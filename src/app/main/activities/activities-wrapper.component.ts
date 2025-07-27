@@ -4,6 +4,7 @@ import { CyclingGoalsCardComponent } from './cycling-goals-card.component';
 import { WalkGoalsCardComponent } from './walk-goals-card.component';
 import { CyclingStatsCardComponent } from './cycling-stats-card.component';
 import { Activities, UUID, StravaAthleteData } from '../../types';
+import { StravaRoutesLinkComponent } from './strava-routes-link.component';
 
 @Component({
   selector: 'pk-activities-wrapper',
@@ -12,6 +13,7 @@ import { Activities, UUID, StravaAthleteData } from '../../types';
     CyclingGoalsCardComponent,
     WalkGoalsCardComponent,
     CyclingStatsCardComponent,
+    StravaRoutesLinkComponent,
   ],
   providers: [],
   styles: ``,
@@ -24,6 +26,7 @@ import { Activities, UUID, StravaAthleteData } from '../../types';
       [chores]="activitiesData()!.chores ?? []"
       (edit)="editChore.emit($event)"
       (delete)="deleteChore.emit($event)" />
+    <pk-strava-routes-link />
   `,
 })
 export class ActivitiesWrapperComponent {
