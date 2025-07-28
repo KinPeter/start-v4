@@ -19,7 +19,8 @@ export class StravaRoutesService {
   ) {
     effect(() => {
       const stravaToken = this.stravaApiService.stravaToken();
-      if (!stravaToken || this.hasSyncedSinceStartup) return;
+      const isLoggedInToStrava = this.stravaApiService.isLoggedInToStrava();
+      if (!stravaToken || !isLoggedInToStrava || this.hasSyncedSinceStartup) return;
       untracked(() => {
         this.syncStravaRoutes();
         this.hasSyncedSinceStartup = true;
