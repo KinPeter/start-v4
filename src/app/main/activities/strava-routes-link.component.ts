@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PkButtonComponent } from '../../common/pk-button.component';
-import { ActivitiesService } from './activities.service';
 import { NgIcon } from '@ng-icons/core';
+import { StravaRoutesService } from './strava-routes.service';
 
 @Component({
   selector: 'pk-strava-routes-link',
@@ -15,9 +15,9 @@ import { NgIcon } from '@ng-icons/core';
   `,
 })
 export class StravaRoutesLinkComponent {
-  constructor(private activitiesService: ActivitiesService) {}
+  constructor(private stravaRoutesService: StravaRoutesService) {}
 
   public openStravaRoutes(): void {
-    this.activitiesService.openStravaRoutes();
+    this.stravaRoutesService.openStravaRoutes();
   }
 }

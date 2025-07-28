@@ -108,3 +108,8 @@ export interface StravaAthleteData {
   walkThisWeek: StravaActivityStats;
   walkThisMonth: StravaActivityStats;
 }
+
+export interface StravaRoutesSyncResponse {
+  routesSynced: number;
+  totalRoutes: number;
+}

@@ -20,6 +20,7 @@ import {
   UUID,
   StravaAthleteData,
 } from '../../types';
+import { StravaRoutesService } from './strava-routes.service';
 
 type ActivityView = 'home' | 'chore' | 'goals';
 
@@ -145,6 +146,7 @@ export class ActivitiesComponent {
   constructor(
     private widgetsBarService: WidgetsBarService,
     private stravaApiService: StravaApiService,
+    private stravaRoutesService: StravaRoutesService,
     private activitiesService: ActivitiesService,
     private notificationService: NotificationService
   ) {
@@ -162,6 +164,7 @@ export class ActivitiesComponent {
 
   public refresh() {
     this.stravaApiService.fetchStravaData();
+    this.stravaRoutesService.syncStravaRoutes();
   }
 
   public async copyToken() {
