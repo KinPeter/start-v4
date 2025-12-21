@@ -1,7 +1,7 @@
 import { Component, computed, signal } from '@angular/core';
 import { AuthService } from './auth.service';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../services/notification.service';
 import { AuthStore } from './auth.store';
 import { parseError } from '../utils/parse-error';
@@ -10,10 +10,18 @@ import { PkInputDirective } from '../common/pk-input.directive';
 import { PkInputComponent } from '../common/pk-input.component';
 import { PkButtonComponent } from '../common/pk-button.component';
 import { LOGIN_CODE_REGEX } from '../utils/regex';
+import { NgIconComponent } from '@ng-icons/core';
 
 @Component({
   selector: 'pk-auth',
-  imports: [FormsModule, NgStyle, PkInputDirective, PkInputComponent, PkButtonComponent],
+  imports: [
+    FormsModule,
+    NgStyle,
+    PkInputDirective,
+    PkInputComponent,
+    PkButtonComponent,
+    NgIconComponent,
+  ],
   providers: [],
   styles: `
     .container {
@@ -87,6 +95,13 @@ import { LOGIN_CODE_REGEX } from '../utils/regex';
         </pk-button>
         <pk-button variant="link" (onClick)="step.set(0)"> I need a new login code </pk-button>
       }
+      <pk-button
+        variant="link"
+        (onClick)="onLoginWithGoogle()"
+        [iconPrefix]="true"
+        [loading]="loading()">
+        <ng-icon name="tablerBrandGoogle" size="1rem" /> Log in with Google
+      </pk-button>
     </div>
   `,
 })
@@ -105,9 +120,17 @@ export class AuthComponent {
   constructor(
     private authService: AuthService,
     private authStore: AuthStore,
+    private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService
-  ) {}
+  ) {
+    this.route.queryParams.subscribe(params => {
+      const token = params['token'];
+      if (token) {
+        this.onSsoToken(token);
+      }
+    });
+  }
 
   public onRequestLoginCode(): void {
     if (this.usePassword()) {
@@ -155,5 +178,25 @@ export class AuthComponent {
       },
     });
     this.password.set('');
+  }
+
+  public onLoginWithGoogle(): void {
+    const ssoUrl = this.authService.ssoUrl;
+    window.location.href = ssoUrl;
+  }
+
+  public onSsoToken(token: string): void {
+    console.log('SSO token received:', token);
+    this.loading.set(true);
+    this.authService.loginWithSsoToken(token).subscribe({
+      next: () => {
+        this.loading.set(false);
+        this.router.navigate(['/']).then();
+      },
+      error: err => {
+        this.notificationService.showError('SSO Login failed. ' + parseError(err));
+        this.loading.set(false);
+      },
+    });
   }
 }

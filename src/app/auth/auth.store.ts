@@ -59,4 +59,8 @@ export class AuthStore extends LocalStore<AuthState> {
   public setNewToken({ token, expiresAt }: AuthData): void {
     this.setState({ token, expiresAt });
   }
+
+  public setTokenForSso(token: string): void {
+    this.setState({ token });
+  }
 }

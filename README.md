@@ -38,9 +38,13 @@ Have a `.env` file in the root directory with the following content:
 ```bash
 # URL of local API for development
 PK_API_URL_DEV=
+# URL of local SSO page for development
+PK_SSO_URL_DEV=
 
 # URL of production API
 PK_API_URL_PROD=
+# URL of production SSO page
+PK_SSO_URL_PROD=
 ```
 
 ### Running the application

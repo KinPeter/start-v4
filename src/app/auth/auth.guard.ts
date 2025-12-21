@@ -15,11 +15,15 @@ export class AuthGuard implements CanActivate {
     private auth: AuthStore
   ) {}
 
-  public canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): true | UrlTree {
+  public canActivate(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): true | UrlTree {
     if (this.auth.isAuth()) {
       return true;
     } else {
-      return this.router.createUrlTree(['/auth']);
+      const queryParams =
+        route.queryParams && Object.keys(route.queryParams).length > 0
+          ? { queryParams: route.queryParams }
+          : undefined;
+      return this.router.createUrlTree(['/auth'], queryParams);
     }
   }
 }

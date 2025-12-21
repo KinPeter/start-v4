@@ -17,6 +17,7 @@ import {
   PasswordAuthRequest,
   PkStartSettings,
 } from '../types';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -32,6 +33,10 @@ export class AuthService {
 
   public get store(): AuthState {
     return Object.freeze({ ...this.authStore.current });
+  }
+
+  public get ssoUrl(): string {
+    return environment.PK_SSO_URL;
   }
 
   public requestLoginCode(email: string): Observable<void> {
@@ -78,6 +83,22 @@ export class AuthService {
         }),
         map(() => ({ done: true }))
       );
+  }
+
+  public loginWithSsoToken(token: string): Observable<{ done: boolean }> {
+    this.authStore.setTokenForSso(token);
+    return this.api.post<void, AuthData>(ApiRoutes.AUTH_TOKEN_REFRESH, undefined).pipe(
+      tap((authData: AuthData) => {
+        this.authStore.setLogin(authData);
+        const expires = parseISO(authData.expiresAt as unknown as string);
+        this.scheduleTokenRefresh(expires);
+      }),
+      switchMap(() => this.api.get<PkStartSettings>(ApiRoutes.SETTINGS)),
+      tap((res: PkStartSettings) => {
+        this.settingsStore.setSettings(res);
+      }),
+      map(() => ({ done: true }))
+    );
   }
 
   public logout(): void {
