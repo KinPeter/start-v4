@@ -9,3 +9,4 @@ export * from './proxy';
 export * from './response';
 export * from './shortcuts';
 export * from './start-settings';
+export * from './docs';

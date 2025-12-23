@@ -4,7 +4,7 @@ Personal dashboard application to manage some everyday things, built with all th
 
 ## Features:
 
-- Access to notes, personal documents data and a collection of shortcuts in widgets or with search
+- Access to notes, markdown documents, personal documents data and a collection of shortcuts in widgets or with search
 - Weather information and location data
 - Birthday calendar
 - Cycling and walking activity tracking synced with Strava

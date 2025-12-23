@@ -10,6 +10,7 @@ export interface WidgetsBarState {
   personalDataOpen: boolean;
   activitiesOpen: boolean;
   flightsOpen: boolean;
+  docsOpen: boolean;
 }
 
 const initialState: WidgetsBarState = {
@@ -20,6 +21,7 @@ const initialState: WidgetsBarState = {
   personalDataOpen: false,
   activitiesOpen: false,
   flightsOpen: false,
+  docsOpen: false,
 };
 
 @Injectable({ providedIn: 'root' })
@@ -35,6 +37,7 @@ export class WidgetsBarService extends LocalStore<WidgetsBarState> {
   public translatorOpen = computed(() => this.state().translatorOpen);
   public activitiesOpen = computed(() => this.state().activitiesOpen);
   public flightsOpen = computed(() => this.state().flightsOpen);
+  public docsOpen = computed(() => this.state().docsOpen);
 
   public toggleWeather(): void {
     this.setState({ weatherOpen: !this.state().weatherOpen });
@@ -62,6 +65,10 @@ export class WidgetsBarService extends LocalStore<WidgetsBarState> {
 
   public toggleFlights(): void {
     this.setState({ flightsOpen: !this.state().flightsOpen });
+  }
+
+  public toggleDocs(): void {
+    this.setState({ docsOpen: !this.state().docsOpen });
   }
 
   public resetState(): void {
