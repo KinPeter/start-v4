@@ -13,6 +13,7 @@ import { KeyboardTogglesService } from '../services/keyboard-toggles.service';
 import { GlobalSearchComponent } from './global-search/global-search.component';
 import { TranslatorComponent } from './translator/translator.component';
 import { FlightsComponent } from './flights/flights.component';
+import { DocsComponent } from './docs/docs.component';
 
 @Component({
   selector: 'pk-main',
@@ -27,6 +28,7 @@ import { FlightsComponent } from './flights/flights.component';
     GlobalSearchComponent,
     TranslatorComponent,
     FlightsComponent,
+    DocsComponent,
   ],
   styles: `
     .main-content {
@@ -133,12 +135,19 @@ import { FlightsComponent } from './flights/flights.component';
           }
         </div>
         <div class="col col-x"></div>
-        <div class="col col-3" [class.hidden]="!widgets.flightsOpen() && !widgets.translatorOpen()">
+        <div
+          class="col col-3"
+          [class.hidden]="
+            !widgets.flightsOpen() && !widgets.translatorOpen() && !widgets.docsOpen()
+          ">
           @if (widgets.flightsOpen()) {
             <pk-flights />
           }
           @if (widgets.translatorOpen()) {
             <pk-translator />
+          }
+          @if (widgets.docsOpen()) {
+            <pk-docs />
           }
         </div>
         <div class="col col-4" [class.hidden]="!widgets.weatherOpen() && !widgets.birthdaysOpen()">

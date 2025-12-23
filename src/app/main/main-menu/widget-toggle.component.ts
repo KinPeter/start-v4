@@ -8,7 +8,8 @@ type Widgets =
   | 'Birthdays'
   | 'Translator'
   | 'Personal Data'
-  | 'Flights';
+  | 'Flights'
+  | 'Docs';
 
 @Component({
   selector: 'pk-widget-toggle',
@@ -93,6 +94,8 @@ export class WidgetToggleComponent {
         return 'tablerBike';
       case 'Flights':
         return 'tablerPlaneDeparture';
+      case 'Docs':
+        return 'tablerFiles';
       default:
         return undefined;
     }

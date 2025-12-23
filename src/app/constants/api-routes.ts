@@ -16,6 +16,7 @@ export enum ApiRoutes {
   ACTIVITIES_CHORE = '/activities/chores',
   FLIGHTS = '/flights/',
   STRAVA_ROUTES = '/strava/routes',
+  DOCS = '/docs/',
 }
 
 export const publicApiRoutes = [
@@ -38,4 +39,5 @@ export const authenticatedApiRoutes = [
   ApiRoutes.ACTIVITIES_CHORE,
   ApiRoutes.FLIGHTS,
   ApiRoutes.STRAVA_ROUTES,
+  ApiRoutes.DOCS,
 ];

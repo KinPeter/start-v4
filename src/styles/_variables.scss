@@ -4,6 +4,8 @@ html {
   --focus-box-shadow: 0 0 2px 1px var(--color-primary);
 
   // global Z-indexes
+  --modal-z-index: 7;
+  --modal-backdrop-z-index: 6;
   --overlay-content-z-index: 5;
   --overlay-backdrop-z-index: 4;
   --notification-log-z-index: 3;
