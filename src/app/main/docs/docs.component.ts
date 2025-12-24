@@ -61,9 +61,11 @@ import { DocModalComponent } from './doc-modal.component';
       padding: 2px;
     }
 
-    .results {
-      max-height: 300px;
-      overflow-y: auto;
+    @media (min-width: 430px) {
+      .results {
+        max-height: 300px;
+        overflow-y: auto;
+      }
     }
   `,
   template: `
