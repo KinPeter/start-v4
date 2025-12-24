@@ -1,4 +1,4 @@
-import { Component, effect, input, output, signal } from '@angular/core';
+import { Component, effect, input, output, Signal, signal } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -14,6 +14,7 @@ import { NgIcon } from '@ng-icons/core';
 import { PkButtonComponent } from '../../common/pk-button.component';
 import { Document, DocumentRequest } from '../../types';
 import { MarkedPipe } from '../../common/marked.pipe';
+import { DocsService } from './docs.service';
 
 @Component({
   selector: 'pk-doc-form',
@@ -107,6 +108,14 @@ import { MarkedPipe } from '../../common/marked.pipe';
         </pk-input>
       }
       <div class="tags">
+        <pk-input width="150px" type="select">
+          <select pkInput name="Existing tags" (change)="addExistingTag($event)">
+            <option value="" disabled selected>Existing tags</option>
+            @for (item of existingTags(); track item) {
+              <option [value]="item">{{ item }}</option>
+            }
+          </select>
+        </pk-input>
         @for (tag of tags; let idx = $index; track idx) {
           <div class="tag-form">
             <pk-input width="150px" [error]="hasTagError(idx) ? 'Tag is required' : ''">
@@ -144,11 +153,18 @@ export class DocFormComponent {
   public cancel = output<void>();
   public save = output<DocumentRequest>();
 
+  public existingTags: Signal<string[]>;
+
   public isPreviewMode = signal(false);
 
   public form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private docsService: DocsService
+  ) {
+    this.existingTags = this.docsService.tags;
+
     this.form = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(255)]],
       tags: formBuilder.array([]),
@@ -185,6 +201,21 @@ export class DocFormComponent {
     const tags = this.form.get('tags') as FormArray;
     tags.push(
       this.formBuilder.control('', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(16),
+      ])
+    );
+  }
+
+  public addExistingTag(event: Event): void {
+    const tag = (event.target as HTMLSelectElement).value;
+    const tags = this.form.get('tags') as FormArray;
+    if (tags.controls.some(control => control.value === tag)) {
+      return;
+    }
+    tags.push(
+      this.formBuilder.control(tag, [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(16),
