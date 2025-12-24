@@ -4,6 +4,7 @@ import {
   computed,
   ElementRef,
   OnDestroy,
+  signal,
   Signal,
   viewChild,
 } from '@angular/core';
@@ -12,10 +13,20 @@ import { PersonalDataCardComponent } from '../personal-data/personal-data-card.c
 import { NoteComponent } from '../notes/note.component';
 import { ShortcutComponent } from '../shortcuts/shortcut.component';
 import { MainManagerService } from '../main-manager.service';
+import { DocCardComponent } from '../docs/doc-card.component';
+import { DocModalComponent } from '../docs/doc-modal.component';
+import { DocsService } from '../docs/docs.service';
+import { Document, UUID } from '../../types';
 
 @Component({
   selector: 'pk-search-results',
-  imports: [PersonalDataCardComponent, NoteComponent, ShortcutComponent],
+  imports: [
+    PersonalDataCardComponent,
+    NoteComponent,
+    ShortcutComponent,
+    DocCardComponent,
+    DocModalComponent,
+  ],
   providers: [],
   styles: `
     .wrapper {
@@ -76,6 +87,11 @@ import { MainManagerService } from '../main-manager.service';
             <pk-personal-data-card [data]="data" [hideActions]="true" />
           }
         </div>
+        <div class="docs" [class.hidden]="!results().docs.length">
+          @for (doc of results().docs; track doc.id) {
+            <pk-doc-card [item]="doc" [hideActions]="true" (open)="showDocument($event)" />
+          }
+        </div>
       </div>
       @if (results().birthdays.length) {
         <div class="birthday-results">
@@ -86,15 +102,25 @@ import { MainManagerService } from '../main-manager.service';
         </div>
       }
     </div>
+
+    @if (documentToOpen()) {
+      <pk-doc-modal
+        [document]="documentToOpen()"
+        [isReadOnly]="true"
+        (close)="documentToOpen.set(null)" />
+    }
   `,
 })
 export class SearchResultsComponent implements AfterViewInit, OnDestroy {
   public results: Signal<GlobalSearchResult>;
   public wrapper = viewChild.required<ElementRef<HTMLInputElement>>('wrapper');
 
+  public documentToOpen = signal<Document | null>(null);
+
   constructor(
     private globalSearchService: GlobalSearchService,
-    private mainManagerService: MainManagerService
+    private mainManagerService: MainManagerService,
+    private docsService: DocsService
   ) {
     this.results = this.globalSearchService.results;
   }
@@ -113,6 +139,14 @@ export class SearchResultsComponent implements AfterViewInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.wrapper().nativeElement.removeEventListener('keyup', this.keyUpHandler.bind(this));
+  }
+
+  public showDocument(id: UUID): void {
+    this.docsService.openDocument(id).subscribe({
+      next: document => {
+        this.documentToOpen.set(document);
+      },
+    });
   }
 
   private keyUpHandler(event: KeyboardEvent): void {

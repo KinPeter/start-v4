@@ -55,28 +55,31 @@ import { DocumentListItem, UUID } from '../../types';
           }
         </div>
       </main>
-      <div class="actions">
-        @if (!confirmState()) {
-          <pk-icon-button tooltip="Delete" (onClick)="confirmState.set(true)">
-            <ng-icon name="tablerTrash" size="1rem" />
-          </pk-icon-button>
-        } @else {
-          <pk-icon-button tooltip="Cancel" variant="subtle" (onClick)="confirmState.set(false)">
-            <ng-icon name="tablerX" size="1rem" />
-          </pk-icon-button>
-          <pk-icon-button
-            tooltip="Confirm delete"
-            variant="filled"
-            (onClick)="delete.emit(item()?.id!)">
-            <ng-icon name="tablerTrash" size="1rem" />
-          </pk-icon-button>
-        }
-      </div>
+      @if (!hideActions()) {
+        <div class="actions">
+          @if (!confirmState()) {
+            <pk-icon-button tooltip="Delete" (onClick)="confirmState.set(true)">
+              <ng-icon name="tablerTrash" size="1rem" />
+            </pk-icon-button>
+          } @else {
+            <pk-icon-button tooltip="Cancel" variant="subtle" (onClick)="confirmState.set(false)">
+              <ng-icon name="tablerX" size="1rem" />
+            </pk-icon-button>
+            <pk-icon-button
+              tooltip="Confirm delete"
+              variant="filled"
+              (onClick)="delete.emit(item()?.id!)">
+              <ng-icon name="tablerTrash" size="1rem" />
+            </pk-icon-button>
+          }
+        </div>
+      }
     </div>
   `,
 })
 export class DocCardComponent {
   public item = input<DocumentListItem>();
+  public hideActions = input<boolean>(false);
 
   public open = output<UUID>();
   public delete = output<UUID>();

@@ -142,7 +142,7 @@ export class DocsComponent {
   }
 
   public close(): void {
-    this.widgetsBarService.togglePersonalData();
+    this.widgetsBarService.toggleDocs();
   }
 
   public openDoc(id: UUID): void {

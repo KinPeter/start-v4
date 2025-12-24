@@ -56,7 +56,7 @@ import { MarkedPipe } from '../../common/marked.pipe';
       <div class="modal-content">
         <div class="modal-header">
           <span class="title">{{ document()?.title ?? 'New document' }}</span>
-          @if (document() && !isNew() && !isEditMode()) {
+          @if (document() && !isNew() && !isEditMode() && !isReadOnly()) {
             <pk-icon-button
               tooltip="Edit"
               variant="subtle"
@@ -86,6 +86,7 @@ import { MarkedPipe } from '../../common/marked.pipe';
 export class DocModalComponent {
   public document = input<Document | null>(null);
   public isNew = input<boolean>(false);
+  public isReadOnly = input<boolean>(false);
   public close = output<void>();
   public save = output<DocumentRequest>();
 
