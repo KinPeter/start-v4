@@ -19,6 +19,7 @@ import { DocumentListItem, UUID } from '../../types';
       padding: 8px;
       margin: 1px;
       border-radius: 16px;
+      text-align: left;
 
       &:hover {
         color: var(--color-text-accent);
