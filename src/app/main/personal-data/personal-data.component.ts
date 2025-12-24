@@ -44,6 +44,11 @@ import { PersonalData, PersonalDataRequest, UUID } from '../../types';
     .search {
       padding: 2px;
     }
+
+    .results {
+      max-height: 300px;
+      overflow-y: auto;
+    }
   `,
   template: `
     <div pkWidget class="container">
@@ -81,12 +86,14 @@ import { PersonalData, PersonalDataRequest, UUID } from '../../types';
                 (input)="search($event)" />
             </pk-input>
           </div>
-          @for (item of results(); track item.id) {
-            <pk-personal-data-card
-              [data]="item"
-              (edit)="startEditData($event)"
-              (delete)="deleteData($event)" />
-          }
+          <div class="results">
+            @for (item of results(); track item.id) {
+              <pk-personal-data-card
+                [data]="item"
+                (edit)="startEditData($event)"
+                (delete)="deleteData($event)" />
+            }
+          </div>
         }
       </main>
     </div>

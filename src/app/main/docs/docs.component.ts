@@ -60,6 +60,11 @@ import { DocModalComponent } from './doc-modal.component';
     .search {
       padding: 2px;
     }
+
+    .results {
+      max-height: 300px;
+      overflow-y: auto;
+    }
   `,
   template: `
     <div pkWidget class="container">
@@ -100,9 +105,11 @@ import { DocModalComponent } from './doc-modal.component';
               <button class="tag" (click)="filterByTag(tag)">{{ tag }}</button>
             }
           </div>
-          @for (item of results(); track item.id) {
-            <pk-doc-card [item]="item" (open)="openDoc($event)" (delete)="deleteDoc($event)" />
-          }
+          <div class="results">
+            @for (item of results(); track item.id) {
+              <pk-doc-card [item]="item" (open)="openDoc($event)" (delete)="deleteDoc($event)" />
+            }
+          </div>
         }
       </main>
     </div>
