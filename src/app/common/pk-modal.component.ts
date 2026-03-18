@@ -1,4 +1,4 @@
-import { Component, ElementRef, output, viewChild } from '@angular/core';
+import { Component, ElementRef, input, output, viewChild } from '@angular/core';
 import { PkIconButtonComponent } from './pk-icon-button.component';
 import { NgIcon } from '@ng-icons/core';
 import { FocusFirstDirective } from './focus-first.directive';
@@ -55,7 +55,7 @@ import { focusableSelectors } from '../constants';
     }
   `,
   template: `
-    <div class="pk-modal-backdrop" (click)="close.emit()">
+    <div class="pk-modal-backdrop" (click)="onClickBackdrop()">
       <div
         #modalContainer
         class="pk-modal"
@@ -75,6 +75,7 @@ import { focusableSelectors } from '../constants';
   `,
 })
 export class PkModalComponent {
+  public preventClickOutsideClose = input<boolean>(false);
   public close = output<void>();
 
   public modalContainer = viewChild.required<ElementRef<HTMLElement>>('modalContainer');
@@ -84,6 +85,11 @@ export class PkModalComponent {
     return Array.from(
       this.modalContainer().nativeElement.querySelectorAll(focusableSelectors.join(','))
     ).filter(el => (el as HTMLElement).offsetParent !== null) as HTMLElement[];
+  }
+
+  public onClickBackdrop() {
+    if (this.preventClickOutsideClose()) return;
+    this.close.emit();
   }
 
   public onKeyDown(event: KeyboardEvent) {

@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { PkModalComponent } from '../../common/pk-modal.component';
 import { Document, DocumentRequest } from '../../types';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
@@ -52,7 +52,7 @@ import { MarkedPipe } from '../../common/marked.pipe';
     }
   `,
   template: `
-    <pk-modal (close)="close.emit()">
+    <pk-modal (close)="close.emit()" [preventClickOutsideClose]="preventClose()">
       <div class="modal-content">
         <div class="modal-header">
           <span class="title">{{ document()?.title ?? 'New document' }}</span>
@@ -91,6 +91,8 @@ export class DocModalComponent {
   public save = output<DocumentRequest>();
 
   public isEditMode = signal(false);
+
+  public preventClose = computed(() => this.isEditMode() || this.isNew());
 
   public toggleEditMode(): void {
     this.isEditMode.set(!this.isEditMode());
