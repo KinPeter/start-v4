@@ -113,3 +113,17 @@ export interface StravaRoutesSyncResponse {
   routesSynced: number;
   totalRoutes: number;
 }
+
+export interface StepsSyncResponse {
+  daysSynced: number;
+  totalDays: number;
+}
+
+export interface StepsItem {
+  date: string; // YYYY-MM-DD
+  steps: number;
+}
+
+export interface StepsResponse {
+  entities: StepsItem[];
+}

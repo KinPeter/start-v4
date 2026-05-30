@@ -21,6 +21,7 @@ import {
   StravaAthleteData,
 } from '../../types';
 import { StravaRoutesService } from './strava-routes.service';
+import { StepsService } from './steps.service';
 
 type ActivityView = 'home' | 'chore' | 'goals';
 
@@ -148,7 +149,8 @@ export class ActivitiesComponent {
     private stravaApiService: StravaApiService,
     private stravaRoutesService: StravaRoutesService,
     private activitiesService: ActivitiesService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private stepsService: StepsService
   ) {
     this.disabled = this.stravaApiService.disabled;
     this.needAuth = this.stravaApiService.needAuth;
@@ -165,6 +167,7 @@ export class ActivitiesComponent {
   public refresh() {
     this.stravaApiService.fetchStravaData();
     this.stravaRoutesService.syncStravaRoutes();
+    this.stepsService.syncSteps();
   }
 
   public async copyToken() {
