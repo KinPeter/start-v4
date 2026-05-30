@@ -19,6 +19,7 @@ import {
   SetGoalsRequest,
   UUID,
   StravaAthleteData,
+  StepsItem,
 } from '../../types';
 import { StravaRoutesService } from './strava-routes.service';
 import { StepsService } from './steps.service';
@@ -114,6 +115,7 @@ type ActivityView = 'home' | 'chore' | 'goals';
           <pk-activities-wrapper
             [stravaData]="stravaData()!"
             [activitiesData]="activitiesData()!"
+            [stepsData]="stepsData()!"
             (editChore)="handleEditChore($event)"
             (deleteChore)="handleDeleteChore($event)" />
         } @else if (currentView() === 'chore') {
@@ -140,6 +142,7 @@ export class ActivitiesComponent {
   public stravaOauthUrl: Signal<string>;
   public stravaData: Signal<StravaAthleteData | null>;
   public activitiesData: Signal<Activities | null>;
+  public stepsData: Signal<StepsItem[] | null>;
   public currentView = signal<ActivityView>('home');
   public choreToEdit: WritableSignal<CyclingChore | null> = signal(null);
   public showCheckmark = signal(false);
@@ -154,10 +157,12 @@ export class ActivitiesComponent {
   ) {
     this.disabled = this.stravaApiService.disabled;
     this.needAuth = this.stravaApiService.needAuth;
-    this.loading = this.stravaApiService.loading || this.activitiesService.loading;
+    this.loading =
+      this.stravaApiService.loading || this.activitiesService.loading || this.stepsService.loading;
     this.stravaOauthUrl = this.stravaApiService.stravaOauthUrl;
     this.stravaData = this.stravaApiService.data;
     this.activitiesData = this.activitiesService.data;
+    this.stepsData = this.stepsService.data;
   }
 
   public close(): void {
