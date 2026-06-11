@@ -5,7 +5,7 @@ import { NgIcon } from '@ng-icons/core';
 import { PkCardDirective } from '../../common/pk-card.directive';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { CyclingChore } from '../../types/activities';
-import { UUID, StravaAthleteData } from '../../types';
+import { UUID } from '../../types';
 
 @Component({
   selector: 'pk-chore',
@@ -43,8 +43,7 @@ import { UUID, StravaAthleteData } from '../../types';
         <div class="text">
           <h3>{{ chore().name }}</h3>
           <p>
-            {{ stravaData().primaryBike.distance - chore().lastKm | number: '1.0-2' }} /
-            {{ chore().kmInterval }}km
+            {{ currentBikeKms() - chore().lastKm | number: '1.0-2' }} / {{ chore().kmInterval }}km
           </p>
         </div>
 
@@ -70,7 +69,7 @@ import { UUID, StravaAthleteData } from '../../types';
         </div>
       </div>
 
-      @if (stravaData().primaryBike.distance >= chore().lastKm + chore().kmInterval) {
+      @if (currentBikeKms() >= chore().lastKm + chore().kmInterval) {
         <div class="alert">
           <ng-icon name="tablerAlertTriangle" size="2rem" />
         </div>
@@ -78,16 +77,14 @@ import { UUID, StravaAthleteData } from '../../types';
 
       <div>
         <pk-circular-progress
-          [percentage]="
-            ((stravaData().primaryBike.distance - chore().lastKm) / chore().kmInterval) * 100
-          "
+          [percentage]="((currentBikeKms() - chore().lastKm) / chore().kmInterval) * 100"
           [radius]="32" />
       </div>
     </div>
   `,
 })
 export class ChoreComponent {
-  public stravaData = input.required<StravaAthleteData>();
+  public currentBikeKms = input.required<number>();
   public chore = input.required<CyclingChore>();
 
   public edit = output<UUID>();

@@ -7,7 +7,6 @@ export enum StoreKeys {
   LOCATION = 'pk-start-location',
   ACTIVITIES = 'pk-start-activities',
   STEPS = 'pk-start-steps',
-  STRAVA = 'pk-start-strava',
 }
 
 export const focusableSelectors = [

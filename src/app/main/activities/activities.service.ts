@@ -1,10 +1,9 @@
-import { computed, effect, Injectable, untracked } from '@angular/core';
+import { computed, Injectable } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { NotificationService } from '../../services/notification.service';
 import { LocalStore } from '../../utils/store';
 import { ApiRoutes, StoreKeys } from '../../constants';
 import { parseError } from '../../utils/parse-error';
-import { StravaApiService } from './strava-api.service';
 import { Activities, CyclingChoreRequest, SetGoalsRequest, UUID } from '../../types';
 
 interface ActivitiesState {
@@ -21,15 +20,10 @@ const initialState: ActivitiesState = {
 export class ActivitiesService extends LocalStore<ActivitiesState> {
   constructor(
     private apiService: ApiService,
-    private notificationService: NotificationService,
-    private stravaApiService: StravaApiService
+    private notificationService: NotificationService
   ) {
     super(StoreKeys.ACTIVITIES, initialState);
-    effect(() => {
-      if (this.stravaApiService.isLoggedInToStrava()) {
-        untracked(() => this.fetchActivitiesData());
-      }
-    });
+    this.fetchActivitiesData();
   }
 
   public data = computed(() => this.state().data);
@@ -37,7 +31,7 @@ export class ActivitiesService extends LocalStore<ActivitiesState> {
 
   public fetchActivitiesData(): void {
     this.setState({ loading: true });
-    this.apiService.get<Activities>(ApiRoutes.ACTIVITIES).subscribe({
+    this.apiService.get<Activities>(ApiRoutes.ACTIVITIES_STATS).subscribe({
       next: res => {
         this.setState({
           data: res,

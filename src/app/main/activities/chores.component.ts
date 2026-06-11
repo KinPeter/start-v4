@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { ChoreComponent } from './chore.component';
-import { CyclingChore, StravaAthleteData, UUID } from '../../types';
+import { CyclingChore, UUID } from '../../types';
 
 @Component({
   selector: 'pk-chores',
@@ -10,7 +10,7 @@ import { CyclingChore, StravaAthleteData, UUID } from '../../types';
   template: `
     @for (chore of chores(); track chore.id) {
       <pk-chore
-        [stravaData]="stravaData()"
+        [currentBikeKms]="currentBikeKms()"
         [chore]="chore"
         (edit)="edit.emit($event)"
         (delete)="delete.emit($event)" />
@@ -18,7 +18,7 @@ import { CyclingChore, StravaAthleteData, UUID } from '../../types';
   `,
 })
 export class ChoresComponent {
-  public stravaData = input.required<StravaAthleteData>();
+  public currentBikeKms = input.required<number>();
   public chores = input.required<CyclingChore[]>();
 
   public edit = output<UUID>();

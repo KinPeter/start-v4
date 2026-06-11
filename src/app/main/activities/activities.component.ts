@@ -4,9 +4,7 @@ import { PkWidgetDirective } from '../../common/pk-widget.directive';
 import { NgIcon } from '@ng-icons/core';
 import { PkIconButtonComponent } from '../../common/pk-icon-button.component';
 import { WidgetsBarService } from '../main-menu/widgets-bar.service';
-import { StravaApiService } from './strava-api.service';
 import { PkLoaderComponent } from '../../common/pk-loader.component';
-import { NgOptimizedImage } from '@angular/common';
 import { ActivitiesService } from './activities.service';
 import { ActivitiesWrapperComponent } from './activities-wrapper.component';
 import { ChoreFormComponent } from './chore-form.component';
@@ -18,10 +16,8 @@ import {
   CyclingChoreRequest,
   SetGoalsRequest,
   UUID,
-  StravaAthleteData,
   StepsItem,
 } from '../../types';
-import { StravaRoutesService } from './strava-routes.service';
 import { StepsService } from './steps.service';
 
 type ActivityView = 'home' | 'chore' | 'goals';
@@ -33,7 +29,6 @@ type ActivityView = 'home' | 'chore' | 'goals';
     NgIcon,
     PkIconButtonComponent,
     PkLoaderComponent,
-    NgOptimizedImage,
     ActivitiesWrapperComponent,
     ChoreFormComponent,
     GoalsFormComponent,
@@ -65,26 +60,17 @@ type ActivityView = 'home' | 'chore' | 'goals';
           <pk-icon-button
             tooltip="Set Goals"
             (onClick)="currentView.set('goals')"
-            [disabled]="loading() || needAuth() || disabled() || !activitiesData()">
+            [disabled]="loading() || !activitiesData()">
             <ng-icon name="tablerTargetArrow" size="1.2rem" />
           </pk-icon-button>
           <pk-icon-button
             tooltip="Add Chore"
             (onClick)="currentView.set('chore')"
-            [disabled]="loading() || needAuth() || disabled() || !activitiesData()">
+            [disabled]="loading() || !activitiesData()">
             <ng-icon name="tablerBellPlus" size="1.2rem" />
           </pk-icon-button>
-          <pk-icon-button
-            tooltip="Refresh"
-            (onClick)="refresh()"
-            [disabled]="loading() || needAuth() || disabled()">
+          <pk-icon-button tooltip="Refresh" (onClick)="refresh()" [disabled]="loading()">
             <ng-icon name="tablerRefresh" size="1.2rem" />
-          </pk-icon-button>
-          <pk-icon-button
-            tooltip="Copy token"
-            (onClick)="copyToken()"
-            [disabled]="loading() || needAuth() || disabled()">
-            <ng-icon [name]="showCheckmark() ? 'tablerCheck' : 'tablerCopy'" size="1.2rem" />
           </pk-icon-button>
           <pk-icon-button tooltip="Close" (onClick)="close()" pkFocusFirst>
             <ng-icon name="tablerX" size="1.2rem" />
@@ -96,24 +82,12 @@ type ActivityView = 'home' | 'chore' | 'goals';
           <div class="loader">
             <pk-loader size="sm" />
           </div>
-        } @else if (needAuth()) {
-          <div class="connect">
-            <a [href]="stravaOauthUrl()">
-              <img
-                ngSrc="assets/connect.png"
-                priority
-                alt="Connect with Strava"
-                height="48"
-                width="193" />
-            </a>
-          </div>
-        } @else if (disabled() || !stravaData() || !activitiesData()) {
+        } @else if (!activitiesData()) {
           <div class="not-available">
-            <p>Strava service is not available.</p>
+            <p>Activities service is not available.</p>
           </div>
         } @else if (currentView() === 'home') {
           <pk-activities-wrapper
-            [stravaData]="stravaData()!"
             [activitiesData]="activitiesData()!"
             [stepsData]="stepsData()!"
             (editChore)="handleEditChore($event)"
@@ -136,11 +110,7 @@ type ActivityView = 'home' | 'chore' | 'goals';
   `,
 })
 export class ActivitiesComponent {
-  public disabled: Signal<boolean>;
-  public needAuth: Signal<boolean>;
   public loading: Signal<boolean>;
-  public stravaOauthUrl: Signal<string>;
-  public stravaData: Signal<StravaAthleteData | null>;
   public activitiesData: Signal<Activities | null>;
   public stepsData: Signal<StepsItem[] | null>;
   public currentView = signal<ActivityView>('home');
@@ -149,18 +119,11 @@ export class ActivitiesComponent {
 
   constructor(
     private widgetsBarService: WidgetsBarService,
-    private stravaApiService: StravaApiService,
-    private stravaRoutesService: StravaRoutesService,
     private activitiesService: ActivitiesService,
     private notificationService: NotificationService,
     private stepsService: StepsService
   ) {
-    this.disabled = this.stravaApiService.disabled;
-    this.needAuth = this.stravaApiService.needAuth;
-    this.loading =
-      this.stravaApiService.loading || this.activitiesService.loading || this.stepsService.loading;
-    this.stravaOauthUrl = this.stravaApiService.stravaOauthUrl;
-    this.stravaData = this.stravaApiService.data;
+    this.loading = this.activitiesService.loading || this.stepsService.loading;
     this.activitiesData = this.activitiesService.data;
     this.stepsData = this.stepsService.data;
   }
@@ -170,23 +133,7 @@ export class ActivitiesComponent {
   }
 
   public refresh() {
-    this.stravaApiService.fetchStravaData();
-    this.stravaRoutesService.syncStravaRoutes();
     this.stepsService.syncSteps();
-  }
-
-  public async copyToken() {
-    try {
-      const data = this.stravaApiService.stravaToken();
-      if (!data) return;
-      await navigator.clipboard.writeText(data);
-      this.showCheckmark.set(true);
-      setTimeout(() => {
-        this.showCheckmark.set(false);
-      }, 3000);
-    } catch (_e) {
-      this.notificationService.showError('Could not copy to clipboard.');
-    }
   }
 
   public handleSaveGoals(goals: SetGoalsRequest): void {

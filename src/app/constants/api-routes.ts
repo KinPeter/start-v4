@@ -12,12 +12,12 @@ export enum ApiRoutes {
   BIRTHDAYS = '/birthdays/',
   PROXY_TRANSLATE = '/proxy/translate',
   ACTIVITIES = '/activities/',
+  ACTIVITIES_STATS = '/activities/stats',
   ACTIVITIES_GOALS = '/activities/goals',
   ACTIVITIES_CHORE = '/activities/chores',
   ACTIVITIES_STEPS = '/activities/steps',
   ACTIVITIES_STEPS_SYNC = '/activities/steps/sync',
   FLIGHTS = '/flights/',
-  STRAVA_ROUTES = '/strava/routes',
   DOCS = '/docs/',
 }
 
@@ -42,6 +42,5 @@ export const authenticatedApiRoutes = [
   ApiRoutes.ACTIVITIES_STEPS,
   ApiRoutes.ACTIVITIES_STEPS_SYNC,
   ApiRoutes.FLIGHTS,
-  ApiRoutes.STRAVA_ROUTES,
   ApiRoutes.DOCS,
 ];

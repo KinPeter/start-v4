@@ -1,11 +1,10 @@
-import { computed, effect, Injectable, untracked } from '@angular/core';
+import { computed, Injectable } from '@angular/core';
 import { LocalStore } from '../../utils/store';
 import { StepsItem, StepsResponse, StepsSyncResponse } from '../../types';
 import { ApiService } from '../../services/api.service';
 import { NotificationService } from '../../services/notification.service';
 import { ApiRoutes, StoreKeys } from '../../constants';
 import { parseError } from '../../utils/parse-error';
-import { StravaApiService } from './strava-api.service';
 import { Subject, take } from 'rxjs';
 
 interface StepsState {
@@ -24,15 +23,10 @@ export class StepsService extends LocalStore<StepsState> {
 
   constructor(
     private apiService: ApiService,
-    private notificationService: NotificationService,
-    private stravaApiService: StravaApiService
+    private notificationService: NotificationService
   ) {
     super(StoreKeys.STEPS, initialState);
-    effect(() => {
-      if (this.stravaApiService.isLoggedInToStrava()) {
-        untracked(() => this.syncSteps());
-      }
-    });
+    this.syncSteps();
     this.hasSynced.pipe(take(1)).subscribe(() => this.fetchSteps());
   }
 

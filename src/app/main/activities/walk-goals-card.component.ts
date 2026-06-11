@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { PkCardDirective } from '../../common/pk-card.directive';
 import { GoalsComponent } from './goals.component';
-import { Activities, StravaAthleteData } from '../../types';
+import { Activities } from '../../types';
 
 @Component({
   selector: 'pk-walk-goals-card',
@@ -14,12 +14,11 @@ import { Activities, StravaAthleteData } from '../../types';
         [iconName]="'tablerWalk'"
         [monthlyGoal]="activitiesData().walkMonthlyGoal ?? 0"
         [weeklyGoal]="activitiesData().walkWeeklyGoal ?? 0"
-        [monthlyProgress]="stravaData().walkThisMonth.distance"
-        [weeklyProgress]="stravaData().walkThisWeek.distance" />
+        [monthlyProgress]="activitiesData().walk.thisMonth"
+        [weeklyProgress]="activitiesData().walk.thisWeek" />
     </div>
   `,
 })
 export class WalkGoalsCardComponent {
-  public stravaData = input.required<StravaAthleteData>();
   public activitiesData = input.required<Activities>();
 }

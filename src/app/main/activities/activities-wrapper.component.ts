@@ -2,10 +2,9 @@ import { Component, input, output } from '@angular/core';
 import { ChoresComponent } from './chores.component';
 import { CyclingGoalsCardComponent } from './cycling-goals-card.component';
 import { WalkGoalsCardComponent } from './walk-goals-card.component';
-import { CyclingStatsCardComponent } from './cycling-stats-card.component';
-import { Activities, UUID, StravaAthleteData, StepsItem } from '../../types';
-import { StravaRoutesLinkComponent } from './strava-routes-link.component';
+import { Activities, UUID, StepsItem } from '../../types';
 import { StepsCardComponent } from './steps-card.component';
+import { StepsGoalsCardComponent } from './steps-goals-card.component';
 
 @Component({
   selector: 'pk-activities-wrapper',
@@ -13,27 +12,24 @@ import { StepsCardComponent } from './steps-card.component';
     ChoresComponent,
     CyclingGoalsCardComponent,
     WalkGoalsCardComponent,
-    CyclingStatsCardComponent,
-    StravaRoutesLinkComponent,
     StepsCardComponent,
+    StepsGoalsCardComponent,
   ],
   providers: [],
   styles: ``,
   template: `
-    <pk-walk-goals-card [stravaData]="stravaData()!" [activitiesData]="activitiesData()!" />
-    <pk-cycling-goals-card [stravaData]="stravaData()!" [activitiesData]="activitiesData()!" />
+    <pk-walk-goals-card [activitiesData]="activitiesData()!" />
+    <pk-steps-goals-card [activitiesData]="activitiesData()!" />
+    <pk-cycling-goals-card [activitiesData]="activitiesData()!" />
     <pk-steps-card [stepsData]="stepsData()!" />
-    <pk-cycling-stats-card [stravaData]="stravaData()!" />
     <pk-chores
-      [stravaData]="stravaData()!"
+      [currentBikeKms]="activitiesData().currentBikeKms"
       [chores]="activitiesData()!.chores ?? []"
       (edit)="editChore.emit($event)"
       (delete)="deleteChore.emit($event)" />
-    <pk-strava-routes-link />
   `,
 })
 export class ActivitiesWrapperComponent {
-  public stravaData = input.required<StravaAthleteData>();
   public activitiesData = input.required<Activities>();
   public stepsData = input.required<StepsItem[]>();
   public editChore = output<UUID>();

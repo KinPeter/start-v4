@@ -1,10 +1,11 @@
 import { Component, input } from '@angular/core';
 import { CircularProgressComponent } from '../../common/circular-progress.component';
 import { NgIcon } from '@ng-icons/core';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'pk-goals',
-  imports: [CircularProgressComponent, NgIcon],
+  imports: [CircularProgressComponent, NgIcon, DecimalPipe],
   providers: [],
   styles: `
     .goals {
@@ -44,8 +45,14 @@ import { NgIcon } from '@ng-icons/core';
       <div class="week">
         <div class="data">
           <h3><ng-icon [name]="iconName()" />Week</h3>
-          <p><ng-icon name="tablerProgressCheck" />{{ weeklyProgress() }}km</p>
-          <p><ng-icon name="tablerTargetArrow" />{{ weeklyGoal() }}km</p>
+          <p>
+            <ng-icon name="tablerProgressCheck" />{{ weeklyProgress() | number: '1.0-0'
+            }}{{ showKms() ? 'km' : '' }}
+          </p>
+          <p>
+            <ng-icon name="tablerTargetArrow" />{{ weeklyGoal() | number: '1.0-0'
+            }}{{ showKms() ? 'km' : '' }}
+          </p>
         </div>
         <div class="progress">
           <pk-circular-progress
@@ -56,8 +63,14 @@ import { NgIcon } from '@ng-icons/core';
       <div class="month">
         <div class="data">
           <h3><ng-icon [name]="iconName()" />Month</h3>
-          <p><ng-icon name="tablerProgressCheck" />{{ monthlyProgress() }}km</p>
-          <p><ng-icon name="tablerTargetArrow" />{{ monthlyGoal() }}km</p>
+          <p>
+            <ng-icon name="tablerProgressCheck" />{{ monthlyProgress() | number: '1.0-0'
+            }}{{ showKms() ? 'km' : '' }}
+          </p>
+          <p>
+            <ng-icon name="tablerTargetArrow" />{{ monthlyGoal() | number: '1.0-0'
+            }}{{ showKms() ? 'km' : '' }}
+          </p>
         </div>
         <div class="progress">
           <pk-circular-progress
@@ -74,4 +87,5 @@ export class GoalsComponent {
   public monthlyGoal = input.required<number>();
   public weeklyProgress = input.required<number>();
   public monthlyProgress = input.required<number>();
+  public showKms = input<boolean>(true);
 }
